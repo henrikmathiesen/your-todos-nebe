@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/henrikmathiesen/yourTodosNoBe/issues"
   },
+  "eslintConfig": {
+    "extends": "eslint:recommended"
+  },
   "homepage": "https://github.com/henrikmathiesen/yourTodosNoBe#readme",
   "dependencies": {
     "angular": "^1.5.8",
@@ -25,6 +28,7 @@
     "jquery": "^3.1.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1"
   }
 }
