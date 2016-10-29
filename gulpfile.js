@@ -19,7 +19,7 @@ var config = {
     },
     bld: './bld',
     server: {
-
+        port: 1337
     }
 }
 
@@ -29,6 +29,8 @@ gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config));
 gulp.task('jsapp', require('./gulp-tasks/jsapp')(gulp, config));
 gulp.task('template-cache', require('./gulp-tasks/template-cache')(gulp, config));
 gulp.task('less', require('./gulp-tasks/less')(gulp, config));
+
+gulp.task('connect', require('./gulp-tasks/connect')(gulp, config));
 
 // gulp.task('test', function(){
 //     plugins.runSequence(
