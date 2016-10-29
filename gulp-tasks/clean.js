@@ -1,5 +1,7 @@
-module.exports = function (gulp, plugins) {
+module.exports = function (gulp, plugins, config) {
     return function () {
-        return plugins.del('')
+        return gulp.task('clean', function(){
+            plugins.del(config.bld);
+        });
     };
 };
