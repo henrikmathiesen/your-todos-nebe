@@ -26,6 +26,10 @@
       "$": true,
       "angular": true,
       "FastClick": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-debugger": 0
     }
   },
   "homepage": "https://github.com/henrikmathiesen/yourTodosNoBe#readme",

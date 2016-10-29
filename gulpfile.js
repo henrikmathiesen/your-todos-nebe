@@ -22,7 +22,9 @@ var plugins = {
     inject: require('gulp-inject'),
     size: require('gulp-size'),
 
-    Server: require('karma').Server
+    Server: require('karma').Server,
+
+    runSequence: require('run-sequence')
 }
 
 var config = {
@@ -46,3 +48,11 @@ var config = {
 gulp.task('clean', require('./gulp-tasks/clean')(gulp, config, plugins));
 gulp.task('jslib', require('./gulp-tasks/jslib')(gulp, config, plugins));
 gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config, plugins));
+
+// gulp.task('test', function(){
+//     plugins.runSequence(
+//         'clean',
+//         'jslib',
+//         'eslint'
+//     );
+// });
