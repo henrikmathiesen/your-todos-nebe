@@ -4,7 +4,6 @@ var runSequence = require('run-sequence');
 
 var config = {
     isProduction: (argv.prod) ? (true) : (false),
-    resetInject: (argv.resetinject) ? (true) : (false),
     src: {
         indexhtml: './app/index.html',
         app: ['./app/**/*.module.js', './app/**/*.js'],
@@ -39,31 +38,27 @@ gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config));
 gulp.task('jsapp', require('./gulp-tasks/jsapp')(gulp, config));
 gulp.task('template-cache', require('./gulp-tasks/template-cache')(gulp, config));
 gulp.task('less', require('./gulp-tasks/less')(gulp, config));
-
 gulp.task('copy-indexhtml', require('./gulp-tasks/copy-indexhtml')(gulp, config));
 gulp.task('copy-fontawesome', require('./gulp-tasks/copy-fontawesome')(gulp, config));
-
 gulp.task('inject', require('./gulp-tasks/inject')(gulp, config));
-
+gulp.task('watcher', require('./gulp-tasks/watcher')(gulp, config));
 gulp.task('connect', require('./gulp-tasks/connect')(config));
 gulp.task('test', require('./gulp-tasks/test')(config));
-
-gulp.task('watcher', require('./gulp-tasks/watcher')(gulp, config));
 
 gulp.task('build', function () {
     runSequence(
         'clean',
         ['jslib', 'eslint', 'jsapp', 'template-cache', 'less', 'copy-indexhtml', 'copy-fontawesome'],
+        'inject'
     );
 });
 
 gulp.task('default', ['build'], function () {
     runSequence(
-        'inject',
+        'watcher',
         'connect'
     );
 });
-
 
 gulp.task('test', ['build'], function () {
     runSequence('test');
