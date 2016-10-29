@@ -2,9 +2,9 @@ var gulpif = require('gulp-if');
 var sourceMaps = require('gulp-sourcemaps');
 var concatJs = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var saveLicense = require('uglify-save-license');
 var size = require('gulp-size');
 var rev = require('gulp-rev');
-var saveLicense = require('uglify-save-license');
 
 module.exports = function (gulp, config) {
     return function () {
