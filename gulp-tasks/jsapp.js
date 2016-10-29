@@ -1,22 +1,25 @@
 var gulpif = require('gulp-if');
 var sourceMaps = require('gulp-sourcemaps');
 var concatJs = require('gulp-concat');
-var uglify = require('gulp-uglify');
+var ngAnnotate = require('gulp-ng-annotate');
 var size = require('gulp-size');
+var stripDebug = require('gulp-strip-debug');
+var uglify = require('gulp-uglify');
 var rev = require('gulp-rev');
-var saveLicense = require('uglify-save-license');
 
 module.exports = function (gulp, config) {
     return function () {
         return gulp
-            .src(config.src.lib)
+            .src(config.src.app)
             .pipe(gulpif(!config.isProduction, sourceMaps.init()))
 
-            .pipe(concatJs('lib.js'))
+            .pipe(concatJs('app.js'))
+            .pipe(ngAnnotate())
 
-            .pipe(gulpif(config.isProduction, size({ title: "js-lib unmin" })))
-            .pipe(gulpif(config.isProduction, uglify({ preserveComments: saveLicense })))
-            .pipe(gulpif(config.isProduction, size({ title: "js-lib min" })))
+            .pipe(gulpif(config.isProduction, size({ title: "js-app unmin" })))
+            .pipe(gulpif(config.isProduction, stripDebug()))
+            .pipe(gulpif(config.isProduction, uglify()))
+            .pipe(gulpif(config.isProduction, size({ title: "js-app min" })))
             .pipe(gulpif(config.isProduction, rev()))
 
             .pipe(gulpif(!config.isProduction, sourceMaps.write()))

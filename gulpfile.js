@@ -1,7 +1,6 @@
 var gulp = require('gulp');
-
-var runSequence = require('run-sequence');
 var argv = require('yargs').argv;
+var runSequence = require('run-sequence');
 
 var config = {
     isProduction: (argv.prod) ? (true) : (false),
@@ -24,6 +23,7 @@ var config = {
 gulp.task('clean', require('./gulp-tasks/clean')(gulp, config));
 gulp.task('jslib', require('./gulp-tasks/jslib')(gulp, config));
 gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config));
+gulp.task('jsapp', require('./gulp-tasks/jsapp')(gulp, config));
 
 // gulp.task('test', function(){
 //     plugins.runSequence(
