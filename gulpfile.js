@@ -32,7 +32,7 @@ gulp.task('less', require('./gulp-tasks/less')(gulp, config));
 
 gulp.task('connect', require('./gulp-tasks/connect')(gulp, config));
 
-// gulp.task('test', function(){
+// gulp.task('testing', function(){
 //     plugins.runSequence(
 //         'clean',
 //         'jslib',
