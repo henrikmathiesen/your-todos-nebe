@@ -16,7 +16,17 @@
     "url": "https://github.com/henrikmathiesen/yourTodosNoBe/issues"
   },
   "eslintConfig": {
-    "extends": "eslint:recommended"
+    "extends": "eslint:recommended",
+    "env": {
+      "browser": true,
+      "jquery": true
+    },
+    "globals": {
+      "jQuery": true,
+      "$": true,
+      "angular": true,
+      "FastClick": true
+    }
   },
   "homepage": "https://github.com/henrikmathiesen/yourTodosNoBe#readme",
   "dependencies": {

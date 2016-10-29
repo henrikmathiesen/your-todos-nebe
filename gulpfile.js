@@ -5,7 +5,7 @@ var plugins = {
     gulpif: require('gulp-if'),
     del: require('del'),
 
-    esLint: require('gulp-eslint'),
+    eslint: require('gulp-eslint'),
     concatJs: require('gulp-concat'),
     stripDebug: require('gulp-strip-debug'),
     ngAnnotate: require('gulp-ng-annotate'),
@@ -45,3 +45,4 @@ var config = {
 
 gulp.task('clean', require('./gulp-tasks/clean')(gulp, config, plugins));
 gulp.task('jslib', require('./gulp-tasks/jslib')(gulp, config, plugins));
+gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config, plugins));

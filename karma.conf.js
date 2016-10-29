@@ -1,7 +1,7 @@
-/// <reference path="./typings/tsd.d.ts" />
+/// <reference path="./typings/index.d.ts" />
 
 module.export = function (config) {
-
+    
     config.set({
         browsers: ['PhantomJS'],
         frameworks: ['jasmine'],
