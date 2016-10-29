@@ -6,6 +6,7 @@ var config = {
     isProduction: (argv.prod) ? (true) : (false),
     resetInject: (argv.resetinject) ? (true) : (false),
     src: {
+        indexhtml: './app/index.html',
         app: ['./app/**/*.module.js', './app/**/*.js'],
         less: './app/less/app.less',
         lessWatch: './app/less/**/*.less',
@@ -17,12 +18,12 @@ var config = {
             './node_modules/angular-mocks/angular-mocks.js'
         ],
         inject: [
-            this.config.bld + '/lib*.js', 
-            this.config.bld + '/templates*.js', 
-            this.config.bld + '/app*.js', 
-            this.config.bld + '/app*.css'
+            this.bld + '/lib*.js', 
+            this.bld + '/templates*.js', 
+            this.bld + '/app*.js', 
+            this.bld + '/app*.css'
         ],
-        injectTo: this.config.bld + '/index.html',
+        injectTo: this.bld + '/index.html',
         karma: __dirname + '/karma.conf.js'
     },
     bld: './bld',
@@ -37,6 +38,7 @@ gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config));
 gulp.task('jsapp', require('./gulp-tasks/jsapp')(gulp, config));
 gulp.task('template-cache', require('./gulp-tasks/template-cache')(gulp, config));
 gulp.task('less', require('./gulp-tasks/less')(gulp, config));
+gulp.task('copy-indexhtml', require('./gulp-tasks/copy-indexhtml')(gulp, config));
 gulp.task('inject', require('./gulp-tasks/inject')(gulp, config));
 
 gulp.task('connect', require('./gulp-tasks/connect')(config));
