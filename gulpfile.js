@@ -44,3 +44,4 @@ var config = {
 }
 
 gulp.task('clean', require('./gulp-tasks/clean')(gulp, config, plugins));
+gulp.task('jslib', require('./gulp-tasks/jslib')(gulp, config, plugins));
