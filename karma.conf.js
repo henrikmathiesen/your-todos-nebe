@@ -1,6 +1,6 @@
 /// <reference path="./typings/index.d.ts" />
 
-module.export = function (config) {
+module.exports = function (config) {
 
     config.set({
         browsers: ['PhantomJS'],

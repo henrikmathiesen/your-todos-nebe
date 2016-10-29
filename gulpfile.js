@@ -16,7 +16,7 @@ var config = {
             './node_modules/angular/angular.js',
             './node_modules/angular-mocks/angular-mocks.js'
         ],
-        karmaConf: __dirname + '/karma.conf.js'
+        karma: __dirname + '/karma.conf.js'
     },
     bld: './bld',
     server: {
@@ -32,7 +32,7 @@ gulp.task('template-cache', require('./gulp-tasks/template-cache')(gulp, config)
 gulp.task('less', require('./gulp-tasks/less')(gulp, config));
 
 gulp.task('connect', require('./gulp-tasks/connect')(config));
-gulp.task('test', require('./gulp-task/test')(config));
+gulp.task('test', require('./gulp-tasks/test')(config));
 
 // gulp.task('testing', function(){
 //     plugins.runSequence(
