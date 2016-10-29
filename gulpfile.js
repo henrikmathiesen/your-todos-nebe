@@ -8,6 +8,7 @@ var config = {
     src: {
         app: ['./app/**/*.module.js', './app/**/*.js'],
         less: './app/less/app.less',
+        lessWatch: './app/less/**/*.less',
         templates: './app/templates/**/*.html',
         lib: [
             './node_modules/jquery/dist/jquery.js',
