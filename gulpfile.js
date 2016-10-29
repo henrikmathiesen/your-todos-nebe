@@ -16,6 +16,12 @@ var config = {
             './node_modules/angular/angular.js',
             './node_modules/angular-mocks/angular-mocks.js'
         ],
+        inject: [
+            this.config.bld + '/lib*.js', 
+            this.config.bld + '/templates*.js', 
+            this.config.bld + '/app*.js', 
+            this.config.bld + '/app*.css'
+        ],
         karma: __dirname + '/karma.conf.js'
     },
     bld: './bld',
