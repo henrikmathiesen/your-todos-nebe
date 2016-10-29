@@ -1,5 +1,7 @@
-module.exports = function (gulp, config, plugins) {
+var del = require('del');
+
+module.exports = function (gulp, config) {
     return function () {
-        return plugins.del(config.bld);
+        return del(config.bld);
     };
 };

@@ -1,9 +1,11 @@
-module.exports = function (gulp, config, plugins) {
+var eslint = require('gulp-eslint');
+
+module.exports = function (gulp, config) {
     return function () {
         return gulp
         .src(config.src.app)
-        .pipe(plugins.eslint())
-        .pipe(plugins.eslint.format())
-        .pipe(plugins.eslint.failAfterError());
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
     };
 };

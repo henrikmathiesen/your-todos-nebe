@@ -1,35 +1,11 @@
 var gulp = require('gulp');
 
-var plugins = {
-    argv: require('yargs').argv,
-    gulpif: require('gulp-if'),
-    del: require('del'),
-
-    eslint: require('gulp-eslint'),
-    concatJs: require('gulp-concat'),
-    stripDebug: require('gulp-strip-debug'),
-    ngAnnotate: require('gulp-ng-annotate'),
-    templateCache: require('gulp-angular-templatecache'),
-    saveLicense: require('uglify-save-license'),
-    minifyJs: require('gulp-uglify'),
-
-    less: require('gulp-less'),
-    autoprefix: require('gulp-autoprefixer'),
-    minifyCss: require('gulp-clean-css'),
-
-    sourceMaps: require('gulp-sourcemaps'),
-    rev: require('gulp-rev'),
-    inject: require('gulp-inject'),
-    size: require('gulp-size'),
-
-    Server: require('karma').Server,
-
-    runSequence: require('run-sequence')
-}
+var runSequence = require('run-sequence');
+var argv = require('yargs').argv;
 
 var config = {
-    isProduction: (plugins.argv.prod) ? (true) : (false),
-    resetInject: (plugins.argv.resetinject) ? (true) : (false),
+    isProduction: (argv.prod) ? (true) : (false),
+    resetInject: (argv.resetinject) ? (true) : (false),
     src: {
         app: ['./app/**/*.module.js', './app/**/*.js'],
         lib: [
@@ -45,9 +21,9 @@ var config = {
     }
 }
 
-gulp.task('clean', require('./gulp-tasks/clean')(gulp, config, plugins));
-gulp.task('jslib', require('./gulp-tasks/jslib')(gulp, config, plugins));
-gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config, plugins));
+gulp.task('clean', require('./gulp-tasks/clean')(gulp, config));
+gulp.task('jslib', require('./gulp-tasks/jslib')(gulp, config));
+gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config));
 
 // gulp.task('test', function(){
 //     plugins.runSequence(
