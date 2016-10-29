@@ -19,9 +19,9 @@ var config = {
         ],
         fontawesome: './node_modules/font-awesome/fonts/*.*',
         inject: [
-            this.bld + '/lib*.js', 
-            this.bld + '/templates*.js', 
-            this.bld + '/app*.js', 
+            this.bld + '/lib*.js',
+            this.bld + '/templates*.js',
+            this.bld + '/app*.js',
             this.bld + '/app*.css'
         ],
         injectTo: this.bld + '/index.html',
@@ -48,10 +48,23 @@ gulp.task('inject', require('./gulp-tasks/inject')(gulp, config));
 gulp.task('connect', require('./gulp-tasks/connect')(config));
 gulp.task('test', require('./gulp-tasks/test')(config));
 
-// gulp.task('testing', function(){
-//     plugins.runSequence(
-//         'clean',
-//         'jslib',
-//         'eslint'
-//     );
-// });
+gulp.task('watcher', require('./gulp-tasks/watcher')(gulp, config));
+
+gulp.task('build', function () {
+    runSequence(
+        'clean',
+        ['jslib', 'eslint', 'jsapp', 'template-cache', 'less', 'copy-indexhtml', 'copy-fontawesome'],
+    );
+});
+
+gulp.task('default', ['build'], function () {
+    runSequence(
+        'inject',
+        'connect'
+    );
+});
+
+
+gulp.task('test', ['build'], function () {
+    runSequence('test');
+});
