@@ -17,6 +17,7 @@ var config = {
             './node_modules/angular/angular.js',
             './node_modules/angular-mocks/angular-mocks.js'
         ],
+        fontawesome: './node_modules/font-awesome/fonts/*.*',
         inject: [
             this.bld + '/lib*.js', 
             this.bld + '/templates*.js', 
@@ -38,7 +39,10 @@ gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config));
 gulp.task('jsapp', require('./gulp-tasks/jsapp')(gulp, config));
 gulp.task('template-cache', require('./gulp-tasks/template-cache')(gulp, config));
 gulp.task('less', require('./gulp-tasks/less')(gulp, config));
+
 gulp.task('copy-indexhtml', require('./gulp-tasks/copy-indexhtml')(gulp, config));
+gulp.task('copy-fontawesome', require('./gulp-tasks/copy-fontawesome')(gulp, config));
+
 gulp.task('inject', require('./gulp-tasks/inject')(gulp, config));
 
 gulp.task('connect', require('./gulp-tasks/connect')(config));
