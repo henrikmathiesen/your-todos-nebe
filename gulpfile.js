@@ -22,6 +22,7 @@ var config = {
             this.config.bld + '/app*.js', 
             this.config.bld + '/app*.css'
         ],
+        injectTo: this.config.bld + '/index.html',
         karma: __dirname + '/karma.conf.js'
     },
     bld: './bld',
@@ -36,6 +37,7 @@ gulp.task('eslint', require('./gulp-tasks/eslint')(gulp, config));
 gulp.task('jsapp', require('./gulp-tasks/jsapp')(gulp, config));
 gulp.task('template-cache', require('./gulp-tasks/template-cache')(gulp, config));
 gulp.task('less', require('./gulp-tasks/less')(gulp, config));
+gulp.task('inject', require('./gulp-tasks/inject')(gulp, config));
 
 gulp.task('connect', require('./gulp-tasks/connect')(config));
 gulp.task('test', require('./gulp-tasks/test')(config));
