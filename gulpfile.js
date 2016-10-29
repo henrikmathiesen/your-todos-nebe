@@ -15,7 +15,8 @@ var config = {
             './node_modules/fastclick/lib/fastclick.js',
             './node_modules/angular/angular.js',
             './node_modules/angular-mocks/angular-mocks.js'
-        ]
+        ],
+        karmaConf: __dirname + '/karma.conf.js'
     },
     bld: './bld',
     server: {
@@ -30,7 +31,8 @@ gulp.task('jsapp', require('./gulp-tasks/jsapp')(gulp, config));
 gulp.task('template-cache', require('./gulp-tasks/template-cache')(gulp, config));
 gulp.task('less', require('./gulp-tasks/less')(gulp, config));
 
-gulp.task('connect', require('./gulp-tasks/connect')(gulp, config));
+gulp.task('connect', require('./gulp-tasks/connect')(config));
+gulp.task('test', require('./gulp-task/test')(config));
 
 // gulp.task('testing', function(){
 //     plugins.runSequence(
