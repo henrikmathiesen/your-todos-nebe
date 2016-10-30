@@ -2,8 +2,12 @@
 
 angular
     .module('backend', ['ngMockE2E'])
-    .run(function(){
+    .run(function ($httpBackend, backEndFactory) {
 
-        // TODO: mock ajax calls
+        $httpBackend.whenGet('/api/todos')
+            .respond(function (method, url, data) {
+                var todos = backEndFactory.getTodos();
+                return [200, todos, {}];
+            });
 
     });
