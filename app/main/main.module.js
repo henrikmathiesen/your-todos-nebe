@@ -5,4 +5,4 @@ $(function() {
 });
 
 angular
-    .module('your-todos', []);
+    .module('main', []);
