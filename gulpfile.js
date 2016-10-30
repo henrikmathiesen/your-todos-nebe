@@ -7,9 +7,9 @@ var config = {
     src: {
         indexhtml: './app/index.html',
         app: ['./app/**/*.module.js', './app/**/*.js'],
-        less: './app/less/app.less',
-        lessWatch: './app/less/**/*.less',
-        templates: './app/templates/**/*.html',
+        less: './app/main/app.less',
+        lessWatch: './app/**/*.less',
+        templates: './app/**/*.template.html',
         img: './app/img/*.*',
         lib: [
             './node_modules/jquery/dist/jquery.js',

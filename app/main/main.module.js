@@ -5,4 +5,4 @@ $(function() {
 });
 
 angular
-    .module('main', []);
+    .module('main', ['templatecache']);
