@@ -10,6 +10,7 @@ var config = {
         less: './app/less/app.less',
         lessWatch: './app/less/**/*.less',
         templates: './app/templates/**/*.html',
+        img: './app/img/*.*',
         lib: [
             './node_modules/jquery/dist/jquery.js',
             './node_modules/fastclick/lib/fastclick.js',
@@ -39,6 +40,7 @@ gulp.task('jsapp', require('./gulp-tasks/jsapp')(gulp, config));
 gulp.task('template-cache', require('./gulp-tasks/template-cache')(gulp, config));
 gulp.task('less', require('./gulp-tasks/less')(gulp, config));
 gulp.task('copy-indexhtml', require('./gulp-tasks/copy-indexhtml')(gulp, config));
+gulp.task('copy-images', require('./gulp-tasks/copy-images')(gulp, config));
 gulp.task('copy-fontawesome', require('./gulp-tasks/copy-fontawesome')(gulp, config));
 gulp.task('inject', require('./gulp-tasks/inject')(gulp, config));
 gulp.task('watcher', require('./gulp-tasks/watcher')(gulp, config));
@@ -48,7 +50,7 @@ gulp.task('test', require('./gulp-tasks/test')(config));
 gulp.task('build', function () {
     runSequence(
         'clean',
-        ['jslib', 'eslint', 'jsapp', 'template-cache', 'less', 'copy-indexhtml', 'copy-fontawesome'],
+        ['jslib', 'eslint', 'jsapp', 'template-cache', 'less', 'copy-indexhtml', 'copy-images', 'copy-fontawesome'],
         'inject'
     );
 });
