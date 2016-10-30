@@ -19,12 +19,12 @@ var config = {
         ],
         fontawesome: './node_modules/font-awesome/fonts/*.*',
         inject: [
-            this.bld + '/lib*.js',
-            this.bld + '/templates*.js',
-            this.bld + '/app*.js',
-            this.bld + '/app*.css'
+            './bld/lib*.js',
+            './bld/templates*.js',
+            './bld/app*.js',
+            './bld/app*.css'
         ],
-        injectTo: this.bld + '/index.html',
+        injectTo: './bld/index.html',
         karma: __dirname + '/karma.conf.js'
     },
     bld: './bld',
@@ -47,12 +47,19 @@ gulp.task('watcher', require('./gulp-tasks/watcher')(gulp, config));
 gulp.task('connect', require('./gulp-tasks/connect')(config));
 gulp.task('test', require('./gulp-tasks/test')(config));
 
-gulp.task('build', function () {
+
+
+gulp.task('build', function (cb) {
     runSequence(
         'clean',
         ['jslib', 'eslint', 'jsapp', 'template-cache', 'less', 'copy-indexhtml', 'copy-images', 'copy-fontawesome'],
-        'inject'
+        'inject',
+        cb
     );
+});
+
+gulp.task('test', ['build'], function () {
+    runSequence('test');
 });
 
 gulp.task('default', ['build'], function () {
@@ -60,8 +67,4 @@ gulp.task('default', ['build'], function () {
         'watcher',
         'connect'
     );
-});
-
-gulp.task('test', ['build'], function () {
-    runSequence('test');
 });
