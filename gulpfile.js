@@ -46,7 +46,7 @@ gulp.task('inject', require('./gulp-tasks/inject')(gulp, config));
 gulp.task('watch-indexhtml-task', function(){ runSequence('copy-indexhtml', 'inject');});
 gulp.task('watcher', require('./gulp-tasks/watcher')(gulp, config));
 gulp.task('connect', require('./gulp-tasks/connect')(config));
-gulp.task('test', require('./gulp-tasks/test')(config));
+gulp.task('tester', require('./gulp-tasks/tester')(config));
 
 gulp.task('build', function (cb) {
     runSequence(
@@ -58,7 +58,7 @@ gulp.task('build', function (cb) {
 });
 
 gulp.task('test', ['build'], function () {
-    runSequence('test');
+    runSequence('tester');
 });
 
 gulp.task('default', ['build'], function () {
