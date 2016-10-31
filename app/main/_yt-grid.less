@@ -16,7 +16,11 @@ body {
 }
 
 .yt-main-container {
-  padding-top: @yt-sticky-header-height + @yt-gutter-xl;
+  padding-top: @yt-sticky-header-height + @yt-gutter-lg;
+  
+  @media (min-width: @screen-md-min) { 
+    padding-top: @yt-sticky-header-height-md-up + @yt-gutter-xl;
+  }
 }
 
 .yt-test-remove {

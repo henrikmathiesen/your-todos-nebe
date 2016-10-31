@@ -6,15 +6,25 @@
 
     width: 100%;
     height: @yt-sticky-header-height;
+    overflow: hidden;
     background-color: @yt-color-yellow;
     box-shadow: 2px 2px 10px 4px fade(@yt-color-yellow, 50%);
+
+    @media (min-width: @screen-md-min) { 
+        height: @yt-sticky-header-height-md-up;
+    }
 
     &__logo {
         margin: 0;
         text-align: center;
         font-family: 'The Girl Next Door', cursive;
         font-weight: normal;
-        font-size: 87px;
+        font-size: 42px;
         color:@yt-color-black;
+        height: inherit;
+
+        @media (min-width: @screen-md-min) { 
+            font-size: 87px;
+        }   
     }
 }
