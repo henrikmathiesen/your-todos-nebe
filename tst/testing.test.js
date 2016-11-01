@@ -2,6 +2,8 @@
 
 describe("test test", function(){
 
+    // remove this file
+    
     it("should work", function(){
 
         expect(true).toBe(true);
