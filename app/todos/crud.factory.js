@@ -20,6 +20,12 @@ angular
                 .catch(onError);
         };
 
+        factory.deleteTodo = function (id) {
+            return apiFactory.deleteTodo(id)
+                .then(onSuccess)
+                .catch(onError);
+        };
+
         return factory;
 
     });

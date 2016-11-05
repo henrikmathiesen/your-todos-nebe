@@ -45,8 +45,22 @@ angular
             },
         ];
 
-        factory.getTodos = function(){
+        factory.getTodos = function () {
             return todos;
+        };
+
+        factory.deleteTodo = function (id) {
+            var match = false;
+
+            for(var i = 0; i < todos.length; i++) {
+                if(todos[i].id == id) {
+                    match = true;
+                    todos.splice(i, 1);
+                    break;
+                }
+            }
+
+            return match;
         };
 
         return factory;

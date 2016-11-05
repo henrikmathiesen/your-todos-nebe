@@ -7,8 +7,12 @@ angular
             restrict: 'E',
             replace: true,
             scope: {},
-            controller: function ($filter) {
+            controller: function ($filter, crudFactory) {
                 var vm = this;
+
+                vm.deleteTodo = function () {
+                    crudFactory.deleteTodo(vm.todo.id);
+                };
             },
             controllerAs: 'vm',
             bindToController: {
