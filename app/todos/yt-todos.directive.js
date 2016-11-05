@@ -7,25 +7,14 @@ angular
             restrict: 'E',
             replace: true,
             scope: {},
-            controller: function (apiFactory, errorHandlerFactory) {
+            controller: function (crudFactory) {
                 var vm = this;
                 vm.todos = [];
 
-                var handleCrudError = function () {
-                    errorHandlerFactory.setAppHasError(true);
-                };
-
-                vm.deleteTodo = function (todo) {
-                    console.log("deleteTodo");
-                    console.log(todo);
-                    console.log("/deleteTodo");
-                }
-
-                apiFactory.getTodos()
-                    .then(function (response) {
-                        vm.todos = response.data;
-                    })
-                    .catch(handleCrudError);
+                crudFactory.getTodos()
+                    .then(function (todos) {
+                        vm.todos = todos;
+                    });
             },
             controllerAs: 'vm',
             bindToController: true,
