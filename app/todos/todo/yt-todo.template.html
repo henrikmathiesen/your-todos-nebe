@@ -2,7 +2,7 @@
     <div class="col-xs-12">
         <div class="row yt-todo__header">
             <div class="col-xs-8">
-                <h2 class="yt-todo__date">{{ vm.todo.date }}</h2>
+                <h2 class="yt-todo__date">{{ vm.todo.date | date: 'yyyy-MM-dd HH:mm'}}</h2>
             </div>
             <div class="col-xs-4">
                 <h2 class="yt-todo__label yt-text-right {{ vm.todo.label | getCssClassForLabelFilter }}">{{ vm.todo.label }}</h2>
