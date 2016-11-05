@@ -11,6 +11,7 @@ angular
                 var vm = this;
 
                 vm.deleteTodo = function () {
+                    console.log("deleteTodo");
                     crudFactory.deleteTodo(vm.todo.id);
                 };
             },
