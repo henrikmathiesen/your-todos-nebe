@@ -5,14 +5,14 @@
                 <h2 class="yt-todo__date">{{ vm.todo.date | date: 'yyyy-MM-dd HH:mm'}}</h2>
             </div>
             <div class="col-xs-4">
-                <h2 class="yt-todo__label yt-text-right {{ vm.todo.label | getCssClassForLabelFilter }}">{{ vm.todo.label }}</h2>
+                <h2 class="yt-todo__label {{ vm.todo.label | getCssClassForLabelFilter }}">{{ vm.todo.label }}</h2>
             </div>
         </div>
         <div class="row yt-todo__body">
             <div class="col-xs-8">
                 <p>{{ vm.todo.text }}</p>
             </div>
-            <div class="col-xs-4 yt-text-right">
+            <div class="col-xs-4 yt-todo__crud">
                 <div>[EDIT]</div>
                 <div>[DELTE]</div>
             </div>

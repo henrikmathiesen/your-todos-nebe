@@ -13,6 +13,19 @@
 
     &__label {
         margin: 0;
+        text-align: right;
+
+        &.yt-color-joy {
+            color: @yt-color-magenta;
+        }
+
+        &.yt-color-project {
+            color: @yt-color-purple;
+        }
+
+        &.yt-color-work {
+            color: @yt-color-blue;
+        }
     }
 
     &__body {
@@ -26,5 +39,9 @@
         p + p {
             margin-top: @yt-gutter-sm;
         }
+    }
+
+    &__crud {
+        text-align: right;
     }
 }
