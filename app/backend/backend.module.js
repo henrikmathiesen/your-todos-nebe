@@ -2,7 +2,7 @@
 
 angular
     .module('backend', ['ngMockE2E'])
-    .run(function ($httpBackend, backEndFactory) {
+    .run(function ($httpBackend, backendFactory) {
 
         var headers = {
             headers: { 'Content-Type': 'application/json' }
@@ -10,7 +10,7 @@ angular
 
         $httpBackend.whenGET('/api/todos')
             .respond(function () {
-                var todos = backEndFactory.getTodos();
+                var todos = backendFactory.getTodos();
                 return [200, todos, headers];
             });
 

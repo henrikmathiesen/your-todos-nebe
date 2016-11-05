@@ -2,7 +2,7 @@
 
 angular
     .module('backend')
-    .factory('backEndFactory', function () {
+    .factory('backendFactory', function () {
 
         var factory = {};
 
