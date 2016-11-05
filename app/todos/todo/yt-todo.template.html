@@ -1,6 +1,21 @@
-<div class="yt-todo">
-    <div>{{ vm.todo.id }}</div>
-    <div>{{ vm.todo.date }}</div>
-    <div>{{ vm.todo.label }}</div>
-    <div>{{ vm.todo.text }}</div>
+<div class="row yt-todo">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-8">
+                <h2 class="yt-todo__date">{{ vm.todo.date }}</h2>
+            </div>
+            <div class="col-xs-4">
+                <h2 class="yt-todo__label yt-text-right">{{ vm.todo.label }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <p>{{ vm.todo.text }}</p>
+            </div>
+            <div class="col-xs-4 yt-text-right">
+                <div>[EDIT]</div>
+                <div>[DELTE]</div>
+            </div>
+        </div>
+    </div>
 </div>

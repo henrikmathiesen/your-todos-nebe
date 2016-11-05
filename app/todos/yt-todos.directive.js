@@ -5,6 +5,7 @@ angular
     .directive('ytTodos', function () {
         return {
             restrict: 'E',
+            replace: true,
             scope: {},
             controller: function (apiFactory, errorHandlerFactory) {
                 var vm = this;

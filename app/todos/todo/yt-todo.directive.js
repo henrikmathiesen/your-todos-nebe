@@ -5,6 +5,7 @@ angular
     .directive('ytTodo', function () {
         return {
             restrict: 'E',
+            replace: true,
             scope: {},
             controller: function () {
                 var vm = this;
