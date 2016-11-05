@@ -26,7 +26,7 @@ angular
         };
 
         factory.deleteTodo = function(id) {
-            return apiFactory.deleteTodo(id)
+            apiFactory.deleteTodo(id)
                 .then(deleteSuccess)
                 .catch(onError);
         };
