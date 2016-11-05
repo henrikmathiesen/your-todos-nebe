@@ -26,7 +26,6 @@ angular
         };
 
         factory.deleteTodo = function(id) {
-            console.log("cf del todo");
             return apiFactory.deleteTodo(id)
                 .then(deleteSuccess)
                 .catch(onError);

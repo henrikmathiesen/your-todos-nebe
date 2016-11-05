@@ -12,7 +12,6 @@ angular
                 vm.todos = [];
 
                 var getTodos = function() {
-                    console.log("GT");
                     crudFactory.getTodos()
                         .then(function(todos) {
                             vm.todos = todos;
