@@ -9,7 +9,6 @@ angular
             scope: {},
             controller: function ($filter) {
                 var vm = this;
-                //vm.todo = { date: null, id: null, label: null, text: null };
             },
             controllerAs: 'vm',
             bindToController: {

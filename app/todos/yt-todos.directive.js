@@ -11,13 +11,21 @@ angular
                 var vm = this;
                 vm.todos = [];
 
+                var handleCrudError = function () {
+                    errorHandlerFactory.setAppHasError(true);
+                };
+
+                vm.deleteTodo = function (todo) {
+                    console.log("deleteTodo");
+                    console.log(todo);
+                    console.log("/deleteTodo");
+                }
+
                 apiFactory.getTodos()
                     .then(function (response) {
                         vm.todos = response.data;
                     })
-                    .catch(function () {
-                        errorHandlerFactory.setAppHasError(true);
-                    });
+                    .catch(handleCrudError);
             },
             controllerAs: 'vm',
             bindToController: true,
