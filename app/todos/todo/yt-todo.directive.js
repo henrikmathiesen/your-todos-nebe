@@ -14,6 +14,6 @@ angular
             bindToController: {
                 todo: '='
             },
-            templateUrl: 'todos/yt-todo.template.html'
+            templateUrl: 'todos/todo/yt-todo.template.html'
         }
     });
