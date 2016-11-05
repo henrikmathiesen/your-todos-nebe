@@ -2,14 +2,13 @@
 
 angular
     .module('todos')
-    .directive('ytTodos', function (apiFactory, errorHandlerFactory) {
+    .directive('ytTodos', function () {
         return {
             restrict: 'E',
             scope: {},
-            controller: function () {
+            controller: function (apiFactory, errorHandlerFactory) {
                 var vm = this;
                 vm.todos = [];
-                // todo: { date, id, label, text }
 
                 apiFactory.getTodos()
                     .then(function (response) {
