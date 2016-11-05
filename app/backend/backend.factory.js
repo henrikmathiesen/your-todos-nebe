@@ -22,7 +22,7 @@ angular
             {
                 id: 3,
                 date: "2010-08-01T15:00:00+02:00",
-                label: "project",
+                label: "no label",
                 text: "Make sure there are an equal ammount of blue berries in each muffin"
             },
             {
@@ -42,6 +42,12 @@ angular
                 date: "2010-08-01T15:00:00+02:00",
                 label: "work",
                 text: "Study React"
+            },
+            {
+                id: 7,
+                date: "2010-08-01T15:00:00+02:00",
+                label: "no label",
+                text: "Lorem ipsum dolores"
             },
         ];
 

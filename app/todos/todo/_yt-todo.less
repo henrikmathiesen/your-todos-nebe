@@ -1,32 +1,42 @@
 .yt-todo {
 
+    // Header
+
     &__header {
         background-color: @yt-color-darker-grey;
+        border: 28px solid @yt-color-dark-grey;
+        padding: @yt-gutter-sm;
         color: @yt-color-white;
-        border: 4px solid @yt-color-dark-grey;
-        padding: @yt-gutter-md;
+
+        &.yt-bg-color-joy {
+           background-color: @yt-color-magenta;
+        }
+
+        &.yt-bg-color-no_label {
+            background-color: @yt-color-darker-grey;
+        }
+
+        &.yt-bg-color-project {
+            background-color: @yt-color-purple;
+        }
+
+        &.yt-bg-color-work {
+            background-color: @yt-color-blue;
+        }
     }
 
     &__date {
         margin: 0;
+        font-size: 24px;
     }
 
     &__label {
         margin: 0;
+        font-size: 24px;
         text-align: right;
-
-        &.yt-color-joy {
-            color: @yt-color-magenta;
-        }
-
-        &.yt-color-project {
-            color: @yt-color-purple;
-        }
-
-        &.yt-color-work {
-            color: @yt-color-blue;
-        }
     }
+
+    // Body
 
     &__body {
         background-color: @yt-color-dark-grey;
@@ -35,6 +45,7 @@
 
         p {
             margin: 0;
+            font-size: 18px;
         }
         p + p {
             margin-top: @yt-gutter-sm;

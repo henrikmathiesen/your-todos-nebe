@@ -11,13 +11,16 @@ angular
 
             switch (label) {
                 case LABELS_CONSTANTS.joy:
-                    cssClass = 'yt-color-joy';
+                    cssClass = 'yt-bg-color-joy';
+                    break;
+                case LABELS_CONSTANTS.no_label:
+                    cssClass = 'yt-bg-color-no_label';
                     break;
                 case LABELS_CONSTANTS.project:
-                    cssClass = 'yt-color-project';
+                    cssClass = 'yt-bg-color-project';
                     break;
                 case LABELS_CONSTANTS.work:
-                    cssClass = 'yt-color-work';
+                    cssClass = 'yt-bg-color-work';
                     break;
                 default:
                     console.error("ERROR getting color for label");

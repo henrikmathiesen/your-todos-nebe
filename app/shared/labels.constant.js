@@ -3,7 +3,8 @@
 angular
     .module('shared')
     .constant('LABELS_CONSTANTS', {
-        'work': 'work',
         'joy': 'joy',
-        'project': 'project'
+        'no_label': 'no label',
+        'project': 'project',
+        'work': 'work'
     });
