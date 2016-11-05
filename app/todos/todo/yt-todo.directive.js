@@ -7,7 +7,7 @@ angular
             restrict: 'E',
             replace: true,
             scope: {},
-            controller: function () {
+            controller: function ($filter) {
                 var vm = this;
                 //vm.todo = { date: null, id: null, label: null, text: null };
             },
