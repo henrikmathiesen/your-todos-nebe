@@ -24,4 +24,12 @@ describe("api.factory.test", function () {
         });
     });
 
+    it("should expose a deleteTodo method that makes an ajax call deleting a todo to 'backend-less' back end", function () {
+        $httpBackend.when('DELETE', '/api/todo/' + '1').respond(204);
+
+        apiFactory.deleteTodo(1).then(function (response) {
+            expect(response.status).toBe(204);
+        });
+    });
+
 });
