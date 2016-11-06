@@ -1,6 +1,6 @@
 /// <reference path="../../typings/index.d.ts" />
 
-describe("crud factory works as a layer between api factory and todos controllers", function () {
+describe("crud.factory works as a layer between api factory and todos controllers", function () {
 
     var $q;
     var $scope;
