@@ -2,18 +2,19 @@
 
 angular
     .module('todos')
-    .directive('ytTodo', function () {
+    .directive('ytTodo', function (crudFactory, $filter) {
         return {
             restrict: 'E',
             replace: true,
             scope: {},
-            controller: function ($filter, crudFactory) {
-                var vm = this;
+            link: function (scope, $element) {
+                var vm = scope.vm;
 
                 vm.deleteTodo = function () {
-                    crudFactory.deleteTodo(vm.todo.id);
+                    $element.fadeOut(crudFactory.deleteTodo.bind(null, vm.todo.id));
                 };
             },
+            controller: function () {},
             controllerAs: 'vm',
             bindToController: {
                 todo: '='
