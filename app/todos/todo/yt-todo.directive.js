@@ -2,7 +2,7 @@
 
 angular
     .module('todos')
-    .directive('ytTodo', function (crudFactory, $filter) {
+    .directive('ytTodo', function (todosCrudFactory, $filter) {
         return {
             restrict: 'E',
             replace: true,
@@ -11,7 +11,7 @@ angular
                 var vm = scope.vm;
 
                 vm.deleteTodo = function () {
-                    $element.fadeOut(crudFactory.deleteTodo.bind(null, vm.todo.id));
+                    $element.fadeOut(todosCrudFactory.deleteTodo.bind(null, vm.todo.id));
                 };
             },
             controller: function () {},

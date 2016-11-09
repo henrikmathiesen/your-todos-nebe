@@ -7,18 +7,18 @@ angular
             restrict: 'E',
             replace: true,
             scope: {},
-            controller: function(crudFactory) {
+            controller: function(todosCrudFactory) {
                 var vm = this;
                 vm.todos = [];
 
                 var getTodos = function() {
-                    crudFactory.getTodos()
+                    todosCrudFactory.getTodos()
                         .then(function(todos) {
                             vm.todos = todos;
                         });
                 };
 
-                crudFactory.subscribeToCrudComplete(getTodos);
+                todosCrudFactory.subscribeToCrudComplete(getTodos);
 
                 getTodos();                
 

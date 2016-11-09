@@ -2,7 +2,7 @@
 
 angular
     .module('todos')
-    .factory('apiFactory', function ($http) {
+    .factory('todosApiFactory', function ($http) {
 
         var factory = {};
 

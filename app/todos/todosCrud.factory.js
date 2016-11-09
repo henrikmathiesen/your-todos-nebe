@@ -2,7 +2,7 @@
 
 angular
     .module('todos')
-    .factory('crudFactory', function(apiFactory, errorHandlerFactory) {
+    .factory('todosCrudFactory', function(todosApiFactory, errorHandlerFactory) {
 
         var factory = {};
         var _subscribeToCrudCompleteCb;
@@ -20,13 +20,13 @@ angular
         };
 
         factory.getTodos = function() {
-            return apiFactory.getTodos()
+            return todosApiFactory.getTodos()
                 .then(getSuccess)
                 .catch(onError);
         };
 
         factory.deleteTodo = function(id) {
-            apiFactory.deleteTodo(id)
+            todosApiFactory.deleteTodo(id)
                 .then(deleteSuccess)
                 .catch(onError);
         };
