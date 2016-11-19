@@ -4,13 +4,23 @@
     box-shadow: @yt-box-shadow;
 
     &__row {
-        padding: @yt-gutter-lg;
-        padding-left: @yt-gutter-md;
+        //padding: @yt-gutter-lg;
+        //padding-left: @yt-gutter-md;
+        display: flex;
         border-bottom: @yt-border-02;
     }
 
-    &__col {
+    &__col01, &__col02 {
         float: left;
+        align-items: stretch;
+    }
+
+    &__col01 {
+        border-right: @yt-border-01;
+    }
+
+    &__col02 {
+        border-left: @yt-border-01;
     }
 
     .fa-square-o {

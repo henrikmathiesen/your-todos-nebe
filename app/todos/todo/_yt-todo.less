@@ -1,12 +1,19 @@
 .yt-todo-row {
-    padding: @yt-gutter-md;
+    //padding: @yt-gutter-md;
 
-    &__col {
+    display: flex;
+
+    &__col01, &__col02 {
         float: left;
+        align-items: stretch;
     }
 
-    &__col-text {
-        float: left;
+    &__col01 {
+        border-right: @yt-border-01;
+    }
+
+    &__col02 {
+        border-left: @yt-border-01;
         width: 90%;
     }
 }
