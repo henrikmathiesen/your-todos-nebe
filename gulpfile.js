@@ -51,7 +51,7 @@ gulp.task('tester', require('./gulp-tasks/tester')(config));
 gulp.task('build', function (cb) {
     runSequence(
         'clean',
-        ['jslib', 'eslint', 'jsapp', /*'template-cache',*/ 'less', 'copy-indexhtml', 'copy-images', 'copy-fontawesome'],
+        ['jslib', 'eslint', 'jsapp', 'template-cache', 'less', 'copy-indexhtml', 'copy-images', 'copy-fontawesome'],
         'inject',
         cb
     );
