@@ -1,13 +1,16 @@
-.yt-todo__row {
-
+.yt-todo-row {
     padding: @yt-gutter-md;
 
-    &__col-text {
-        width: 90%;
-    } 
+    &__col {
+        float: left;
+    }
 
+    &__col-text {
+        float: left;
+        width: 90%;
+    }
 }
 
-.yt-todo__row + .yt-todo__row {
+.yt-todo-row + .yt-todo-row {
     border-top:@yt-border-01;
 }
