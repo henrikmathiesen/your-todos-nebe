@@ -2,30 +2,30 @@
 
 angular
     .module('todos')
-    .factory('todosCrudFactory', function(todosApiFactory, errorHandlerFactory) {
+    .factory('todosCrudFactory', function (todosApiFactory, errorHandlerFactory) {
 
         var factory = {};
         var _subscribeToCrudCompleteCb;
 
-        var onError = function() {
+        var onError = function () {
             errorHandlerFactory.setAppHasError(true);
         }
 
-        var getSuccess = function(response) {
+        var getSuccess = function (response) {
             return response.data;
         };
 
-        var deleteSuccess = function(response) {
+        var deleteSuccess = function (response) {
             _subscribeToCrudCompleteCb();
         };
 
-        factory.getTodos = function() {
+        factory.getTodos = function () {
             return todosApiFactory.getTodos()
                 .then(getSuccess)
                 .catch(onError);
         };
 
-        factory.deleteTodo = function(id) {
+        factory.deleteTodo = function (id) {
             todosApiFactory.deleteTodo(id)
                 .then(deleteSuccess)
                 .catch(onError);
@@ -33,7 +33,7 @@ angular
 
         // PUB/SUB
 
-        factory.subscribeToCrudComplete = function(subscriber) {
+        factory.subscribeToCrudComplete = function (subscriber) {
             _subscribeToCrudCompleteCb = subscriber;
         };
 

@@ -11,10 +11,12 @@ angular
             bindToController: true
         }
     })
-    .controller('ytTodosController', function ($scope) {
+    .controller('ytTodosController', function (todosCrudFactory) {
         var vm = this;
+        vm.todos = [];
 
-        console.log("ytTodosController");
-        console.log($scope);
-        console.log("/ytTodosController");
+        todosCrudFactory.getTodos()
+            .then(function (todos) {
+                vm.todos = todos;
+            });
     });
