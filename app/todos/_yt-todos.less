@@ -7,12 +7,14 @@
         //padding: @yt-gutter-lg;
         //padding-left: @yt-gutter-md;
         display: flex;
+        align-items: stretch;
         border-bottom: @yt-border-nightblue-02;
     }
 
     &__col01, &__col02 {
         float: left;
-        align-items: stretch;
+        display: flex;
+        align-items: center;
     }
 
     &__col01 {
@@ -27,6 +29,8 @@
 
     .fa-square-o {
         color: @yt-color-matteblue;
+        position: relative;
+        top:2px;
     }
 
     .fa-plus {
