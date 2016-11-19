@@ -7,6 +7,7 @@ angular
             restrict: 'E',
             scope: {},
             templateUrl: 'todos/yt-todos.template.html',
+            replace: true,
             controller: 'ytTodosController as vm',
             bindToController: true
         }

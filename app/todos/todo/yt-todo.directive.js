@@ -7,6 +7,7 @@ angular
             restrict: 'E',
             scope: {},
             templateUrl: 'todos/todo/yt-todo.template.html',
+            replace: true,
             controller: 'ytTodoController as subVm',
             bindToController: {
                 todo: '<'
@@ -15,5 +16,5 @@ angular
     })
     .controller('ytTodoController', function () {
         var subVm = this;
-        
+
     });
