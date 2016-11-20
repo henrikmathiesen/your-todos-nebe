@@ -26,6 +26,16 @@ angular
         vm.checkAllTodos = function (isChecked) {
             vm.todos.map(function (todo) { todo.checked = isChecked; });
             vm.allTodosChecked = isChecked;
-        }
+        };
+
+        vm.isAllTodosChecked = function () {
+            for (var i = 0; i < vm.todos.length; i++) {
+                if (!vm.todos[i].checked) {
+                    vm.allTodosChecked = false;
+                    return;
+                }
+                vm.allTodosChecked = true;
+            }
+        };
 
     });
