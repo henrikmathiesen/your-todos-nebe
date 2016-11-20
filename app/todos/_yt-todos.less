@@ -49,7 +49,7 @@
         font-size: 30px;
     }
 
-    .fa-plus, .fa-trash-o {
+    a.fa-plus, a.fa-trash-o {
         position: relative;
 
         &:active {
@@ -57,7 +57,7 @@
         }
     }
 
-    .fa-plus {
+    a.fa-plus {
         color: fade(@yt-color-greensea, 50%);
 
         &:hover {
@@ -65,11 +65,15 @@
         }
     }
 
-    .fa-trash-o {
+    a.fa-trash-o {
         color: fade(@yt-color-carrot, 50%);
 
         &:hover {
             color: @yt-color-carrot;
         }
+    }
+
+    .fa-trash-o {
+        color: fade(@yt-color-carrot, 50%);
     }
 }
