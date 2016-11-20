@@ -38,4 +38,8 @@ angular
             }
         };
 
+        vm.deleteCheckedTodos = function () {
+            
+        };
+
     });
