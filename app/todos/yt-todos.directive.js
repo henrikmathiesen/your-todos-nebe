@@ -16,6 +16,7 @@ angular
         var vm = this;
         vm.todos = [];
         vm.allTodosChecked = false;
+        vm.noTodosChecked = true;
 
         vm.isAllTodosChecked = function () {
             if (!vm.todos.length) {
