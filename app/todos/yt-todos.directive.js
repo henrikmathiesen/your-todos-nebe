@@ -34,8 +34,6 @@ angular
         };
 
         var getTodos = function () {
-            console.log("one time");
-
             todosCrudFactory.getTodos()
                 .then(function (todos) {
                     vm.todos = todos;
