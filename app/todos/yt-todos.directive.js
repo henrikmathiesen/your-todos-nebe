@@ -12,27 +12,11 @@ angular
             bindToController: true
         }
     })
-    .controller('ytTodosController', function (todosCrudFactory, $q) {
+    .controller('ytTodosController', function (todosCrudFactory, todosCheckedFactory) {
         var vm = this;
         vm.todos = [];
         vm.allTodosChecked = false;
         vm.noTodosChecked = true;
-
-        vm.isAllTodosChecked = function () {
-            if (!vm.todos.length) {
-                vm.allTodosChecked = false;
-                vm.noTodosChecked = true;
-                return;
-            }
-
-            vm.allTodosChecked = vm.todos.every(function (todo) { return todo.checked; });
-            vm.noTodosChecked = !vm.todos.some(function (todo) { return todo.checked; });
-        };
-
-        vm.checkAllTodos = function (isChecked) {
-            vm.todos.map(function (todo) { todo.checked = isChecked; });
-            vm.isAllTodosChecked();
-        };
 
         var getTodos = function () {
             todosCrudFactory.getTodos()
@@ -43,30 +27,9 @@ angular
                 });
         };
 
-        vm.deleteCheckedTodos = function () {
-            var deletePromises = [];
-            var $todoElements = [];
-            var fadePromises = [];
-
-            for (var i = 0; i < vm.todos.length; i++) {
-
-                var todo = vm.todos[i];
-
-                if (todo.checked) {
-                    $todoElements.push(angular.element('div[data-todo-id=' + todo.id + ']'));
-                    deletePromises.push(todosCrudFactory.deleteTodo(todo.id));
-                }
-            }
-
-            angular.forEach($todoElements, function (el) {
-                fadePromises.push(el.fadeOut().promise());
-            });
-
-            $q.all(fadePromises).then(function(){
-                $q.all(deletePromises).then(getTodos);
-            });
-
-        };
+        vm.isAllTodosChecked = function () { todosCheckedFactory.isAllTodosChecked(vm); };
+        vm.checkAllTodos = function (isChecked) { todosCheckedFactory.checkAllTodos(vm, isChecked); };
+        vm.deleteCheckedTodos = function () { todosCheckedFactory.deleteCheckedTodos(vm, getTodos); };
 
         getTodos();
 
