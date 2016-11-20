@@ -4,8 +4,6 @@
     box-shadow: @yt-box-shadow;
 
     &__row {
-        //padding: @yt-gutter-lg;
-        //padding-left: @yt-gutter-md;
         display: flex;
         align-items: stretch;
         border-bottom: @yt-border-nightblue-02;
@@ -15,6 +13,10 @@
         float: left;
         display: flex;
         align-items: center;
+        padding-left: @yt-gutter-sm;
+        padding-right: @yt-gutter-sm;
+        padding-top: @yt-gutter-md;
+        padding-bottom: @yt-gutter-md;
     }
 
     &__col01 {
@@ -25,6 +27,14 @@
     &__col02 {
         border-left: @yt-border-concrete-01;
         margin-left: 1px;
+
+        .fa:first-child {
+            margin-left: @yt-gutter-xs;
+        } 
+
+        .fa + .fa {
+            margin-left: @yt-gutter-md;
+        }
     }
 
     .fa-square-o {
