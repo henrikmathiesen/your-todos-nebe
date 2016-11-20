@@ -12,16 +12,19 @@ angular
             bindToController: true
         }
     })
-    .controller('ytTodosController', function (todosCrudFactory) {
+    .controller('ytTodosController', function (todosCrudFactory, $q) {
         var vm = this;
         vm.todos = [];
         vm.allTodosChecked = false;
 
-        todosCrudFactory.getTodos()
-            .then(function (todos) {
-                vm.todos = todos;
-                vm.todos.map(function (todo) { todo.checked = false; });
-            });
+
+        var getTodos = function () {
+            todosCrudFactory.getTodos()
+                .then(function (todos) {
+                    vm.todos = todos;
+                    vm.todos.map(function (todo) { todo.checked = false; });
+                });
+        };
 
         vm.checkAllTodos = function (isChecked) {
             vm.todos.map(function (todo) { todo.checked = isChecked; });
@@ -33,11 +36,15 @@ angular
         };
 
         vm.deleteCheckedTodos = function () {
+            debugger;
+
             for (var i = 0; i < vm.todos.length; i++) {
-                if(vm.todos[i].checked === true) {
+                if (vm.todos[i].checked === true) {
                     todosCrudFactory.deleteTodo(vm.todos[i].id);
                 }
             }
         };
+
+        getTodos();
 
     });
