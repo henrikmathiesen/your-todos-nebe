@@ -18,7 +18,7 @@ angular
         vm.allTodosChecked = false;
 
         vm.isAllTodosChecked = function () {
-            if(!vm.todos.length) {
+            if (!vm.todos.length) {
                 vm.allTodosChecked = false;
                 vm.noTodosChecked = true;
                 return;
@@ -46,15 +46,27 @@ angular
 
         vm.deleteCheckedTodos = function () {
             var promises = [];
+            var $todoElements = [];
+            var fadePromises = [];
 
             for (var i = 0; i < vm.todos.length; i++) {
-                if (vm.todos[i].checked === true) {
-                    var promise = todosCrudFactory.deleteTodo(vm.todos[i].id);
-                    promises.push(promise);
+
+                var todo = vm.todos[i];
+
+                if (todo.checked) {
+                    $todoElements.push(angular.element('div[data-todo-id=' + todo.id + ']'));
+                    promises.push(todosCrudFactory.deleteTodo(todo.id));
                 }
             }
 
-            $q.all(promises).then(getTodos);
+            angular.forEach($todoElements, function (el) {
+                fadePromises.push(el.fadeOut().promise());
+            });
+
+            $q.all(fadePromises).then(function(){
+                $q.all(promises).then(getTodos);
+            });
+
         };
 
         getTodos();
