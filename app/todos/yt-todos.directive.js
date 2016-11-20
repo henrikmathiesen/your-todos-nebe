@@ -29,13 +29,15 @@ angular
         };
 
         vm.isAllTodosChecked = function () {
-            vm.allTodosChecked = vm.todos.every(function (todo) {
-                return todo.checked;
-            });
+            vm.allTodosChecked = vm.todos.every(function (todo) { return todo.checked; });
         };
 
         vm.deleteCheckedTodos = function () {
-            
+            for (var i = 0; i < vm.todos.length; i++) {
+                if(vm.todos[i].checked === true) {
+                    todosCrudFactory.deleteTodo(vm.todos[i].id);
+                }
+            }
         };
 
     });
