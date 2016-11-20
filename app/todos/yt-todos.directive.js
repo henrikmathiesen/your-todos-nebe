@@ -19,6 +19,8 @@ angular
 
 
         var getTodos = function () {
+            console.log("one time");
+
             todosCrudFactory.getTodos()
                 .then(function (todos) {
                     vm.todos = todos;
@@ -36,13 +38,16 @@ angular
         };
 
         vm.deleteCheckedTodos = function () {
-            debugger;
-
-            for (var i = 0; i < vm.todos.length; i++) {
+            var promises = [];
+            
+            for (var i = 0; i < vm.todos.length; i++) { 
                 if (vm.todos[i].checked === true) {
-                    todosCrudFactory.deleteTodo(vm.todos[i].id);
+                    var promise = todosCrudFactory.deleteTodo(vm.todos[i].id);
+                    promises.push(promise);
                 }
             }
+            
+            $q.all(promises).then(getTodos);
         };
 
         getTodos();
