@@ -45,7 +45,7 @@ angular
         };
 
         vm.deleteCheckedTodos = function () {
-            var promises = [];
+            var deletePromises = [];
             var $todoElements = [];
             var fadePromises = [];
 
@@ -55,7 +55,7 @@ angular
 
                 if (todo.checked) {
                     $todoElements.push(angular.element('div[data-todo-id=' + todo.id + ']'));
-                    promises.push(todosCrudFactory.deleteTodo(todo.id));
+                    deletePromises.push(todosCrudFactory.deleteTodo(todo.id));
                 }
             }
 
@@ -64,7 +64,7 @@ angular
             });
 
             $q.all(fadePromises).then(function(){
-                $q.all(promises).then(getTodos);
+                $q.all(deletePromises).then(getTodos);
             });
 
         };
