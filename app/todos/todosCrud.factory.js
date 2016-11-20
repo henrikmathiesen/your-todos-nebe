@@ -5,36 +5,25 @@ angular
     .factory('todosCrudFactory', function (todosApiFactory, errorHandlerFactory) {
 
         var factory = {};
-        var _subscribeToCrudCompleteCb;
 
         var onError = function () {
             errorHandlerFactory.setAppHasError(true);
         }
 
-        var getSuccess = function (response) {
+        var onSuccess = function (response) {
             return response.data;
-        };
-
-        var deleteSuccess = function (response) {
-            _subscribeToCrudCompleteCb();
         };
 
         factory.getTodos = function () {
             return todosApiFactory.getTodos()
-                .then(getSuccess)
+                .then(onSuccess)
                 .catch(onError);
         };
 
         factory.deleteTodo = function (id) {
             todosApiFactory.deleteTodo(id)
-                .then(deleteSuccess)
+                .then(onSuccess)
                 .catch(onError);
-        };
-
-        // PUB/SUB
-
-        factory.subscribeToCrudComplete = function (subscriber) {
-            _subscribeToCrudCompleteCb = subscriber;
         };
 
         return factory;
