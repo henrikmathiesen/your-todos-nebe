@@ -1,6 +1,6 @@
 /// <reference path="../../typings/index.d.ts" />
 
-describe("api.factory makes ajax call to mocked http backend", function () {
+describe("todosApi.factory makes ajax call to mocked http backend", function () {
 
     var $httpBackend;
     var todosApiFactory;
