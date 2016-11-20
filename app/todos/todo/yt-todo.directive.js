@@ -10,11 +10,20 @@ angular
             replace: true,
             controller: 'ytTodoController as subVm',
             bindToController: {
-                todo: '<'
+                todo: '<',
+                allTodosChecked: '='
             }
         }
     })
     .controller('ytTodoController', function () {
         var subVm = this;
+
+        subVm.checkTodo = function (isChecked) {
+            subVm.todo.checked = isChecked;
+            
+            if (isChecked === false) {
+                subVm.allTodosChecked = false;
+            }
+        }
 
     });

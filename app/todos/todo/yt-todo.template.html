@@ -1,7 +1,7 @@
 <div class="yt-clearfix yt-todo-row">
     <div class="yt-todo-row__col01">
-        <span class="fa fa-2x fa-square-o" ng-show="!subVm.todo.checked" ng-click="subVm.todo.checked = true"></span>
-        <span class="fa fa-2x fa-check-square-o" ng-show="subVm.todo.checked" ng-click="subVm.todo.checked = false"></span>
+        <span class="fa fa-2x fa-square-o" ng-show="!subVm.todo.checked" ng-click="subVm.checkTodo(true);"></span>
+        <span class="fa fa-2x fa-check-square-o" ng-show="subVm.todo.checked" ng-click="subVm.checkTodo(false);"></span>
     </div>
     <div class="yt-todo-row__col02">
         {{ subVm.todo.text }}
