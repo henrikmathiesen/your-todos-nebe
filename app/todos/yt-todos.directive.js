@@ -29,13 +29,9 @@ angular
         };
 
         vm.isAllTodosChecked = function () {
-            for (var i = 0; i < vm.todos.length; i++) {
-                if (!vm.todos[i].checked) {
-                    vm.allTodosChecked = false;
-                    return;
-                }
-                vm.allTodosChecked = true;
-            }
+            vm.allTodosChecked = vm.todos.every(function (todo) {
+                return todo.checked;
+            });
         };
 
         vm.deleteCheckedTodos = function () {
