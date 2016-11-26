@@ -35,13 +35,13 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
 
     it("should set the app in an error state if ajax error for get", function () {
         spyOn(errorHandlerFactory, 'setAppHasError');
-        spyOn(todosApiFactory, 'getTodos').and.returnValue($q.reject());            // $q.reject() Returns a promise that was already resolved as rejected with the reason
+        spyOn(todosApiFactory, 'getTodos').and.returnValue($q.reject());                // $q.reject() Returns a promise that was already resolved as rejected with the reason
 
-        todosCrudFactory.getTodos().catch(function () {                             // $q.reject() in error callback in todosCrudFactory should stop the promise chain, but we can still catch here though, dont know why 
-            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);  // On an error, neither the .then() nor a .catch() will run in the controller, so the promise chain is indeed stoped there
+        todosCrudFactory.getTodos().catch(function () {                                 // $q.reject() in error callback in todosCrudFactory should stop the promise chain, but we can still catch here though, dont know why 
+            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);      // On an error, neither the .then() nor a .catch() will run in the controller, so the promise chain is indeed stoped there
         });
 
-        $scope.$digest(); // Need it for running then. could also use $scope.$apply() / $rootScope.$apply()  
+        $scope.$digest();                                                               // Need it for running then. could also use $scope.$apply() / $rootScope.$apply()  
     });
 
     it("should set the app in an error state if ajax error for delete", function () {
