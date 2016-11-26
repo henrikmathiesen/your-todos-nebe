@@ -2,12 +2,13 @@
 
 angular
     .module('todos')
-    .factory('todosCrudFactory', function (todosApiFactory, errorHandlerFactory) {
+    .factory('todosCrudFactory', function ($q, todosApiFactory, errorHandlerFactory) {
 
         var factory = {};
 
-        var onError = function () {
+        var onError = function (e) {
             errorHandlerFactory.setAppHasError(true);
+            return $q.reject(); // stops the promise chain
         }
 
         var onSuccess = function (response) {
@@ -21,7 +22,7 @@ angular
         };
 
         factory.deleteTodo = function (id) {
-            todosApiFactory.deleteTodo(id)
+            return todosApiFactory.deleteTodo(8)
                 .then(onSuccess)
                 .catch(onError);
         };
