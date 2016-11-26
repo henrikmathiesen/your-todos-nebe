@@ -37,12 +37,12 @@ angular
                 }
             }
 
-            angular.forEach($todoElements, function (el) {
-                fadePromises.push(el.fadeOut().promise());
-            });
+            $q.all(deletePromises).then(function () {
+                angular.forEach($todoElements, function (el) {
+                    fadePromises.push(el.fadeOut().promise());
+                });
 
-            $q.all(fadePromises).then(function () {
-                $q.all(deletePromises).then(cb);
+                $q.all(fadePromises).then(cb);
             });
         };
 
