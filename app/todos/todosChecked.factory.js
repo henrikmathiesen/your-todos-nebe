@@ -22,7 +22,7 @@ angular
             factory.isAllTodosChecked(vm);
         };
 
-        factory.deleteCheckedTodos = function (vm, cb) {
+        factory.deleteCheckedTodos = function (vm, getTodos) {
             var deletePromises = [];
             var $todoElements = [];
             var fadePromises = [];
@@ -42,7 +42,7 @@ angular
                     fadePromises.push(el.fadeOut().promise());
                 });
 
-                $q.all(fadePromises).then(cb);
+                $q.all(fadePromises).then(getTodos);
             });
         };
 
