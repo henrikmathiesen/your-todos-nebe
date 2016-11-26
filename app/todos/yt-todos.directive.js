@@ -27,9 +27,17 @@ angular
                 });
         };
 
-        vm.isAllTodosChecked = function () { todosCheckedFactory.isAllTodosChecked(vm); };
-        vm.checkAllTodos = function (isChecked) { todosCheckedFactory.checkAllTodos(vm, isChecked); };
-        vm.deleteCheckedTodos = function () { todosCheckedFactory.deleteCheckedTodos(vm, getTodos); };
+        vm.isAllTodosChecked = function () {
+            todosCheckedFactory.isAllTodosChecked(vm);
+        };
+
+        vm.checkAllTodos = function (isChecked) {
+            todosCheckedFactory.checkAllTodos(vm, isChecked);
+        };
+
+        vm.deleteCheckedTodos = function () {
+            todosCheckedFactory.deleteCheckedTodos(vm, getTodos);
+        };
 
         getTodos();
 
