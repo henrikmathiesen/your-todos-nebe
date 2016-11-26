@@ -86,7 +86,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
         backendFactory = _backendFactory_;
     }));
 
-    it("should should have a method for getting todos", function () {
+    it("should have a method for getting todos", function () {
         var todos = backendFactory.getTodos();
         var pos = todos.map(function(todo) { return todo.id.toString(); }).indexOf('5');
 

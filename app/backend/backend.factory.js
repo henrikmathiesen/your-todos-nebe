@@ -34,7 +34,7 @@ angular
             {
                 id: 7,
                 text: "Lorem ipsum dolores"
-            },
+            }
         ];
 
         factory.getTodos = function () {

@@ -32,4 +32,12 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         });
     });
 
+    it("should expose a deleteTodo method that makes an ajax call deleting a todo and can respond with 404 if no todo is found", function () {
+        $httpBackend.when('DELETE', '/api/todo/' + '8').respond(404);
+
+        todosApiFactory.deleteTodo(8).then(function (response) {
+            expect(response.status).toBe(404);
+        });
+    });
+
 });
