@@ -22,7 +22,7 @@ angular
         };
 
         factory.deleteTodo = function (id) {
-            return todosApiFactory.deleteTodo(8)
+            return todosApiFactory.deleteTodo(id)
                 .then(onSuccess)
                 .catch(onError);
         };

@@ -41,8 +41,8 @@ angular
                 fadePromises.push(el.fadeOut().promise());
             });
 
-            $q.all(fadePromises).then(function () {
-                $q.all(deletePromises).then(cb);
+            $q.all(deletePromises).then(function () {
+                $q.all(fadePromises).then(cb);
             });
         };
 
