@@ -6,7 +6,7 @@ angular
 
         var factory = {};
 
-        var onError = function (e) {
+        var onError = function (error) {
             errorHandlerFactory.setAppHasError(true);
             return $q.reject(); // stops the promise chain
         }
