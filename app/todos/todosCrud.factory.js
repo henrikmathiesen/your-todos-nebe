@@ -8,7 +8,7 @@ angular
 
         var onError = function (error) {
             errorHandlerFactory.setAppHasError(true);
-            return $q.reject(); // stops the promise chain
+            return $q.reject(); // stops the promise chain to todosCrudFactory().then() , .catch() will however run
         }
 
         var onSuccess = function (response) {
