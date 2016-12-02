@@ -121,4 +121,8 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         });
     });
 
+    describe("Directives template should render correctly", function(){
+        
+    });
+
 });
