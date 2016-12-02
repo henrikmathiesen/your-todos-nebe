@@ -73,7 +73,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect(jQelement.isolateScope().vm.todos[1].checked).toBe(false);
         });
 
-        it("Should have properties allTodosChecked and noTodosChecked on vm", function(){
+        it("Should have properties allTodosChecked and noTodosChecked on vm", function () {
             expect(jQelement.isolateScope().vm.allTodosChecked).toBe(false);
             expect(jQelement.isolateScope().vm.noTodosChecked).toBe(true);
         });
@@ -91,7 +91,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
 
     describe("Directives view model has methods for handling checked todos, forwards call to todosCheckedFactory", function () {
 
-        beforeEach(function(){
+        beforeEach(function () {
             vm = $controller('ytTodosController');
             $scope.$apply();
 
@@ -114,15 +114,17 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         it("Should have a method for deleting all checked todos, forwarding the call and then reload todos", function () {
             // We have already tested that todosCheckedFactory.deleteCheckedTodos runs the sent callback, so dont need to test it here
 
-            var getTodos = function(){ return true; };
+            var getTodos = function () { return true; };
             vm.deleteCheckedTodos();
 
             expect(todosCheckedFactory.deleteCheckedTodos).toHaveBeenCalled(); // with vm, getTodos (having problem mocking private var)
         });
     });
 
-    describe("Directives template should render correctly", function(){
-        
+    describe("Directives template should render correctly", function () {
+        it("should work", function () { 
+            console.log(html);
+        });
     });
 
 });
