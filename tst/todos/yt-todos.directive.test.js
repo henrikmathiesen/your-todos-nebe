@@ -51,7 +51,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         html = jQelement.html();
     }));
 
-    describe("Directive goes out and gets all todos via service, it also tracks which one are checked", function () {
+    describe("Directive goes out and gets all todos via service, it also tracks checked status", function () {
 
         it("Should call getTodos", function () {
             expect(todosCrudFactory.getTodos).toHaveBeenCalled();
@@ -61,6 +61,19 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect(todosCheckedFactory.isAllTodosChecked).toHaveBeenCalled();
         });
 
+        it("Should have populated todos on view model", function(){
+            expect(jQelement.isolateScope().vm.todos.length).toBe(2);
+        });
+
+        it("Should set all todos checked property to false", function(){
+            expect(jQelement.isolateScope().vm.todos[0].checked).toBe(false);
+            expect(jQelement.isolateScope().vm.todos[1].checked).toBe(false);
+        });
+
+    });
+
+    describe("Directives view model has methods for handling checked todos", function(){
+        
     });
 
 });
