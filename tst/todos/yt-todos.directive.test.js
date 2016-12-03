@@ -136,9 +136,12 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             $unCheckAllTodosIcon = jQelement.find('.fa-check-square-o[ng-click="vm.checkAllTodos(false)"]');
 
             // 1) $addTodoIcon = jQelement.find('.fa-plus'); to do when implementing it
+
+            $deleteTodoIcon = jQelement.find('a.fa-trash-o[ng-click="vm.deleteCheckedTodos()"]');
+            $deleteTodoIconDisabled = jQelement.find('span.fa-trash-o');
         });
 
-        it("should start with an empty square icon, since no todos are checked", function () {
+        it("Should start with an empty square icon, since no todos are checked", function () {
             expect($checkAllTodosIcon.hasClass('ng-hide')).toBe(false);
             expect($unCheckAllTodosIcon.hasClass('ng-hide')).toBe(true);
         });
@@ -147,8 +150,9 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         //     // 2
         // });
 
-        it("", function () {
-
+        it("Should have a delete icon that start disabled since no todos are checked", function () {
+            expect($deleteTodoIcon.hasClass('ng-hide')).toBe(true);
+            expect($deleteTodoIconDisabled.hasClass('ng-hide')).toBe(false);
         });
     });
 
