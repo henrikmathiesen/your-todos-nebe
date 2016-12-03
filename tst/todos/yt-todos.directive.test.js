@@ -122,8 +122,33 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
     });
 
     describe("Directives template should render correctly", function () {
-        it("should work", function () { 
-            console.log(html);
+
+        var $checkAllTodosIcon;
+        var $unCheckAllTodosIcon;
+
+        var $addTodoIcon;
+        
+        var $deleteTodoIcon;
+        var $deleteTodoIconDisabled;
+
+        beforeEach(function () {
+            $checkAllTodosIcon = jQelement.find('.fa-square-o[ng-click="vm.checkAllTodos(true)"]');
+            $unCheckAllTodosIcon = jQelement.find('.fa-check-square-o[ng-click="vm.checkAllTodos(false)"]');
+
+            // 1) $addTodoIcon = jQelement.find('.fa-plus'); to do when implementing it
+        });
+
+        it("should start with an empty square icon, since no todos are checked", function () {
+            expect($checkAllTodosIcon.hasClass('ng-hide')).toBe(false);
+            expect($unCheckAllTodosIcon.hasClass('ng-hide')).toBe(true);
+        });
+
+        // it("should have an icon for adding a todo", function () {
+        //     // 2
+        // });
+
+        it("", function () {
+
         });
     });
 
