@@ -127,7 +127,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         var $unCheckAllTodosIcon;
 
         var $addTodoIcon;
-        
+
         var $deleteTodoIcon;
         var $deleteTodoIconDisabled;
 
@@ -142,8 +142,8 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         });
 
         it("Should start with an empty square icon, since no todos are checked", function () {
-            expect($checkAllTodosIcon.hasClass('ng-hide')).toBe(false);
-            expect($unCheckAllTodosIcon.hasClass('ng-hide')).toBe(true);
+            expect($checkAllTodosIcon.hasClass('ng-hide')).toBe(false, "it should be visible");
+            expect($unCheckAllTodosIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
         });
 
         // it("should have an icon for adding a todo", function () {
@@ -151,8 +151,20 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         // });
 
         it("Should have a delete icon that start disabled since no todos are checked", function () {
-            expect($deleteTodoIcon.hasClass('ng-hide')).toBe(true);
-            expect($deleteTodoIconDisabled.hasClass('ng-hide')).toBe(false);
+            expect($deleteTodoIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
+            expect($deleteTodoIconDisabled.hasClass('ng-hide')).toBe(false, "it should be visible");
+        });
+
+        it("Should obey view model -- if allTodosChecked then square icon in header gets checked, if !noTodosChecked then delete icon is enabled", function () { 
+            jQelement.isolateScope().vm.allTodosChecked = true;
+            jQelement.isolateScope().vm.noTodosChecked = false;
+            $scope.$apply();
+
+            expect($checkAllTodosIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
+            expect($unCheckAllTodosIcon.hasClass('ng-hide')).toBe(false, "it should be visible");
+
+            expect($deleteTodoIcon.hasClass('ng-hide')).toBe(false, "it should be visible");
+            expect($deleteTodoIconDisabled.hasClass('ng-hide')).toBe(true, "it should be hidden");
         });
     });
 
