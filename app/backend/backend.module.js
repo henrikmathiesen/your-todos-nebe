@@ -23,4 +23,13 @@ angular
                 return [statusCode, {}, {}];
             });
 
+
+        $httpBackend.whenPOST('/api/todo')
+            .respond(function (method, url, data) {
+                var params = angular.fromJson(data);
+                var todo = backendFactory.addTodo(params);
+
+                return [201, todo, headers];
+            });
+
     });
