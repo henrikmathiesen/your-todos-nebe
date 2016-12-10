@@ -6,7 +6,7 @@ angular
 
         var factory = {};
 
-        var _todos = [
+        var todos = [
             {
                 id: 1,
                 text: "Keep up with front end stuff"
@@ -37,12 +37,12 @@ angular
             }
         ];
 
-        var _getNewId = function () {
-            if (!_todos.length) {
+        var getNewId = function () {
+            if (!todos.length) {
                 return 1;
             }
 
-            var idArray = _todos.map(function (todo) { return todo.id });
+            var idArray = todos.map(function (todo) { return todo.id });
 
             var idArraySorted = idArray.sort(function (a, b) { return a - b });
 
@@ -50,16 +50,16 @@ angular
         };
 
         factory.getTodos = function () {
-            return _todos;
+            return todos;
         };
 
         factory.deleteTodo = function (id) {
             var match = false;
 
-            for (var i = 0; i < _todos.length; i++) {
-                if (_todos[i].id == id) {
+            for (var i = 0; i < todos.length; i++) {
+                if (todos[i].id == id) {
                     match = true;
-                    _todos.splice(i, 1);
+                    todos.splice(i, 1);
                     break;
                 }
             }
@@ -68,8 +68,8 @@ angular
         };
 
         factory.addTodo = function (todo) {
-            todo.id = _getNewId();
-            _todos.push(todo);
+            todo.id = getNewId();
+            todos.push(todo);
 
             return todo;
         };

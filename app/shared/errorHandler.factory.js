@@ -5,14 +5,14 @@ angular
     .factory('errorHandlerFactory', function () {
 
         var factory = {};
-        var _appHasError = false;
+        var appHasError = false;
 
         factory.getAppHasError = function () {
-            return _appHasError;
+            return appHasError;
         };
 
         factory.setAppHasError = function (hasError) {
-            _appHasError = hasError;
+            appHasError = hasError;
         };
 
         return factory;
