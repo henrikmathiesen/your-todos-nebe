@@ -20,6 +20,7 @@ angular
 
         subVm.checkTodo = function (isChecked) {
             subVm.todo.checked = isChecked;
+            subVm.todo.isInEditMode = isChecked;
             subVm.isAllTodosChecked();
         }
 

@@ -18,7 +18,7 @@ angular
         };
 
         factory.checkAllTodos = function (vm, isChecked) {
-            vm.todos.map(function (todo) { todo.checked = isChecked; });
+            vm.todos.map(function (todo) { todo.checked = isChecked; todo.isInEditMode = isChecked; });
             factory.isAllTodosChecked(vm);
         };
 

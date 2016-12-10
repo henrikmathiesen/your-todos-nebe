@@ -22,7 +22,7 @@ angular
             todosCrudFactory.getTodos()
                 .then(function(todos) {
                     vm.todos = todos;
-                    vm.todos.map(function(todo) { todo.checked = false; });
+                    vm.todos.map(function(todo) { todo.checked = false; todo.isInEditMode = false; });
                     vm.isAllTodosChecked();
                 })
         };
