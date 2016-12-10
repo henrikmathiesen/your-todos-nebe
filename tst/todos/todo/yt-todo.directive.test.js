@@ -59,7 +59,6 @@ describe("yt-todo.directive renders a todo with a clickable checkbox next to it"
 
         expect($notCheckedIcon.hasClass('ng-hide')).toBe(true, "not checked icon should be hidden");
         expect($checkedIcon.hasClass('ng-hide')).toBe(false, "checked icon should be visible");
-
     });
 
     it("Should set todo checked status and call passed in parameter function when user clicks on checkbox next to todo", function () {
