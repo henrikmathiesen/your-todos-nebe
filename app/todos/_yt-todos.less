@@ -49,23 +49,29 @@
         font-size: 30px;
     }
 
-    a.fa-plus, a.fa-trash-o {
+    a.fa-plus {
         position: relative;
+        top:2px;
+        color: @yt-color-greensea;
 
         &:active {
-            top: 1px;
+            top: 3px;
         }
     }
 
-    a.fa-plus {
-        color: @yt-color-greensea;
-    }
-
     a.fa-trash-o {
+        position: relative;
+        top: 1px;
         color: @yt-color-carrot;
+
+        &:active {
+            top: 2px;
+        }
     }
 
-    .fa-trash-o {
+    span.fa-trash-o {
+        position: relative;
+        top: 1px;
         color: fade(@yt-color-carrot, 50%);
     }
 }
