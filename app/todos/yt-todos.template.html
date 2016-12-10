@@ -6,8 +6,10 @@
         </div>
         <div class="yt-todos__col02">
             <a href="#" class="fa fa-2x fa-plus"></a>
-            <a href="#" class="fa fa-2x fa-trash-o" ng-click="vm.deleteCheckedTodos()" ng-show="!vm.noTodosChecked"></a>
+            <a href="#" class="fa fa-2x fa-trash-o" ng-show="!vm.noTodosChecked" ng-click="vm.deleteCheckedTodos()"></a>
             <span class="fa fa-2x fa-trash-o" ng-show="vm.noTodosChecked"></span>
+            <a href="#" class="fa fa-2x fa-floppy-o" ng-show="!vm.noTodosChecked"></a>
+            <span class="fa fa-2x fa-floppy-o" ng-show="vm.noTodosChecked"></span>
         </div>
     </div>
     <yt-todo ng-repeat="todo in vm.todos" todo="todo" ng-show="vm.todos.length" is-all-todos-checked="vm.isAllTodosChecked()"></yt-todo>
