@@ -54,7 +54,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         html = jQelement.html();
     }));
 
-    describe("Directive goes out and gets all todos via service, it also tracks checked status", function () {
+    describe("Directive goes out and gets all todos via service, it also tracks checked status and isInEditMode status", function () {
 
         it("Should call getTodos", function () {
             expect(todosCrudFactory.getTodos).toHaveBeenCalled();
@@ -71,6 +71,11 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         it("Should set all todos checked property to false", function () {
             expect(jQelement.isolateScope().vm.todos[0].checked).toBe(false);
             expect(jQelement.isolateScope().vm.todos[1].checked).toBe(false);
+        });
+
+        it("Should set all todos isInEditMode property to false", function () { 
+            expect(jQelement.isolateScope().vm.todos[0].isInEditMode).toBe(false);
+            expect(jQelement.isolateScope().vm.todos[1].isInEditMode).toBe(false);
         });
 
         it("Should have properties allTodosChecked and noTodosChecked on vm", function () {
@@ -159,7 +164,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect($deleteTodoIconDisabled.hasClass('ng-hide')).toBe(false, "it should be visible");
         });
 
-        it("Should obey view model -- if allTodosChecked then square icon in header gets checked, if !noTodosChecked then delete icon is enabled", function () { 
+        it("Should obey view model -- if allTodosChecked then square icon in header gets checked, if !noTodosChecked then delete icon is enabled", function () {
             jQelement.isolateScope().vm.allTodosChecked = true;
             jQelement.isolateScope().vm.noTodosChecked = false;
             $scope.$apply();

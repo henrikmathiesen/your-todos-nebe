@@ -83,24 +83,30 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
 
     });
 
-    describe("There should be a function for checking and unchecking all todos, that function then checks if all todos are checked.", function () {
+    describe("There should be a function for checking and unchecking all todos, also sets them in edit mode, that function then checks if all todos are checked.", function () {
 
-        it("should be able to set set all todos checked to true", function () {
+        it("should be able to set all todos checked to true, also sets all in edit mode", function () {
             vm.todos = todos;
 
             todosCheckedFactory.checkAllTodos(vm, true);
 
             expect(vm.allTodosChecked).toBe(true);
             expect(vm.noTodosChecked).toBe(false);
+            expect(vm.todos[0].isInEditMode).toBe(true);
+            expect(vm.todos[1].isInEditMode).toBe(true);
+            expect(vm.todos[2].isInEditMode).toBe(true);
         });
 
-        it("should be able to set set all todos checked to false", function () {
+        it("should be able to set set all todos checked to false, also sets all not in edit mode", function () {
             vm.todos = todos;
 
             todosCheckedFactory.checkAllTodos(vm, false);
 
             expect(vm.allTodosChecked).toBe(false);
             expect(vm.noTodosChecked).toBe(true);
+            expect(vm.todos[0].isInEditMode).toBe(false);
+            expect(vm.todos[1].isInEditMode).toBe(false);
+            expect(vm.todos[2].isInEditMode).toBe(false);
         });
 
     });
