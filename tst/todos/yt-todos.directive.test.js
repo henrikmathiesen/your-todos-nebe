@@ -127,6 +127,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         var $unCheckAllTodosIcon;
 
         var $addTodoIcon;
+        var $saveIcon;
 
         var $deleteTodoIcon;
         var $deleteTodoIconDisabled;
@@ -136,6 +137,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             $unCheckAllTodosIcon = jQelement.find('.fa-check-square-o[ng-click="vm.checkAllTodos(false)"]');
 
             // 1) $addTodoIcon = jQelement.find('.fa-plus'); to do when implementing it
+            // 1b) $saveIcon = ......... to do when implementing it
 
             $deleteTodoIcon = jQelement.find('a.fa-trash-o[ng-click="vm.deleteCheckedTodos()"]');
             $deleteTodoIconDisabled = jQelement.find('span.fa-trash-o');
@@ -149,6 +151,8 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         // it("should have an icon for adding a todo", function () {
         //     // 2
         // });
+
+        // 2b
 
         it("Should have a delete icon that start disabled since no todos are checked", function () {
             expect($deleteTodoIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
