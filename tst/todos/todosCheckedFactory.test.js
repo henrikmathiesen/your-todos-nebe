@@ -85,25 +85,39 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
 
     describe("There should be a function for checking and unchecking all todos, also sets them in edit mode, that function then checks if all todos are checked.", function () {
 
-        it("should be able to set all todos checked to true, also sets all in edit mode", function () {
+        it("should be able to set all todos checked to true", function () {
             vm.todos = todos;
 
             todosCheckedFactory.checkAllTodos(vm, true);
 
             expect(vm.allTodosChecked).toBe(true);
             expect(vm.noTodosChecked).toBe(false);
-            expect(vm.todos[0].isInEditMode).toBe(true);
-            expect(vm.todos[1].isInEditMode).toBe(true);
-            expect(vm.todos[2].isInEditMode).toBe(true);
         });
 
-        it("should be able to set set all todos checked to false, also sets all not in edit mode", function () {
+        it("should be able to set set all todos checked to false", function () {
             vm.todos = todos;
 
             todosCheckedFactory.checkAllTodos(vm, false);
 
             expect(vm.allTodosChecked).toBe(false);
             expect(vm.noTodosChecked).toBe(true);
+        });
+
+        it("Should also set isInEditMode true for all", function () { 
+            vm.todos = todos;
+
+            todosCheckedFactory.checkAllTodos(vm, true);
+
+            expect(vm.todos[0].isInEditMode).toBe(true);
+            expect(vm.todos[1].isInEditMode).toBe(true);
+            expect(vm.todos[2].isInEditMode).toBe(true);
+        });
+
+        it("Should also set isInEditMode false for all", function () { 
+            vm.todos = todos;
+
+            todosCheckedFactory.checkAllTodos(vm, false);
+
             expect(vm.todos[0].isInEditMode).toBe(false);
             expect(vm.todos[1].isInEditMode).toBe(false);
             expect(vm.todos[2].isInEditMode).toBe(false);
@@ -113,16 +127,16 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
 
     describe("There should be a function for deleting checked todos, by calling todosCrudFactory, then fades them out and call getTodos callback.", function () {
 
-        it("should delete checked todos, fade out them and then call reload callback", function () { 
+        it("should delete checked todos, fade out them and then call reload callback", function () {
             vm.todos = todos;
             vm.todos[0].checked = false;
             vm.todos[1].checked = true;
             vm.todos[2].checked = true;
             var obj = { reload: function () { return true; } };
-            
+
             spyOn(obj, 'reload');
             spyOn(angular, 'forEach');
-            spyOn(todosCrudFactory, 'deleteTodo').and.callFake(function(){
+            spyOn(todosCrudFactory, 'deleteTodo').and.callFake(function () {
                 // return $q.defer().promise; - since $q.all(promises).then() runs when all promises are resolved, we can not return $q.defer().promise
                 // We need to return a resolved promise and then $scope.$digest() to test the next action
 
@@ -134,7 +148,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
             todosCheckedFactory.deleteCheckedTodos(vm, obj.reload);
 
             expect(todosCrudFactory.deleteTodo).toHaveBeenCalledTimes(2, "id 2 and id 3 is sent for deletion with 2 calls to crudFactory");
-            
+
             $scope.$digest();
             expect(angular.forEach).toHaveBeenCalled(); // fades out element
             expect(obj.reload).toHaveBeenCalled();
@@ -146,7 +160,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
             vm.todos[1].checked = true;
             vm.todos[2].checked = false;
             var obj = { reload: function () { return true; } };
-            
+
             spyOn(obj, 'reload');
             spyOn(angular, 'forEach');
             spyOn(todosCrudFactory, 'deleteTodo').and.returnValue($q.reject());         // $q.reject() Returns a promise that was already resolved as rejected with the reason
@@ -154,7 +168,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
             todosCheckedFactory.deleteCheckedTodos(vm, obj.reload);
 
             expect(todosCrudFactory.deleteTodo).toHaveBeenCalled();                     // "id 2 is sent for deletion with call to crudFactory but there is an ajax error"
-                                                                                        // problem testing toHaveBeenCalledWith , with call in a loop
+            // problem testing toHaveBeenCalledWith , with call in a loop
             $scope.$digest();
             expect(angular.forEach).not.toHaveBeenCalled();
             expect(obj.reload).not.toHaveBeenCalled();
