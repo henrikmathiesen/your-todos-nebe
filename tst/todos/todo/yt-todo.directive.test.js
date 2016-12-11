@@ -21,7 +21,8 @@ describe("yt-todo.directive renders a todo with a clickable checkbox next to it"
         $scope.todo = {
             id: 2,
             text: "Assemble a tshirt gun",
-            checked: false
+            checked: false,
+            isInEditMode: false
         };
 
         $scope.isAllTodosChecked = function () { return true; };
@@ -61,6 +62,20 @@ describe("yt-todo.directive renders a todo with a clickable checkbox next to it"
         expect($checkedIcon.hasClass('ng-hide')).toBe(false, "checked icon should be visible");
     });
 
+    it("Should render and toggle the text of the todo and a form element for editing the todo, design depends on isInEditMode status", function () {
+        var $col02View = jQelement.find('.yt-todo-row__col02').eq(0);
+        var $col02Edit = jQelement.find('.yt-todo-row__col02').eq(1);
+
+        expect($col02View.hasClass('ng-hide')).toBe(false, "Todos text is visible");
+        expect($col02Edit.hasClass('ng-hide')).toBe(true, "Todos edit is hidden");
+
+        jQelement.isolateScope().subVm.todo.isInEditMode = true;
+        $scope.$apply();
+
+        expect($col02View.hasClass('ng-hide')).toBe(true, "Todos text is hidden");
+        expect($col02Edit.hasClass('ng-hide')).toBe(false, "Todos edit is visible");
+    });
+
     it("Should set todo checked status and call passed in parameter function when user clicks on checkbox next to todo", function () {
         expect(jQelement.isolateScope().subVm.todo.checked).toBe(false);
 
@@ -68,6 +83,16 @@ describe("yt-todo.directive renders a todo with a clickable checkbox next to it"
         $scope.$apply();
 
         expect(jQelement.isolateScope().subVm.todo.checked).toBe(true);
+        expect($scope.isAllTodosChecked).toHaveBeenCalled();
+    });
+
+    it("Should set todo in edit mode and call passed in parameter function when user clicks on checkbox next to todo", function () {
+        expect(jQelement.isolateScope().subVm.todo.isInEditMode).toBe(false);
+
+        jQelement.isolateScope().subVm.checkTodo(true);
+        $scope.$apply();
+
+        expect(jQelement.isolateScope().subVm.todo.isInEditMode).toBe(true);
         expect($scope.isAllTodosChecked).toHaveBeenCalled();
     });
 
