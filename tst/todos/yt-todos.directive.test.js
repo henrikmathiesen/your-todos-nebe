@@ -73,7 +73,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect(jQelement.isolateScope().vm.todos[1].checked).toBe(false);
         });
 
-        it("Should set all todos isInEditMode property to false", function () { 
+        it("Should set all todos isInEditMode property to false", function () {
             expect(jQelement.isolateScope().vm.todos[0].isInEditMode).toBe(false);
             expect(jQelement.isolateScope().vm.todos[1].isInEditMode).toBe(false);
         });
@@ -102,6 +102,12 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
 
             spyOn(todosEffectFactory, 'checkAllTodos');
             spyOn(todosEffectFactory, 'deleteCheckedTodos');
+
+            spyOn(todosCrudFactory, 'addTodo').and.callFake(function () {
+                var deferred = $q.defer();
+                deferred.resolve({ id: 3, text: "" });
+                return deferred.promise;
+            });
         });
 
         it("Should have a method for checking if all todos is checked", function () {
@@ -123,6 +129,15 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             vm.deleteCheckedTodos();
 
             expect(todosEffectFactory.deleteCheckedTodos).toHaveBeenCalled(); // with vm, getTodos (having problem mocking private var)
+            expect(todosCrudFactory.getTodos).toHaveBeenCalled();
+        });
+
+        it("Should have a method for adding a empty new todo, forwarding the call and then reload todos", function () {
+            var todo = { id: null, text: "" };
+            vm.addTodo();
+
+            expect(todosCrudFactory.addTodo).toHaveBeenCalledWith(todo);
+            expect(todosCrudFactory.getTodos).toHaveBeenCalled();
         });
     });
 
@@ -141,7 +156,8 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             $checkAllTodosIcon = jQelement.find('.fa-square-o[ng-click="vm.checkAllTodos(true)"]');
             $unCheckAllTodosIcon = jQelement.find('.fa-check-square-o[ng-click="vm.checkAllTodos(false)"]');
 
-            // 1) $addTodoIcon = jQelement.find('.fa-plus'); to do when implementing it
+            $addTodoIcon = jQelement.find('.fa-plus[ng-click="vm.addTodo()"]');
+
             // 1b) $saveIcon = ......... to do when implementing it
 
             $deleteTodoIcon = jQelement.find('a.fa-trash-o[ng-click="vm.deleteCheckedTodos()"]');
@@ -152,12 +168,6 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect($checkAllTodosIcon.hasClass('ng-hide')).toBe(false, "it should be visible");
             expect($unCheckAllTodosIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
         });
-
-        // it("should have an icon for adding a todo", function () {
-        //     // 2
-        // });
-
-        // 2b
 
         it("Should have a delete icon that start disabled since no todos are checked", function () {
             expect($deleteTodoIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
@@ -174,6 +184,10 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
 
             expect($deleteTodoIcon.hasClass('ng-hide')).toBe(false, "it should be visible");
             expect($deleteTodoIconDisabled.hasClass('ng-hide')).toBe(true, "it should be hidden");
+        });
+
+        it("Should obey view model - there should be an addTodo icon", function () {
+            expect($addTodoIcon.length).toBe(1);
         });
     });
 
