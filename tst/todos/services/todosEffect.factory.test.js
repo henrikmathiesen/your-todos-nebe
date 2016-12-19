@@ -177,8 +177,8 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
     });
 
     describe("Other effects", function () {
-        it("", function () { 
-
+        it("Should have a function for setting focus on a todo", function () { 
+            expect(todosEffectFactory.setFocus).toBeDefined();
         });
     });
 
