@@ -33,7 +33,7 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         expect(todosApiFactory.deleteTodo).toHaveBeenCalledWith(1);
     });
 
-    it("Should have an addTodo method that forward the call to todosApiFactory", function () { 
+    it("Should have an addTodo method that forward the call to todosApiFactory", function () {
         spyOn(todosApiFactory, 'addTodo').and.returnValue($q.defer().promise);
         todosCrudFactory.addTodo({ id: null, text: "" });
 
@@ -56,6 +56,17 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         spyOn(todosApiFactory, 'deleteTodo').and.returnValue($q.reject());
 
         todosCrudFactory.deleteTodo(9).catch(function () {
+            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
+        });
+
+        $scope.$digest();
+    });
+
+    it("Should set the app in an error state if ajax error for addTodo", function () {
+        spyOn(errorHandlerFactory, 'setAppHasError');
+        spyOn(todosApiFactory, 'addTodo').and.returnValue($q.reject());
+
+        todosCrudFactory.addTodo({ id: null, text: "" }).catch(function () {
             expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
         });
 
