@@ -46,6 +46,13 @@ angular
             });
         };
 
+        factory.setCheckedAndEditMode = function (vm) { 
+            vm.todos.map(function (todo) { 
+                todo.checked = todo.text ? false : true;
+                todo.isInEditMode = todo.text ? false : true;
+            });
+        };
+
         return factory;
 
     });

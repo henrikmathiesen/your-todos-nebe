@@ -22,6 +22,10 @@ angular
             return $http.delete('/api/todo/' + id);
         };
 
+        factory.addTodo = function (todo) { 
+            return $http.post('/api/todo', todo);
+        };
+
         return factory;
 
     });

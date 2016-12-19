@@ -5,7 +5,7 @@
             <span class="fa fa-2x fa-check-square-o" ng-show="vm.allTodosChecked" ng-click="vm.checkAllTodos(false)"></span>
         </div>
         <div class="yt-todos__col02">
-            <a href="#" class="fa fa-2x fa-plus"></a>
+            <a href="#" class="fa fa-2x fa-plus" ng-click="vm.addTodo()"></a>
             <a href="#" class="fa fa-2x fa-trash-o" ng-show="!vm.noTodosChecked" ng-click="vm.deleteCheckedTodos()"></a>
             <span class="fa fa-2x fa-trash-o" ng-show="vm.noTodosChecked"></span>
             <a href="#" class="fa fa-2x fa-floppy-o" ng-show="!vm.noTodosChecked"></a>

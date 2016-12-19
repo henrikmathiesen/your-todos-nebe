@@ -2,7 +2,7 @@
 
 angular
     .module('todos')
-    .directive('ytTodos', function() {
+    .directive('ytTodos', function () {
         return {
             restrict: 'E',
             scope: {},
@@ -12,31 +12,38 @@ angular
             bindToController: true
         }
     })
-    .controller('ytTodosController', function(todosCrudFactory, todosCheckedFactory) {
+    .controller('ytTodosController', function (todosCrudFactory, todosCheckedFactory) {
         var vm = this;
         vm.todos = [];
         vm.allTodosChecked = false;
         vm.noTodosChecked = true;
 
-        var getTodos = function() {
+        var getTodos = function () {
             todosCrudFactory.getTodos()
-                .then(function(todos) {
+                .then(function (todos) {
                     vm.todos = todos;
-                    vm.todos.map(function(todo) { todo.checked = false; todo.isInEditMode = false; });
+                    todosCheckedFactory.setCheckedAndEditMode(vm);
                     vm.isAllTodosChecked();
                 })
         };
 
-        vm.isAllTodosChecked = function() {
+        vm.isAllTodosChecked = function () {
             todosCheckedFactory.isAllTodosChecked(vm);
         };
 
-        vm.checkAllTodos = function(isChecked) {
+        vm.checkAllTodos = function (isChecked) {
             todosCheckedFactory.checkAllTodos(vm, isChecked);
         };
 
-        vm.deleteCheckedTodos = function() {
+        vm.deleteCheckedTodos = function () {
             todosCheckedFactory.deleteCheckedTodos(vm, getTodos);
+        };
+
+        vm.addTodo = function () { 
+            var todo = { id: null, text: "" };
+            
+            todosCrudFactory.addTodo(todo)
+                .then(getTodos);
         };
 
         getTodos();

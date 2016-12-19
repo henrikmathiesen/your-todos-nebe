@@ -27,6 +27,12 @@ angular
                 .catch(onError);
         };
 
+        factory.addTodo = function (todo) { 
+            return todosApiFactory.addTodo(todo)
+                .then(onSuccess)
+                .catch(onError);
+        };
+
         return factory;
 
     });
