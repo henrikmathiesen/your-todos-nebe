@@ -2,7 +2,7 @@
 
 angular
     .module('todos')
-    .factory('todosCheckedFactory', function (todosCrudFactory, $q) {
+    .factory('todosCheckedFactory', function (todosCrudFactory, $q, $timeout) {
 
         var factory = {};
 
@@ -46,11 +46,18 @@ angular
             });
         };
 
-        factory.setCheckedAndEditMode = function (vm) { 
-            vm.todos.map(function (todo) { 
+        factory.setCheckedAndEditMode = function (vm) {
+            vm.todos.map(function (todo) {
                 todo.checked = todo.text ? false : true;
                 todo.isInEditMode = todo.text ? false : true;
             });
+        };
+
+        factory.setFocus = function (id) { 
+            $timeout(function () {
+                var $todoInput = angular.element('div[data-todo-id="' + id + '"]').find('input');
+                $todoInput.focus();
+            }, 0);
         };
 
         return factory;

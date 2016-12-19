@@ -15,21 +15,14 @@ angular
             }
         }
     })
-    .controller('ytTodoController', function ($timeout) {
+    .controller('ytTodoController', function (todosCheckedFactory) {
         var subVm = this;
-
-        var setFocus = function () {
-            $timeout(function () {
-                var $todoInput = angular.element('div[data-todo-id="' + subVm.todo.id + '"]').find('input');
-                $todoInput.focus();
-            }, 0);
-        };
 
         subVm.checkTodo = function (isChecked) {
             subVm.todo.checked = isChecked;
             subVm.todo.isInEditMode = isChecked;
             subVm.isAllTodosChecked();
-            setFocus();
+            todosCheckedFactory.setFocus(subVm.todo.id);
         }
 
     });
