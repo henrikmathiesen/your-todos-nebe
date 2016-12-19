@@ -2,7 +2,7 @@
 
 angular
     .module('todos')
-    .factory('todosCheckedFactory', function (todosCrudFactory, $q, $timeout) {
+    .factory('todosEffectFactory', function (todosCrudFactory, $q, $timeout) {
 
         var factory = {};
 

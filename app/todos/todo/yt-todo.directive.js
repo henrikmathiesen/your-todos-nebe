@@ -15,14 +15,14 @@ angular
             }
         }
     })
-    .controller('ytTodoController', function (todosCheckedFactory) {
+    .controller('ytTodoController', function (todosEffectFactory) {
         var subVm = this;
 
         subVm.checkTodo = function (isChecked) {
             subVm.todo.checked = isChecked;
             subVm.todo.isInEditMode = isChecked;
             subVm.isAllTodosChecked();
-            todosCheckedFactory.setFocus(subVm.todo.id);
+            todosEffectFactory.setFocus(subVm.todo.id);
         }
 
     });

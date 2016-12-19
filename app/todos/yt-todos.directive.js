@@ -12,7 +12,7 @@ angular
             bindToController: true
         }
     })
-    .controller('ytTodosController', function (todosCrudFactory, todosCheckedFactory) {
+    .controller('ytTodosController', function (todosCrudFactory, todosEffectFactory) {
         var vm = this;
         vm.todos = [];
         vm.allTodosChecked = false;
@@ -22,25 +22,25 @@ angular
             todosCrudFactory.getTodos()
                 .then(function (todos) {
                     vm.todos = todos;
-                    todosCheckedFactory.setCheckedAndEditMode(vm);
+                    todosEffectFactory.setCheckedAndEditMode(vm);
                     vm.isAllTodosChecked();
 
                     if (shouldSetFocusOnAddedId) {
-                        todosCheckedFactory.setFocus(shouldSetFocusOnAddedId);
+                        todosEffectFactory.setFocus(shouldSetFocusOnAddedId);
                     }
                 })
         };
 
         vm.isAllTodosChecked = function () {
-            todosCheckedFactory.isAllTodosChecked(vm);
+            todosEffectFactory.isAllTodosChecked(vm);
         };
 
         vm.checkAllTodos = function (isChecked) {
-            todosCheckedFactory.checkAllTodos(vm, isChecked);
+            todosEffectFactory.checkAllTodos(vm, isChecked);
         };
 
         vm.deleteCheckedTodos = function () {
-            todosCheckedFactory.deleteCheckedTodos(vm, getTodos);
+            todosEffectFactory.deleteCheckedTodos(vm, getTodos);
         };
 
         vm.addTodo = function () {

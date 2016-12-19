@@ -4,7 +4,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
 
     var $q;
     var $scope;
-    var todosCheckedFactory;
+    var todosEffectFactory;
     var todosCrudFactory;
     var todos;
     var vm;
@@ -12,10 +12,10 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
     beforeEach(module('shared'));
     beforeEach(module('todos'));
 
-    beforeEach(inject(function (_$q_, _$rootScope_, _todosCheckedFactory_, _todosCrudFactory_) {
+    beforeEach(inject(function (_$q_, _$rootScope_, _todosEffectFactory_, _todosCrudFactory_) {
         $q = _$q_;
         $scope = _$rootScope_;
-        todosCheckedFactory = _todosCheckedFactory_;
+        todosEffectFactory = _todosEffectFactory_;
         todosCrudFactory = _todosCrudFactory_;
 
         todos = [
@@ -43,7 +43,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
     describe("There should be a function for checking if all or none todos are checked.", function () {
 
         it("should set allTodosChecked to false and noTodosChecked to true if todos collection is empty", function () {
-            todosCheckedFactory.isAllTodosChecked(vm);
+            todosEffectFactory.isAllTodosChecked(vm);
 
             expect(vm.allTodosChecked).toBe(false);
             expect(vm.noTodosChecked).toBe(true);
@@ -53,7 +53,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
             vm.todos = todos;
             vm.todos.map(function (todo) { todo.checked = false; });
 
-            todosCheckedFactory.isAllTodosChecked(vm);
+            todosEffectFactory.isAllTodosChecked(vm);
 
             expect(vm.allTodosChecked).toBe(false);
             expect(vm.noTodosChecked).toBe(true);
@@ -63,7 +63,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
             vm.todos = todos;
             vm.todos.map(function (todo) { todo.checked = true; });
 
-            todosCheckedFactory.isAllTodosChecked(vm);
+            todosEffectFactory.isAllTodosChecked(vm);
 
             expect(vm.allTodosChecked).toBe(true);
             expect(vm.noTodosChecked).toBe(false);
@@ -75,7 +75,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
             vm.todos[1].checked = true;
             vm.todos[2].checked = false;
 
-            todosCheckedFactory.isAllTodosChecked(vm);
+            todosEffectFactory.isAllTodosChecked(vm);
 
             expect(vm.allTodosChecked).toBe(false);
             expect(vm.noTodosChecked).toBe(false);
@@ -88,7 +88,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
         it("should be able to set all todos checked to true", function () {
             vm.todos = todos;
 
-            todosCheckedFactory.checkAllTodos(vm, true);
+            todosEffectFactory.checkAllTodos(vm, true);
 
             expect(vm.allTodosChecked).toBe(true);
             expect(vm.noTodosChecked).toBe(false);
@@ -97,7 +97,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
         it("should be able to set set all todos checked to false", function () {
             vm.todos = todos;
 
-            todosCheckedFactory.checkAllTodos(vm, false);
+            todosEffectFactory.checkAllTodos(vm, false);
 
             expect(vm.allTodosChecked).toBe(false);
             expect(vm.noTodosChecked).toBe(true);
@@ -106,7 +106,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
         it("Should also set isInEditMode true for all", function () { 
             vm.todos = todos;
 
-            todosCheckedFactory.checkAllTodos(vm, true);
+            todosEffectFactory.checkAllTodos(vm, true);
 
             expect(vm.todos[0].isInEditMode).toBe(true);
             expect(vm.todos[1].isInEditMode).toBe(true);
@@ -116,7 +116,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
         it("Should also set isInEditMode false for all", function () { 
             vm.todos = todos;
 
-            todosCheckedFactory.checkAllTodos(vm, false);
+            todosEffectFactory.checkAllTodos(vm, false);
 
             expect(vm.todos[0].isInEditMode).toBe(false);
             expect(vm.todos[1].isInEditMode).toBe(false);
@@ -145,7 +145,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
                 return deferred.promise;
             });
 
-            todosCheckedFactory.deleteCheckedTodos(vm, obj.reload);
+            todosEffectFactory.deleteCheckedTodos(vm, obj.reload);
 
             expect(todosCrudFactory.deleteTodo).toHaveBeenCalledTimes(2, "id 2 and id 3 is sent for deletion with 2 calls to crudFactory");
 
@@ -165,7 +165,7 @@ describe("TodosChecked.factory keeps track of checked todos and can delete them 
             spyOn(angular, 'forEach');
             spyOn(todosCrudFactory, 'deleteTodo').and.returnValue($q.reject());         // $q.reject() Returns a promise that was already resolved as rejected with the reason
 
-            todosCheckedFactory.deleteCheckedTodos(vm, obj.reload);
+            todosEffectFactory.deleteCheckedTodos(vm, obj.reload);
 
             expect(todosCrudFactory.deleteTodo).toHaveBeenCalled();                     // "id 2 is sent for deletion with call to crudFactory but there is an ajax error"
             // problem testing toHaveBeenCalledWith , with call in a loop

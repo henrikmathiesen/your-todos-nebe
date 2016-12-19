@@ -12,20 +12,20 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
     var html;
     var vm;
     var todosCrudFactory;
-    var todosCheckedFactory;
+    var todosEffectFactory;
 
 
     beforeEach(module('templatecache'));
     beforeEach(module('shared'));
     beforeEach(module('todos'));
 
-    beforeEach(inject(function (_$rootScope_, _$compile_, _$q_, _$controller_, _todosCrudFactory_, _todosCheckedFactory_) {
+    beforeEach(inject(function (_$rootScope_, _$compile_, _$q_, _$controller_, _todosCrudFactory_, _todosEffectFactory_) {
         $scope = _$rootScope_.$new();
         $compile = _$compile_;
         $q = _$q_;
         $controller = _$controller_;
         todosCrudFactory = _todosCrudFactory_;
-        todosCheckedFactory = _todosCheckedFactory_;
+        todosEffectFactory = _todosEffectFactory_;
 
         spyOn(todosCrudFactory, 'getTodos').and.callFake(function () {
             var todos = [
@@ -44,7 +44,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             return deferred.promise;
         });
 
-        spyOn(todosCheckedFactory, 'isAllTodosChecked');
+        spyOn(todosEffectFactory, 'isAllTodosChecked');
 
         directiveMarkup = '<yt-todos></yt-todos>';
         directiveElement = $compile(directiveMarkup)($scope);
@@ -61,7 +61,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         });
 
         it("Should check if all or none todo is checked", function () {
-            expect(todosCheckedFactory.isAllTodosChecked).toHaveBeenCalledWith(jQelement.isolateScope().vm);
+            expect(todosEffectFactory.isAllTodosChecked).toHaveBeenCalledWith(jQelement.isolateScope().vm);
         });
 
         it("Should have populated todos on view model", function () {
@@ -94,35 +94,35 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
 
     });
 
-    describe("Directives view model has methods for handling checked todos, forwards call to todosCheckedFactory", function () {
+    describe("Directives view model has methods for handling checked todos, forwards call to todosEffectFactory", function () {
 
         beforeEach(function () {
             vm = $controller('ytTodosController');
             $scope.$apply();
 
-            spyOn(todosCheckedFactory, 'checkAllTodos');
-            spyOn(todosCheckedFactory, 'deleteCheckedTodos');
+            spyOn(todosEffectFactory, 'checkAllTodos');
+            spyOn(todosEffectFactory, 'deleteCheckedTodos');
         });
 
         it("Should have a method for checking if all todos is checked", function () {
             vm.isAllTodosChecked();
 
-            expect(todosCheckedFactory.isAllTodosChecked).toHaveBeenCalledWith(vm);
+            expect(todosEffectFactory.isAllTodosChecked).toHaveBeenCalledWith(vm);
         });
 
         it("Should have a method for checking all todos", function () {
             vm.checkAllTodos(true);
 
-            expect(todosCheckedFactory.checkAllTodos).toHaveBeenCalledWith(vm, true);
+            expect(todosEffectFactory.checkAllTodos).toHaveBeenCalledWith(vm, true);
         });
 
         it("Should have a method for deleting all checked todos, forwarding the call and then reload todos", function () {
-            // We have already tested that todosCheckedFactory.deleteCheckedTodos runs the sent callback, so dont need to test it here
+            // We have already tested that todosEffectFactory.deleteCheckedTodos runs the sent callback, so dont need to test it here
 
             var getTodos = function () { return true; };
             vm.deleteCheckedTodos();
 
-            expect(todosCheckedFactory.deleteCheckedTodos).toHaveBeenCalled(); // with vm, getTodos (having problem mocking private var)
+            expect(todosEffectFactory.deleteCheckedTodos).toHaveBeenCalled(); // with vm, getTodos (having problem mocking private var)
         });
     });
 
