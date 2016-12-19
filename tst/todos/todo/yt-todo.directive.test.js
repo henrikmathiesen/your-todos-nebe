@@ -4,6 +4,7 @@ describe("yt-todo.directive renders a todo with a clickable checkbox next to it"
 
     var $scope;
     var $compile;
+    var todosEffectFactory;
 
     var directiveMarkup;
     var directiveElement;
@@ -14,9 +15,10 @@ describe("yt-todo.directive renders a todo with a clickable checkbox next to it"
     beforeEach(module('shared'));
     beforeEach(module('todos'));
 
-    beforeEach(inject(function (_$rootScope_, _$compile_) {
+    beforeEach(inject(function (_$rootScope_, _$compile_, _todosEffectFactory_) {
         $scope = _$rootScope_.$new();
         $compile = _$compile_;
+        todosEffectFactory = _todosEffectFactory_;
 
         $scope.todo = {
             id: 2,
@@ -28,6 +30,7 @@ describe("yt-todo.directive renders a todo with a clickable checkbox next to it"
         $scope.isAllTodosChecked = function () { return true; };
 
         spyOn($scope, 'isAllTodosChecked');
+        spyOn(todosEffectFactory, 'setFocus');
 
         directiveMarkup = '<yt-todo todo="todo" ng-show="true" is-all-todos-checked="isAllTodosChecked()"></yt-todo>';
         directiveElement = $compile(directiveMarkup)($scope);
@@ -94,6 +97,13 @@ describe("yt-todo.directive renders a todo with a clickable checkbox next to it"
 
         expect(jQelement.isolateScope().subVm.todo.isInEditMode).toBe(true);
         expect($scope.isAllTodosChecked).toHaveBeenCalled();
+    });
+
+    it("Should set focus to checked todo (when unchecking the todo we do not need to blur since view toggle away the input element and show the text instead)", function () { 
+        jQelement.isolateScope().subVm.checkTodo(true);
+        $scope.$apply();
+
+        expect(todosEffectFactory.setFocus).toHaveBeenCalledWith($scope.todo.id);
     });
 
 });

@@ -42,14 +42,14 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
     describe("There should be a function for checking if all or none todos are checked.", function () {
 
-        it("should set allTodosChecked to false and noTodosChecked to true if todos collection is empty", function () {
+        it("Should set allTodosChecked to false and noTodosChecked to true if todos collection is empty", function () {
             todosEffectFactory.isAllTodosChecked(vm);
 
             expect(vm.allTodosChecked).toBe(false);
             expect(vm.noTodosChecked).toBe(true);
         });
 
-        it("should set allTodosChecked to false and noTodosChecked to true if no todos are checked", function () {
+        it("Should set allTodosChecked to false and noTodosChecked to true if no todos are checked", function () {
             vm.todos = todos;
             vm.todos.map(function (todo) { todo.checked = false; });
 
@@ -59,7 +59,7 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             expect(vm.noTodosChecked).toBe(true);
         });
 
-        it("should set allTodosChecked to true and noTodosChecked to false if all todos are checked", function () {
+        it("Should set allTodosChecked to true and noTodosChecked to false if all todos are checked", function () {
             vm.todos = todos;
             vm.todos.map(function (todo) { todo.checked = true; });
 
@@ -69,7 +69,7 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             expect(vm.noTodosChecked).toBe(false);
         });
 
-        it("should set allTodosChecked to false and noTodosChecked to false if some todos are checked", function () {
+        it("Should set allTodosChecked to false and noTodosChecked to false if some todos are checked", function () {
             vm.todos = todos;
             vm.todos[0].checked = false;
             vm.todos[1].checked = true;
@@ -85,7 +85,7 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
     describe("There should be a function for checking and unchecking all todos, also sets them in edit mode, that function then checks if all todos are checked.", function () {
 
-        it("should be able to set all todos checked to true", function () {
+        it("Should be able to set all todos checked to true", function () {
             vm.todos = todos;
 
             todosEffectFactory.checkAllTodos(vm, true);
@@ -94,7 +94,7 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             expect(vm.noTodosChecked).toBe(false);
         });
 
-        it("should be able to set set all todos checked to false", function () {
+        it("Should be able to set set all todos checked to false", function () {
             vm.todos = todos;
 
             todosEffectFactory.checkAllTodos(vm, false);
@@ -103,7 +103,7 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             expect(vm.noTodosChecked).toBe(true);
         });
 
-        it("Should also set isInEditMode true for all", function () { 
+        it("Should also set isInEditMode true for all", function () {
             vm.todos = todos;
 
             todosEffectFactory.checkAllTodos(vm, true);
@@ -113,7 +113,7 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             expect(vm.todos[2].isInEditMode).toBe(true);
         });
 
-        it("Should also set isInEditMode false for all", function () { 
+        it("Should also set isInEditMode false for all", function () {
             vm.todos = todos;
 
             todosEffectFactory.checkAllTodos(vm, false);
@@ -127,7 +127,7 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
     describe("There should be a function for deleting checked todos, by calling todosCrudFactory, then fades them out and call getTodos callback.", function () {
 
-        it("should delete checked todos, fade out them and then call reload callback", function () {
+        it("Should delete checked todos, fade out them and then call reload callback", function () {
             vm.todos = todos;
             vm.todos[0].checked = false;
             vm.todos[1].checked = true;
@@ -154,7 +154,7 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             expect(obj.reload).toHaveBeenCalled();
         });
 
-        it("should not enter q.all():s then() callback that fades out todos and reloads todos, if deletion gives ajax error", function () {
+        it("Should not enter q.all():s then() callback that fades out todos and reloads todos, if deletion gives ajax error", function () {
             vm.todos = todos;
             vm.todos[0].checked = false;
             vm.todos[1].checked = true;
@@ -174,6 +174,12 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             expect(obj.reload).not.toHaveBeenCalled();
         });
 
+    });
+
+    describe("Other effects", function () {
+        it("", function () { 
+
+        });
     });
 
 });
