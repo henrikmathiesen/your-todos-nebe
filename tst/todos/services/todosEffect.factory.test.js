@@ -1,6 +1,6 @@
 /// <reference path="../../typings/index.d.ts" />
 
-describe("TodosChecked.factory keeps track of checked todos and can delete them by forward calls to todosCrud.factory.", function () {
+describe("TodosEffect.factory keeps track of checked todos and can delete them by forward calls to todosCrud.factory.", function () {
 
     var $q;
     var $scope;
