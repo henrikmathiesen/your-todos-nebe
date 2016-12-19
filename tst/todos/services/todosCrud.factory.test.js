@@ -33,8 +33,11 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         expect(todosApiFactory.deleteTodo).toHaveBeenCalledWith(1);
     });
 
-    it("", function () { 
+    it("Should have an addTodo method that forward the call to todosApiFactory", function () { 
+        spyOn(todosApiFactory, 'addTodo').and.returnValue($q.defer().promise);
+        todosCrudFactory.addTodo({ id: null, text: "" });
 
+        expect(todosApiFactory.addTodo).toHaveBeenCalled();
     });
 
     it("Should set the app in an error state if ajax error for get", function () {
