@@ -12,5 +12,5 @@
             <span class="fa fa-2x fa-floppy-o" ng-show="vm.noTodosChecked"></span>
         </div>
     </div>
-    <yt-todo ng-repeat="todo in vm.todos" todo="todo" ng-show="vm.todos.length" is-all-todos-checked="vm.isAllTodosChecked()"></yt-todo>
+    <yt-todo ng-repeat="todo in vm.todos | orderBy: '-id'" todo="todo" ng-show="vm.todos.length" is-all-todos-checked="vm.isAllTodosChecked()"></yt-todo>
 </div>

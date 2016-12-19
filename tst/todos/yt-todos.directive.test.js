@@ -164,6 +164,17 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             $deleteTodoIconDisabled = jQelement.find('span.fa-trash-o');
         });
 
+        it("Should render the todos and order them by highest id first", function () { 
+            var $todoRow01 = jQelement.find('.yt-todo-row').eq(0);
+            var $todoRow02 = jQelement.find('.yt-todo-row').eq(1);
+
+            expect($todoRow01.attr('data-todo-id')).toContain("2");
+            expect($todoRow02.attr('data-todo-id')).toContain("1");
+
+            expect($todoRow01.text()).toContain("Assemble a tshirt gun");
+            expect($todoRow02.text()).toContain("Keep up with front end stuff");
+        });
+
         it("Should start with an empty square icon, since no todos are checked", function () {
             expect($checkAllTodosIcon.hasClass('ng-hide')).toBe(false, "it should be visible");
             expect($unCheckAllTodosIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
