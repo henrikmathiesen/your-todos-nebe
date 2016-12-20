@@ -46,10 +46,12 @@ angular
             });
         };
 
-        factory.setCheckedAndEditMode = function (vm) {
+        factory.setCheckedAndEditMode = function (vm, id) {
             vm.todos.map(function (todo) {
-                todo.checked = todo.text ? false : true;
-                todo.isInEditMode = todo.text ? false : true;
+                if(todo.id == id) {
+                    todo.checked = true;
+                    todo.isInEditMode = true;    
+                }
             });
         };
 

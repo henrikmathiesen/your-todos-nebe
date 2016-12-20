@@ -18,17 +18,12 @@ angular
         vm.allTodosChecked = false;
         vm.noTodosChecked = true;
 
-        var getTodos = function (shouldSetFocusOnAddedId) {
+        var getTodos = function () {
             todosCrudFactory.getTodos()
                 .then(function (todos) {
                     vm.todos = todos;
-                    todosEffectFactory.setCheckedAndEditMode(vm);
-                    vm.isAllTodosChecked();
-
-                    if (shouldSetFocusOnAddedId) {
-                        todosEffectFactory.setFocus(shouldSetFocusOnAddedId);
-                    }
-                })
+                    todosEffectFactory.isAllTodosChecked(vm);
+                });
         };
 
         vm.isAllTodosChecked = function () {
@@ -48,7 +43,10 @@ angular
 
             todosCrudFactory.addTodo(todo)
                 .then(function (addedTodo) {
-                    getTodos(addedTodo.id);
+                    vm.todos.push(addedTodo);
+                    todosEffectFactory.setCheckedAndEditMode(vm, addedTodo.id);
+                    todosEffectFactory.isAllTodosChecked(vm);
+                    todosEffectFactory.setFocus(addedTodo.id);
                 });
         };
 
