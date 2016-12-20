@@ -22,7 +22,7 @@ angular
                 return [201, todo, headers];
             });
 
-        $httpBackend.whenPUT('/\/api\/todo\/\d+/')
+        $httpBackend.whenPUT(/\/api\/todo\/\d+/)
             .respond(function (method, url, data) {
                 var params = angular.fromJson(data);
                 var todo = backendFactory.updateTodo(params);

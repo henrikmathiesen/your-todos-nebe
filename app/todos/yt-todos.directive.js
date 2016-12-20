@@ -19,6 +19,8 @@ angular
         vm.noTodosChecked = true;
 
         var getTodos = function () {
+            console.log("RELOADING");
+
             todosCrudFactory.getTodos()
                 .then(function (todos) {
                     vm.todos = todos;
@@ -34,10 +36,6 @@ angular
             todosEffectFactory.checkAllTodos(vm, isChecked);
         };
 
-        vm.deleteCheckedTodos = function () {
-            todosEffectFactory.deleteCheckedTodos(vm, getTodos);
-        };
-
         vm.addTodo = function () {
             var todo = { id: null, text: "" };
 
@@ -49,6 +47,17 @@ angular
                     todosEffectFactory.setFocus(addedTodo.id);
                 });
         };
+
+        vm.updateCheckedTodos = function () { 
+            todosEffectFactory.updateCheckedTodos(vm);
+        };
+
+        vm.deleteCheckedTodos = function () {
+            todosEffectFactory.deleteCheckedTodos(vm, getTodos);
+        };
+
+        vm.reload = getTodos;
+
 
         getTodos();
 

@@ -125,6 +125,34 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
     });
 
+    describe("There should be a function for updating checked todos, by calling todosCrudFactory, then fades them in", function () {
+        it("Should update checked todos, unset checked and edit mode and then fade them in", function () { 
+            vm.todos = todos;
+            vm.todos[0].checked = false;
+            vm.todos[1].checked = true;
+            vm.todos[2].checked = true;
+
+            spyOn(todosEffectFactory, 'unSetCheckedAndEditMode');
+            spyOn(angular, 'forEach');
+
+            spyOn(todosCrudFactory, 'updateTodo').and.callFake(function () {
+                // return $q.defer().promise; - since $q.all(promises).then() runs when all promises are resolved, we can not return $q.defer().promise
+                // We need to return a resolved promise and then $scope.$digest() to test the next action
+
+                var deferred = $q.defer();
+                deferred.resolve("200");
+                return deferred.promise;
+            });
+
+            todosEffectFactory.updateCheckedTodos(vm);
+
+            expect(todosCrudFactory.updateTodo).toHaveBeenCalledTimes(2, "id 2 and id 3 is sent for update with 2 calls to crudFactory");
+
+            $scope.$digest();
+            expect(angular.forEach).toHaveBeenCalled(); // fades out element
+        });
+    });
+
     describe("There should be a function for deleting checked todos, by calling todosCrudFactory, then fades them out and call getTodos callback.", function () {
 
         it("Should delete checked todos, fade out them and then call reload callback", function () {
@@ -137,9 +165,6 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             spyOn(obj, 'reload');
             spyOn(angular, 'forEach');
             spyOn(todosCrudFactory, 'deleteTodo').and.callFake(function () {
-                // return $q.defer().promise; - since $q.all(promises).then() runs when all promises are resolved, we can not return $q.defer().promise
-                // We need to return a resolved promise and then $scope.$digest() to test the next action
-
                 var deferred = $q.defer();
                 deferred.resolve("204");
                 return deferred.promise;
@@ -176,8 +201,8 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
     });
 
-    describe("There should be a function for setting a todo as checked and in edit mode", function () {
-        it("Should find a todo by id and set the properties", function () { 
+    describe("There should be a function for setting a todo as checked and in edit mode, and a function for unset it", function () {
+        it("Should find a todo by id and set the properties", function () {
             vm.todos = todos;
             vm.todos[1].checked = false;
             vm.todos[1].isInEditMode = false;
@@ -186,6 +211,17 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
             expect(vm.todos[1].checked).toBe(true);
             expect(vm.todos[1].isInEditMode).toBe(true);
+        });
+
+        it("Should find a todo by id and unset the properties", function () {
+            vm.todos = todos;
+            vm.todos[1].checked = true;
+            vm.todos[1].isInEditMode = true;
+
+            todosEffectFactory.unSetCheckedAndEditMode(vm, 2);
+
+            expect(vm.todos[1].checked).toBe(false);
+            expect(vm.todos[1].isInEditMode).toBe(false);
         });
     });
 

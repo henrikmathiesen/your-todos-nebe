@@ -22,6 +22,28 @@ angular
             factory.isAllTodosChecked(vm);
         };
 
+        factory.updateCheckedTodos = function (vm) {
+            var updatePromises = [];
+            var $todoElements = [];
+
+            for (var i = 0; i < vm.todos.length; i++) {
+
+                var todo = vm.todos[i];
+
+                if (todo.checked) {
+                    $todoElements.push(angular.element('div[data-todo-id=' + todo.id + ']'));
+                    updatePromises.push(todosCrudFactory.updateTodo(todo));
+                    factory.unSetCheckedAndEditMode(vm, todo.id);
+                }
+            }
+
+            $q.all(updatePromises).then(function () {
+                angular.forEach($todoElements, function (el) {
+                    el.fadeTo(100, 0.1).fadeTo(200, 1.0);
+                });
+            });
+        };
+
         factory.deleteCheckedTodos = function (vm, getTodos) {
             var deletePromises = [];
             var $todoElements = [];
@@ -46,16 +68,24 @@ angular
             });
         };
 
-        factory.setCheckedAndEditMode = function (vm, id) {
+        var checkedAndEditMode = function (vm, id, shouldSet) {
             vm.todos.map(function (todo) {
-                if(todo.id == id) {
-                    todo.checked = true;
-                    todo.isInEditMode = true;    
+                if (todo.id == id) {
+                    todo.checked = shouldSet;
+                    todo.isInEditMode = shouldSet;
                 }
             });
+        }
+
+        factory.setCheckedAndEditMode = function (vm, id) {
+            checkedAndEditMode(vm, id, true);
         };
 
-        factory.setFocus = function (id) { 
+        factory.unSetCheckedAndEditMode = function (vm, id) {
+            checkedAndEditMode(vm, id, false);
+        };
+
+        factory.setFocus = function (id) {
             $timeout(function () {
                 var $todoInput = angular.element('div[data-todo-id="' + id + '"]').find('input');
                 $todoInput.focus();

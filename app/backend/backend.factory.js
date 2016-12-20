@@ -63,7 +63,7 @@ angular
         factory.updateTodo = function (todo) {
             var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(todo.id.toString());
 
-            todos.splice(pos, 0, todo);
+            todos.splice(pos, 1, todo);
 
             if (pos > -1) {
                 return todo;

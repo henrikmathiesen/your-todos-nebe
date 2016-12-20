@@ -70,7 +70,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
                 factory.updateTodo = function (todo) {
                     var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(todo.id.toString());
 
-                    todos.splice(pos, 0, todo);
+                    todos.splice(pos, 1, todo);
 
                     if (pos > -1) {
                         return todo;
@@ -152,6 +152,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
 
             expect(todos[pos].id).toBe(4, "The id of the test case - A");
             expect(todos[pos].text).toBe("Juggle and fail", "It should have the original text");
+            expect(todos.length).toBe(7, "There are 7 todos");
         });
 
         it("Should find a todo by id, update it and return it", function () {
@@ -164,6 +165,12 @@ describe("backend.factory supports backend-less module to support CRUD operation
 
             expect(todos[pos].id).toBe(4, "The id of the test case - B");
             expect(todos[pos].text).toBe("Juggle and succeed", "It should have the updated text");
+        });
+
+        it("should update the existing todo, NOT adding it", function () { 
+            var todos = backendFactory.getTodos();
+            backendFactory.updateTodo(updateTodo);
+            expect(todos.length).toBe(7, "There are 7 todos");
         });
 
         it("Should return null if no match", function () {

@@ -91,6 +91,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             $scope.$apply();
 
             spyOn(todosEffectFactory, 'checkAllTodos');
+            spyOn(todosEffectFactory, 'updateCheckedTodos');
             spyOn(todosEffectFactory, 'deleteCheckedTodos');
 
             spyOn(todosCrudFactory, 'addTodo').and.callFake(function () {
@@ -112,13 +113,19 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect(todosEffectFactory.checkAllTodos).toHaveBeenCalledWith(vm, true);
         });
 
+        it("Should have a method for updating all checked todos, forwarding the call", function () {
+            vm.updateCheckedTodos();
+
+            expect(todosEffectFactory.updateCheckedTodos).toHaveBeenCalledWith(vm);
+        });
+
         it("Should have a method for deleting all checked todos, forwarding the call and then reload todos", function () {
             // We have already tested that todosEffectFactory.deleteCheckedTodos runs the sent callback, so dont need to test it here
 
             vm.deleteCheckedTodos();
 
             expect(todosEffectFactory.deleteCheckedTodos).toHaveBeenCalled();
-            expect(todosCrudFactory.getTodos).toHaveBeenCalledTimes(2);
+            expect(todosCrudFactory.getTodos).toHaveBeenCalledTimes(2, "1 time on directive creation and 1 time after deletion");
         });
 
         it("Should have a method for adding an empty new todo, forwarding the call", function () {
@@ -146,13 +153,14 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
 
             $addTodoIcon = jQelement.find('.fa-plus[ng-click="vm.addTodo()"]');
 
-            // 1b) $saveIcon = ......... to do when implementing it
+            $saveIcon = jQelement.find('a.fa-floppy-o[ng-click="vm.updateCheckedTodos()"]');
+            $saveIconDisabled = jQelement.find('span.fa-floppy-o');
 
             $deleteTodoIcon = jQelement.find('a.fa-trash-o[ng-click="vm.deleteCheckedTodos()"]');
             $deleteTodoIconDisabled = jQelement.find('span.fa-trash-o');
         });
 
-        it("Should render the todos and order them by highest id first", function () { 
+        it("Should render the todos and order them by highest id first", function () {
             var $todoRow01 = jQelement.find('.yt-todo-row').eq(0);
             var $todoRow02 = jQelement.find('.yt-todo-row').eq(1);
 
@@ -168,25 +176,42 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect($unCheckAllTodosIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
         });
 
-        it("Should have a delete icon that start disabled since no todos are checked", function () {
+        it("Should have an always enabled add todo icon", function () {
+            expect($addTodoIcon.length).toBe(1);
+        });
+
+        it("Should have a delete icon that starts disabled since no todos are checked", function () {
             expect($deleteTodoIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
             expect($deleteTodoIconDisabled.hasClass('ng-hide')).toBe(false, "it should be visible");
         });
 
-        it("Should obey view model -- if allTodosChecked then square icon in header gets checked, if !noTodosChecked then delete icon is enabled", function () {
+        it("Should have a save icon that starts disabled since no todos are checked", function () {
+            expect($saveIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
+            expect($saveIconDisabled.hasClass('ng-hide')).toBe(false, "it should be visible");
+        });
+
+        it("Should obey view model -- if allTodosChecked then square icon in header gets checked", function () {
             jQelement.isolateScope().vm.allTodosChecked = true;
-            jQelement.isolateScope().vm.noTodosChecked = false;
             $scope.$apply();
 
             expect($checkAllTodosIcon.hasClass('ng-hide')).toBe(true, "it should be hidden");
             expect($unCheckAllTodosIcon.hasClass('ng-hide')).toBe(false, "it should be visible");
+        });
+
+        it("Should obey view model -- if at least one todo is checked then delete icon is enabled", function () {
+            jQelement.isolateScope().vm.noTodosChecked = false;
+            $scope.$apply();
 
             expect($deleteTodoIcon.hasClass('ng-hide')).toBe(false, "it should be visible");
             expect($deleteTodoIconDisabled.hasClass('ng-hide')).toBe(true, "it should be hidden");
         });
 
-        it("Should obey view model - there should be an addTodo icon", function () {
-            expect($addTodoIcon.length).toBe(1);
+        it("Should obey view model -- if at least one todo is checked then save icon is enabled", function () { 
+            jQelement.isolateScope().vm.noTodosChecked = false;
+            $scope.$apply();
+
+            expect($saveIcon.hasClass('ng-hide')).toBe(false, "it should be visible");
+            expect($saveIconDisabled.hasClass('ng-hide')).toBe(true, "it should be hidden");
         });
     });
 
