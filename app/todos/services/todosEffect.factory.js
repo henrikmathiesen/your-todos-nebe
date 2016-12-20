@@ -33,7 +33,7 @@ angular
 
                 if (todo.checked) {
                     $todoElements.push(angular.element('div[data-todo-id=' + todo.id + ']'));
-                    deletePromises.push(todosCrudFactory.deleteTodo(todo.id));
+                    deletePromises.push(todosCrudFactory.deleteTodo(8));
                 }
             }
 
