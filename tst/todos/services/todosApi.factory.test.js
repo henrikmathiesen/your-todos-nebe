@@ -47,7 +47,9 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         expect(serverResponse.data).toEqual(returnedTodo);
     });
 
-    // // update todo test
+    it("Should expose an upDateTodo method that makes an ajax call putting a todo to 'backend-less' back end", function () { 
+        
+    });
 
     it("Should expose a deleteTodo method that makes an ajax call deleting a todo to 'backend-less' back end", function () {
         $httpBackend.when('DELETE', '/api/todo/' + '1').respond(204);
