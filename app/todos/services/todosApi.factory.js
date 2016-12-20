@@ -14,8 +14,8 @@ angular
             return $http.post('/api/todo', todo);
         };
 
-        factory.upDateTodo = function (id, todo) {
-            return $http.put('/api/todo/' + id, todo);
+        factory.updateTodo = function (todo) {
+            return $http.put('/api/todo/' + todo.id, todo);
         };
 
         factory.deleteTodo = function (id) {
