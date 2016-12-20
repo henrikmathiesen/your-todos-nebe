@@ -14,6 +14,16 @@ angular
                 return [200, todos, headers];
             });
 
+        $httpBackend.whenPOST('/api/todo')
+            .respond(function (method, url, data) {
+                var params = angular.fromJson(data);
+                var todo = backendFactory.addTodo(params);
+
+                return [201, todo, headers];
+            });
+
+        //$httpBackend.whenPUT()
+
         $httpBackend.whenDELETE(/\/api\/todo\/\d+/)
             .respond(function (method, url, data) {
                 var id = url.split('/')[3];
@@ -23,13 +33,5 @@ angular
                 return [statusCode, {}, {}];
             });
 
-
-        $httpBackend.whenPOST('/api/todo')
-            .respond(function (method, url, data) {
-                var params = angular.fromJson(data);
-                var todo = backendFactory.addTodo(params);
-
-                return [201, todo, headers];
-            });
 
     });

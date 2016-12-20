@@ -21,17 +21,22 @@ angular
                 .catch(onError);
         };
 
+        factory.addTodo = function (todo) {
+            return todosApiFactory.addTodo(todo)
+                .then(onSuccess)
+                .catch(onError);
+        };
+
+        factory.upDateTodo = function (todo) {
+            
+        };
+
         factory.deleteTodo = function (id) {
             return todosApiFactory.deleteTodo(id)
                 .then(onSuccess)
                 .catch(onError);
         };
 
-        factory.addTodo = function (todo) { 
-            return todosApiFactory.addTodo(todo)
-                .then(onSuccess)
-                .catch(onError);
-        };
 
         return factory;
 

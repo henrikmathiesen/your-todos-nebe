@@ -10,11 +10,11 @@ angular
             return $http.get('/api/todos');
         };
 
-        factory.postTodo = function (todo) {
+        factory.addTodo = function (todo) { 
             return $http.post('/api/todo', todo);
         };
 
-        factory.putTodo = function (id, todo) {
+        factory.upDateTodo = function (id, todo) {
             return $http.put('/api/todo/' + id, todo);
         };
 
@@ -22,9 +22,6 @@ angular
             return $http.delete('/api/todo/' + id);
         };
 
-        factory.addTodo = function (todo) { 
-            return $http.post('/api/todo', todo);
-        };
 
         return factory;
 
