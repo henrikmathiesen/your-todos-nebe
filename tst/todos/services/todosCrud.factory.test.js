@@ -45,44 +45,29 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         spyOn(errorHandlerFactory, 'setAppHasError');
         spyOn(todosApiFactory, 'getTodos').and.returnValue($q.reject());
 
-        var catchBlockHasRun = false;
-        
-        todosCrudFactory.getTodos().catch(function () {
-            catchBlockHasRun = true;
-            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
-        });
+        todosCrudFactory.getTodos();
 
         $scope.$digest();
-        expect(catchBlockHasRun).toBe(true);
+        expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
     });
 
     it("Should set the app in an error state if ajax error for addTodo", function () {
         spyOn(errorHandlerFactory, 'setAppHasError');
         spyOn(todosApiFactory, 'addTodo').and.returnValue($q.reject());
 
-        var catchBlockHasRun = false;
-
-        todosCrudFactory.addTodo({ id: null, text: "" }).catch(function () {
-            catchBlockHasRun = true;
-            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
-        });
+        todosCrudFactory.addTodo({ id: null, text: "" });
 
         $scope.$digest();
-        expect(catchBlockHasRun).toBe(true);
+        expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
     });
 
     it("Should set the app in an error state if ajax error for deleteTodo", function () {
         spyOn(errorHandlerFactory, 'setAppHasError');
         spyOn(todosApiFactory, 'deleteTodo').and.returnValue($q.reject());
 
-        var catchBlockHasRun = false;
-
-        todosCrudFactory.deleteTodo(9).catch(function () {
-            catchBlockHasRun = true;
-            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
-        });
+        todosCrudFactory.deleteTodo(9);
 
         $scope.$digest();
-        expect(catchBlockHasRun).toBe(true);
+        expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
     });
 });
