@@ -17,20 +17,23 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
     });
 
     it("Should expose a getTodos method that makes an ajax call getting todos from 'backend-less' back end", function () {
-        $httpBackend.when('GET', '/api/todos').respond(200, [{ id: 1 }]);
+        var returnedTodos = [{ id: 1, text: "Lorem ipsum" }];
+
+        $httpBackend.when('GET', '/api/todos').respond(200, returnedTodos);
 
         todosApiFactory.getTodos().then(function (response) {
+            expect(response.status).toBe(200);
             expect(response.data.length).toBe(1);
         });
     });
 
     it("Should expose an addTodo method that makes an ajax call posting a todo to 'backend-less' back end", function () {
         var todo = { id: null, text: "" };
-        var returnedTodo = { id: 1, text: "" };
+        var returnedTodo = { id: 2, text: "" };
 
         $httpBackend.when('POST', '/api/todo').respond(201, returnedTodo);
 
-        todosApiFactory.addTodo(todo).then(function (response) { 
+        todosApiFactory.addTodo(todo).then(function (response) {
             expect(response.status).toBe(201);
             expect(response.data).toEqual(returnedTodo);
         });

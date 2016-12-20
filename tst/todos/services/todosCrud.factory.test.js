@@ -67,7 +67,7 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
 
     // update error test
 
-    it("Should set the app in an error state if ajax error for delete", function () {
+    it("Should set the app in an error state if ajax error for deleteTodo", function () {
         spyOn(errorHandlerFactory, 'setAppHasError');
         spyOn(todosApiFactory, 'deleteTodo').and.returnValue($q.reject());
 
