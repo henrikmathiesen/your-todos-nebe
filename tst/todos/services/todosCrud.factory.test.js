@@ -41,33 +41,37 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         expect(todosApiFactory.deleteTodo).toHaveBeenCalledWith(1);
     });
 
-    it("Should set the app in an error state if ajax error for get", function () {
-        spyOn(errorHandlerFactory, 'setAppHasError');
-        spyOn(todosApiFactory, 'getTodos').and.returnValue($q.reject());
+    describe("The factory should handle errors", function(){
 
-        todosCrudFactory.getTodos();
+        it("Should set the app in an error state if ajax error for get", function () {
+            spyOn(errorHandlerFactory, 'setAppHasError');
+            spyOn(todosApiFactory, 'getTodos').and.returnValue($q.reject());
 
-        $scope.$digest();
-        expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
-    });
+            todosCrudFactory.getTodos();
 
-    it("Should set the app in an error state if ajax error for addTodo", function () {
-        spyOn(errorHandlerFactory, 'setAppHasError');
-        spyOn(todosApiFactory, 'addTodo').and.returnValue($q.reject());
+            $scope.$digest();
+            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
+        });
 
-        todosCrudFactory.addTodo({ id: null, text: "" });
+        it("Should set the app in an error state if ajax error for addTodo", function () {
+            spyOn(errorHandlerFactory, 'setAppHasError');
+            spyOn(todosApiFactory, 'addTodo').and.returnValue($q.reject());
 
-        $scope.$digest();
-        expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
-    });
+            todosCrudFactory.addTodo({ id: null, text: "" });
 
-    it("Should set the app in an error state if ajax error for deleteTodo", function () {
-        spyOn(errorHandlerFactory, 'setAppHasError');
-        spyOn(todosApiFactory, 'deleteTodo').and.returnValue($q.reject());
+            $scope.$digest();
+            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
+        });
 
-        todosCrudFactory.deleteTodo(9);
+        it("Should set the app in an error state if ajax error for deleteTodo", function () {
+            spyOn(errorHandlerFactory, 'setAppHasError');
+            spyOn(todosApiFactory, 'deleteTodo').and.returnValue($q.reject());
 
-        $scope.$digest();
-        expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
+            todosCrudFactory.deleteTodo(9);
+
+            $scope.$digest();
+            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
+        });
+
     });
 });
