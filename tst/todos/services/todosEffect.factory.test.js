@@ -176,8 +176,21 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
     });
 
+    describe("There should be a function for setting a todo as checked and in edit mode", function () {
+        it("Should find a todo by id and set the properties", function () { 
+            vm.todos = todos;
+            vm.todos[1].checked = false;
+            vm.todos[1].isInEditMode = false;
+
+            todosEffectFactory.setCheckedAndEditMode(vm, 2);
+
+            expect(vm.todos[1].checked).toBe(true);
+            expect(vm.todos[1].isInEditMode).toBe(true);
+        });
+    });
+
     describe("Other effects", function () {
-        it("Should have a function for setting focus on a todo", function () { 
+        it("Should have a function for setting focus on a todo", function () {
             expect(todosEffectFactory.setFocus).toBeDefined();
         });
     });
