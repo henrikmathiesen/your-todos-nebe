@@ -134,6 +134,7 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
             spyOn(todosEffectFactory, 'unSetCheckedAndEditMode');
             spyOn(angular, 'forEach');
+            spyOn(todosEffectFactory, 'isAllTodosChecked');
 
             spyOn(todosCrudFactory, 'updateTodo').and.callFake(function () {
                 // return $q.defer().promise; - since $q.all(promises).then() runs when all promises are resolved, we can not return $q.defer().promise
@@ -147,9 +148,11 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             todosEffectFactory.updateCheckedTodos(vm);
 
             expect(todosCrudFactory.updateTodo).toHaveBeenCalledTimes(2, "id 2 and id 3 is sent for update with 2 calls to crudFactory");
+            expect(todosEffectFactory.unSetCheckedAndEditMode).toHaveBeenCalledTimes(2, "id 2 and id 3 is unchecked and unset from edit mode");
 
             $scope.$digest();
             expect(angular.forEach).toHaveBeenCalled(); // fades out element
+            expect(todosEffectFactory.isAllTodosChecked).toHaveBeenCalled();
         });
     });
 

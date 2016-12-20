@@ -40,8 +40,9 @@ angular
             $q.all(updatePromises).then(function () {
                 angular.forEach($todoElements, function (el) {
                     el.fadeTo(100, 0.1).fadeTo(200, 1.0);
-                    factory.isAllTodosChecked(vm);
                 });
+                
+                factory.isAllTodosChecked(vm);
             });
         };
 
