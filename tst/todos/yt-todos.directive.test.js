@@ -68,16 +68,6 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect(jQelement.isolateScope().vm.todos.length).toBe(2);
         });
 
-        it("Should set all todos checked property to false", function () {
-            expect(jQelement.isolateScope().vm.todos[0].checked).toBe(false);
-            expect(jQelement.isolateScope().vm.todos[1].checked).toBe(false);
-        });
-
-        it("Should set all todos isInEditMode property to false", function () {
-            expect(jQelement.isolateScope().vm.todos[0].isInEditMode).toBe(false);
-            expect(jQelement.isolateScope().vm.todos[1].isInEditMode).toBe(false);
-        });
-
         it("Should have properties allTodosChecked and noTodosChecked on vm", function () {
             expect(jQelement.isolateScope().vm.allTodosChecked).toBe(false);
             expect(jQelement.isolateScope().vm.noTodosChecked).toBe(true);
@@ -94,7 +84,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
 
     });
 
-    describe("Directives view model has methods for handling checked todos, forwards call to todosEffectFactory", function () {
+    describe("Directives view model has methods for handling checked todos, forwards call to todosEffectFactory, and addTodo", function () {
 
         beforeEach(function () {
             vm = $controller('ytTodosController');
@@ -125,19 +115,17 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
         it("Should have a method for deleting all checked todos, forwarding the call and then reload todos", function () {
             // We have already tested that todosEffectFactory.deleteCheckedTodos runs the sent callback, so dont need to test it here
 
-            var getTodos = function () { return true; };
             vm.deleteCheckedTodos();
 
-            expect(todosEffectFactory.deleteCheckedTodos).toHaveBeenCalled(); // with vm, getTodos (having problem mocking private var)
-            expect(todosCrudFactory.getTodos).toHaveBeenCalled();
+            expect(todosEffectFactory.deleteCheckedTodos).toHaveBeenCalled();
+            expect(todosCrudFactory.getTodos).toHaveBeenCalledTimes(2);
         });
 
-        it("Should have a method for adding a empty new todo, forwarding the call and then reload todos", function () {
+        it("Should have a method for adding an empty new todo, forwarding the call", function () {
             var todo = { id: null, text: "" };
             vm.addTodo();
 
             expect(todosCrudFactory.addTodo).toHaveBeenCalledWith(todo);
-            expect(todosCrudFactory.getTodos).toHaveBeenCalled();
         });
     });
 
