@@ -53,6 +53,26 @@ angular
             return todos;
         };
 
+        factory.addTodo = function (todo) {
+            todo.id = getNewId();
+            todos.push(todo);
+
+            return todo;
+        };
+
+        factory.updateTodo = function (todo) {
+            var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(todo.id.toString());
+
+            todos.splice(pos, 0, todo);
+
+            if (pos > -1) {
+                return todo;
+            }
+            else {
+                return null;
+            }
+        };
+
         factory.deleteTodo = function (id) {
             var match = false;
 
@@ -65,13 +85,6 @@ angular
             }
 
             return match;
-        };
-
-        factory.addTodo = function (todo) {
-            todo.id = getNewId();
-            todos.push(todo);
-
-            return todo;
         };
 
         return factory;
