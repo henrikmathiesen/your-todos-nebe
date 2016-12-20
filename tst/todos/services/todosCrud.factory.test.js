@@ -47,22 +47,30 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         spyOn(errorHandlerFactory, 'setAppHasError');
         spyOn(todosApiFactory, 'getTodos').and.returnValue($q.reject());                // $q.reject() Returns a promise that was already resolved as rejected with the reason, this stops the promise chain for .then() callback
 
-        todosCrudFactory.getTodos().catch(function () {                                 // We use the catch block to check if logic is correct
+        var catchBlockHasRun = false;
+        
+        todosCrudFactory.getTodos().catch(function () {
+            catchBlockHasRun = true;
             expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
         });
 
         $scope.$digest();                                                               // Need it for running then. could also use $scope.$apply() / $rootScope.$apply()  
+        expect(catchBlockHasRun).toBe(true);
     });
 
     it("Should set the app in an error state if ajax error for addTodo", function () {
         spyOn(errorHandlerFactory, 'setAppHasError');
         spyOn(todosApiFactory, 'addTodo').and.returnValue($q.reject());
 
+        var catchBlockHasRun = false;
+
         todosCrudFactory.addTodo({ id: null, text: "" }).catch(function () {
+            catchBlockHasRun = true;
             expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
         });
 
         $scope.$digest();
+        expect(catchBlockHasRun).toBe(true);
     });
 
     // update error test
@@ -71,10 +79,14 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         spyOn(errorHandlerFactory, 'setAppHasError');
         spyOn(todosApiFactory, 'deleteTodo').and.returnValue($q.reject());
 
+        var catchBlockHasRun = false;
+
         todosCrudFactory.deleteTodo(9).catch(function () {
+            catchBlockHasRun = true;
             expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
         });
 
         $scope.$digest();
+        expect(catchBlockHasRun).toBe(true);
     });
 });
