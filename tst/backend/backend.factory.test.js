@@ -60,6 +60,26 @@ describe("backend.factory supports backend-less module to support CRUD operation
                     return todos;
                 };
 
+                factory.addTodo = function (todo) {
+                    todo.id = getNewId();
+                    todos.push(todo);
+
+                    return todo;
+                };
+
+                factory.updateTodo = function (todo) {
+                    var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(todo.id.toString());
+
+                    todos.splice(pos, 0, todo);
+
+                    if (pos > -1) {
+                        return todo;
+                    }
+                    else {
+                        return null;
+                    }
+                };
+
                 factory.deleteTodo = function (id) {
                     var match = false;
 
@@ -74,12 +94,6 @@ describe("backend.factory supports backend-less module to support CRUD operation
                     return match;
                 };
 
-                factory.addTodo = function (todo) {
-                    todo.id = getNewId();
-                    todos.push(todo);
-
-                    return todo;
-                };
 
                 return factory;
             });
@@ -109,7 +123,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
         expect(pos).toBe(-1, "todo item Study Angular should NOT be there");
     });
 
-    it("Should have a method for deleting a todo by id and return false if no match to delete so backend module can deliver status code 404", function () {
+    it("Should have a method for deleting a todo by id and return false if no match to delete, so backend module can deliver status code 404", function () {
         var match = backendFactory.deleteTodo(8);
         var todosAfterDelete = backendFactory.getTodos();
 
@@ -127,7 +141,40 @@ describe("backend.factory supports backend-less module to support CRUD operation
         expect(todosAfterDelete.length).toBe(3);
     });
 
-    describe("Should have a method for adding a new todo that also gives the todo an id (that is bigger than any existing todo id), and returns the todo", function () {
+    describe("Factory should have a method for updating an existing todo and return null if no match to update, so backend module can deliver status code 404", function () {
+        var updateTodo = { id: 4, text: "Juggle and succeed" };
+        var updateTodoDummy = { id: 8, text: "Does not exist" };
+
+
+        it("Should first verify the pre updated state of the todo", function () {
+            var todos = backendFactory.getTodos();
+            var pos = todos.map(function (todo) { return todo.id.toString(); }).indexOf(updateTodo.id.toString());
+
+            expect(todos[pos].id).toBe(4, "The id of the test case - A");
+            expect(todos[pos].text).toBe("Juggle and fail", "It should have the original text");
+        });
+
+        it("Should find a todo by id, update it and return it", function () {
+            var updatedTodo = backendFactory.updateTodo(updateTodo);
+
+            expect(updatedTodo).toEqual(updateTodo, "should return the updated todo if match");
+
+            var todos = backendFactory.getTodos();
+            var pos = todos.map(function (todo) { return todo.id.toString(); }).indexOf(updateTodo.id.toString());
+
+            expect(todos[pos].id).toBe(4, "The id of the test case - B");
+            expect(todos[pos].text).toBe("Juggle and succeed", "It should have the updated text");
+        });
+
+        it("Should return null if no match", function () {
+            var updatedTodo = backendFactory.updateTodo(updateTodoDummy);
+
+            expect(updatedTodo).toBe(null, "should return null if no match");
+        });
+
+    });
+
+    describe("Factory should have a method for adding a new todo that also gives the todo an id (that is bigger than any existing todo id), and returns the todo", function () {
 
         it("Should start out with 7 todos", function () {
             var todos = backendFactory.getTodos();
