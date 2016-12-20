@@ -34,8 +34,6 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         expect(todosApiFactory.addTodo).toHaveBeenCalledWith(todo);
     });
 
-    // update test
-
     it("Should have a deleteTodo method that forwards the call to todosApiFactory", function () {
         spyOn(todosApiFactory, 'deleteTodo').and.returnValue($q.defer().promise);
         todosCrudFactory.deleteTodo(1);
@@ -45,7 +43,7 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
 
     it("Should set the app in an error state if ajax error for get", function () {
         spyOn(errorHandlerFactory, 'setAppHasError');
-        spyOn(todosApiFactory, 'getTodos').and.returnValue($q.reject());                // $q.reject() Returns a promise that was already resolved as rejected with the reason, this stops the promise chain for .then() callback
+        spyOn(todosApiFactory, 'getTodos').and.returnValue($q.reject());
 
         var catchBlockHasRun = false;
         
@@ -54,7 +52,7 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
             expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
         });
 
-        $scope.$digest();                                                               // Need it for running then. could also use $scope.$apply() / $rootScope.$apply()  
+        $scope.$digest();
         expect(catchBlockHasRun).toBe(true);
     });
 
@@ -72,8 +70,6 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         $scope.$digest();
         expect(catchBlockHasRun).toBe(true);
     });
-
-    // update error test
 
     it("Should set the app in an error state if ajax error for deleteTodo", function () {
         spyOn(errorHandlerFactory, 'setAppHasError');
