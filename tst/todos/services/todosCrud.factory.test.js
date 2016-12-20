@@ -34,6 +34,14 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         expect(todosApiFactory.addTodo).toHaveBeenCalledWith(todo);
     });
 
+    it("Should have an updateTodo method that forward the call to todosApiFactory", function () {
+        spyOn(todosApiFactory, 'updateTodo').and.returnValue($q.defer().promise);
+        var updateTodo = { id: 4, text: "Juggle and succeed" };
+        todosCrudFactory.updateTodo(updateTodo);
+
+        expect(todosApiFactory.updateTodo).toHaveBeenCalledWith(updateTodo);
+    });
+
     it("Should have a deleteTodo method that forwards the call to todosApiFactory", function () {
         spyOn(todosApiFactory, 'deleteTodo').and.returnValue($q.defer().promise);
         todosCrudFactory.deleteTodo(1);
@@ -41,7 +49,7 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
         expect(todosApiFactory.deleteTodo).toHaveBeenCalledWith(1);
     });
 
-    describe("The factory should handle errors", function(){
+    describe("The factory should handle errors", function () {
 
         it("Should set the app in an error state if ajax error for get", function () {
             spyOn(errorHandlerFactory, 'setAppHasError');
@@ -58,6 +66,17 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
             spyOn(todosApiFactory, 'addTodo').and.returnValue($q.reject());
 
             todosCrudFactory.addTodo({ id: null, text: "" });
+
+            $scope.$digest();
+            expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);
+        });
+
+        it("Should set the app in an error state if ajax error for updateTodo", function () {
+            spyOn(errorHandlerFactory, 'setAppHasError');
+            spyOn(todosApiFactory, 'updateTodo').and.returnValue($q.reject());
+
+            var updateTodo = { id: 4, text: "Juggle and succeed" };
+            todosCrudFactory.updateTodo(updateTodo);
 
             $scope.$digest();
             expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);

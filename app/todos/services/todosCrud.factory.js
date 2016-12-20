@@ -7,13 +7,11 @@ angular
         var factory = {};
 
         var onError = function (error) {
-            //console.log(error);
             errorHandlerFactory.setAppHasError(true);
             return $q.reject(); // stops the promise chain to todosCrudFactory().then() , .catch() will however run (this logic also applies to $q.all()...)
         }
 
         var onSuccess = function (response) {
-            //console.log(response);
             return response.data;
         };
 
@@ -29,8 +27,10 @@ angular
                 .catch(onError);
         };
 
-        factory.upDateTodo = function (todo) {
-            
+        factory.updateTodo = function (todo) {
+            return todosApiFactory.updateTodo(todo)
+                .then(onSuccess)
+                .catch(onError);
         };
 
         factory.deleteTodo = function (id) {
@@ -38,7 +38,6 @@ angular
                 .then(onSuccess)
                 .catch(onError);
         };
-
 
         return factory;
 
