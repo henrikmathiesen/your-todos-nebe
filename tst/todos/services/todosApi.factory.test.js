@@ -16,7 +16,7 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         $httpBackend.flush();
     });
 
-    it("should expose a getTodos method that makes an ajax call getting todos from 'backend-less' back end", function () {
+    it("Should expose a getTodos method that makes an ajax call getting todos from 'backend-less' back end", function () {
         $httpBackend.when('GET', '/api/todos').respond(200, [{ id: 1 }]);
 
         todosApiFactory.getTodos().then(function (response) {
@@ -24,7 +24,11 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         });
     });
 
-    it("should expose a deleteTodo method that makes an ajax call deleting a todo to 'backend-less' back end", function () {
+    it("", function () { 
+
+    });
+
+    it("Should expose a deleteTodo method that makes an ajax call deleting a todo to 'backend-less' back end", function () {
         $httpBackend.when('DELETE', '/api/todo/' + '1').respond(204);
 
         todosApiFactory.deleteTodo(1).then(function (response) {
@@ -32,7 +36,7 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         });
     });
 
-    it("should expose a deleteTodo method that makes an ajax call deleting a todo and can respond with 404 if no todo is found", function () {
+    it("Should expose a deleteTodo method that makes an ajax call deleting a todo and can respond with 404 if no todo is found", function () {
         $httpBackend.when('DELETE', '/api/todo/' + '8').respond(404);
 
         todosApiFactory.deleteTodo(8).then(function (response) {
