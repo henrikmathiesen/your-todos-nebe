@@ -22,7 +22,14 @@ angular
                 return [201, todo, headers];
             });
 
-        //$httpBackend.whenPUT()
+        $httpBackend.whenPUT('/\/api\/todo\/\d+/')
+            .respond(function (method, url, data) {
+                var params = angular.fromJson(data);
+                var todo = backendFactory.updateTodo(params);
+                var statusCode = todo ? 200 : 404;
+
+                return [statusCode, todo, headers];
+            });
 
         $httpBackend.whenDELETE(/\/api\/todo\/\d+/)
             .respond(function (method, url, data) {
