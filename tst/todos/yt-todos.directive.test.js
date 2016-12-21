@@ -1,6 +1,6 @@
 /// <reference path="../../typings/index.d.ts" />
 
-describe("yt-todos.directive loads all todos, keeps tracks of if all or none todo are checked and deletes them (with a service)", function () {
+describe("yt-todos.directive loads all todos, keeps track of their checked status and performs crud operations, with help of services", function () {
 
     var $scope;
     var $compile;
@@ -60,8 +60,16 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect(todosCrudFactory.getTodos).toHaveBeenCalled();
         });
 
-        it("Should check if all or none todo is checked", function () {
-            expect(todosEffectFactory.isAllTodosChecked).toHaveBeenCalledWith(jQelement.isolateScope().vm);
+        it("Should have all todos start unchecked and not in edit mode, because those properties are not set", function () { 
+            var todos = jQelement.isolateScope().vm.todos;
+            var todo01 = todos[0];
+            var todo02 = todos[1];
+
+            expect(todo01.checked).toBeFalsy();
+            expect(todo01.isInEditMode).toBeFalsy();
+
+            expect(todo02.checked).toBeFalsy();
+            expect(todo02.isInEditMode).toBeFalsy();
         });
 
         it("Should have populated todos on view model", function () {
@@ -84,7 +92,9 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
 
     });
 
-    describe("Directives view model has methods for handling checked todos, forwards call to todosEffectFactory, and addTodo", function () {
+    describe("Directives view model has methods for handling checked todos, forwards call to todosEffectFactory, and todosCrudFactory", function () {
+
+        var addedTodo = { id: 3, text: "" };
 
         beforeEach(function () {
             vm = $controller('ytTodosController');
@@ -93,10 +103,11 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             spyOn(todosEffectFactory, 'checkAllTodos');
             spyOn(todosEffectFactory, 'updateCheckedTodos');
             spyOn(todosEffectFactory, 'deleteCheckedTodos');
+            spyOn(todosEffectFactory, 'addTodo');
 
             spyOn(todosCrudFactory, 'addTodo').and.callFake(function () {
                 var deferred = $q.defer();
-                deferred.resolve({ id: 3, text: "" });
+                deferred.resolve(addedTodo);
                 return deferred.promise;
             });
         });
@@ -128,11 +139,14 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect(todosCrudFactory.getTodos).toHaveBeenCalledTimes(2, "1 time on directive creation and 1 time after deletion");
         });
 
-        it("Should have a method for adding an empty new todo, forwarding the call", function () {
+        it("Should have a method for adding an empty new todo, forwarding the call, adding new todo with recieved it to collection and calling todosEffectFactory", function () {
             var todo = { id: null, text: "" };
             vm.addTodo();
+            $scope.$apply();
 
             expect(todosCrudFactory.addTodo).toHaveBeenCalledWith(todo);
+            expect(vm.todos.length).toBe(3, "New todo added");
+            expect(todosEffectFactory.addTodo).toHaveBeenCalledWith(vm, addedTodo);
         });
     });
 
@@ -206,7 +220,7 @@ describe("yt-todos.directive loads all todos, keeps tracks of if all or none tod
             expect($deleteTodoIconDisabled.hasClass('ng-hide')).toBe(true, "it should be hidden");
         });
 
-        it("Should obey view model -- if at least one todo is checked then save icon is enabled", function () { 
+        it("Should obey view model -- if at least one todo is checked then save icon is enabled", function () {
             jQelement.isolateScope().vm.noTodosChecked = false;
             $scope.$apply();
 

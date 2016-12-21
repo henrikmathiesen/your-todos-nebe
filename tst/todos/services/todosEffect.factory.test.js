@@ -1,6 +1,6 @@
 /// <reference path="../../typings/index.d.ts" />
 
-describe("TodosEffect.factory keeps track of checked todos and can delete them by forward calls to todosCrud.factory.", function () {
+describe("TodosEffect.factory keeps track of checked todos, applies effect and calls todosCrud.factory for crud operations.", function () {
 
     var $q;
     var $scope;
@@ -39,6 +39,28 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             noTodosChecked: null
         }
     }));
+
+    describe("test", function () {
+        it("should work", function () {
+            expect(todosEffectFactory.isAllTodosChecked).toBeDefined();
+            expect(todosEffectFactory.checkAllTodos).toBeDefined();
+            expect(todosEffectFactory.addTodo).toBeDefined();
+            expect(todosEffectFactory.updateCheckedTodos).toBeDefined();
+            expect(todosEffectFactory.deleteCheckedTodos).toBeDefined();
+            expect(todosEffectFactory.setCheckedAndEditMode).toBeDefined();
+            expect(todosEffectFactory.unSetCheckedAndEditMode).toBeDefined();
+            expect(todosEffectFactory.setFocus).toBeDefined();
+
+            spyOn(todosEffectFactory, 'setCheckedAndEditMode');
+            spyOn(todosEffectFactory, 'unSetCheckedAndEditMode');
+
+            todosEffectFactory.setCheckedAndEditMode(vm, 1);
+            todosEffectFactory.unSetCheckedAndEditMode(vm, 2);
+
+            expect(todosEffectFactory.setCheckedAndEditMode).toHaveBeenCalledWith(vm, 1);
+            expect(todosEffectFactory.unSetCheckedAndEditMode).toHaveBeenCalledWith(vm, 2);
+        });
+    });
 
     describe("There should be a function for checking if all or none todos are checked.", function () {
 
@@ -90,6 +112,11 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
             todosEffectFactory.checkAllTodos(vm, true);
 
+            expect(vm.todos[0].checked).toBe(true);
+            expect(vm.todos[1].checked).toBe(true);
+            expect(vm.todos[2].checked).toBe(true);
+
+            // has called factory.isAllTodosChecked(vm);
             expect(vm.allTodosChecked).toBe(true);
             expect(vm.noTodosChecked).toBe(false);
         });
@@ -99,6 +126,11 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
             todosEffectFactory.checkAllTodos(vm, false);
 
+            expect(vm.todos[0].checked).toBe(false);
+            expect(vm.todos[1].checked).toBe(false);
+            expect(vm.todos[2].checked).toBe(false);
+
+            // has called factory.isAllTodosChecked(vm);
             expect(vm.allTodosChecked).toBe(false);
             expect(vm.noTodosChecked).toBe(true);
         });
@@ -125,15 +157,40 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
 
     });
 
+    describe("There should be a function for adding a new todo", function () {
+        var todo = { id: 4, text: "" };
+
+        beforeEach(function () {
+            spyOn(todosEffectFactory, 'setCheckedAndEditMode');
+            spyOn(todosEffectFactory, 'isAllTodosChecked');
+            spyOn(todosEffectFactory, 'setFocus');
+        });
+
+        it("Should set the new todo as checked and in edit mode", function () {
+            todosEffectFactory.addTodo(vm, todo);
+            expect(todosEffectFactory.setCheckedAndEditMode).toHaveBeenCalledWith(vm, todo.id);
+        });
+
+        it("Should keep track of if all todos is checked", function () {
+            todosEffectFactory.addTodo(vm, todo);
+            expect(todosEffectFactory.isAllTodosChecked).toHaveBeenCalledWith(vm);
+        });
+
+        it("Should set focus on new todo", function () {
+            todosEffectFactory.addTodo(vm, todo);
+            expect(todosEffectFactory.setFocus).toHaveBeenCalledWith(todo.id);
+        });
+    });
+
     describe("There should be a function for updating checked todos, by calling todosCrudFactory, then fades them in", function () {
-        it("Should update checked todos, unset checked and edit mode and then fade them in", function () { 
+        it("Should update checked todos, unset checked and edit mode and then fade them in", function () {
             vm.todos = todos;
             vm.todos[0].checked = false;
             vm.todos[1].checked = true;
             vm.todos[2].checked = true;
 
             spyOn(todosEffectFactory, 'unSetCheckedAndEditMode');
-            spyOn(angular, 'forEach');
+            spyOn(angular, 'forEach').and.callThrough();
             spyOn(todosEffectFactory, 'isAllTodosChecked');
 
             spyOn(todosCrudFactory, 'updateTodo').and.callFake(function () {
@@ -146,60 +203,67 @@ describe("TodosEffect.factory keeps track of checked todos and can delete them b
             });
 
             todosEffectFactory.updateCheckedTodos(vm);
+            $scope.$digest();
+
+            // - loop through todos and act on the ones that are checked
+            // - loop through checked todos elements and fade them in
+            // - loop through checked todos and unset checked and edit mode, also call isAllTodosChecked
+            expect(angular.forEach).toHaveBeenCalledTimes(3);
 
             expect(todosCrudFactory.updateTodo).toHaveBeenCalledTimes(2, "id 2 and id 3 is sent for update with 2 calls to crudFactory");
-            expect(todosEffectFactory.unSetCheckedAndEditMode).toHaveBeenCalledTimes(2, "id 2 and id 3 is unchecked and unset from edit mode");
 
-            $scope.$digest();
-            expect(angular.forEach).toHaveBeenCalled(); // fades out element
-            expect(todosEffectFactory.isAllTodosChecked).toHaveBeenCalled();
+            expect(todosEffectFactory.unSetCheckedAndEditMode).toHaveBeenCalledTimes(2);
+            expect(todosEffectFactory.isAllTodosChecked).toHaveBeenCalledTimes(1);
         });
     });
 
-    describe("There should be a function for deleting checked todos, by calling todosCrudFactory, then fades them out and call getTodos callback.", function () {
+    describe("There should be a function for deleting checked todos, by calling todosCrudFactory, then fades them out.", function () {
 
         it("Should delete checked todos, fade out them and then call reload callback", function () {
             vm.todos = todos;
             vm.todos[0].checked = false;
             vm.todos[1].checked = true;
             vm.todos[2].checked = true;
-            var obj = { reload: function () { return true; } };
 
-            spyOn(obj, 'reload');
-            spyOn(angular, 'forEach');
+            spyOn(angular, 'forEach').and.callThrough();
+            spyOn(todosEffectFactory, 'isAllTodosChecked');
             spyOn(todosCrudFactory, 'deleteTodo').and.callFake(function () {
                 var deferred = $q.defer();
                 deferred.resolve("204");
                 return deferred.promise;
             });
 
-            todosEffectFactory.deleteCheckedTodos(vm, obj.reload);
+            // I tried this, but cant mock the actual elements
+            // spyOn($.fn, 'fadeOut').and.callFake(function () {
+            //     return $q.defer().promise;
+            // });
+
+            todosEffectFactory.deleteCheckedTodos(vm);
+            $scope.$apply();
+
+            // - loop through todos and act on the ones that are checked
+            // - loop through checked todos elements and fade them out
+            expect(angular.forEach).toHaveBeenCalledTimes(2);
 
             expect(todosCrudFactory.deleteTodo).toHaveBeenCalledTimes(2, "id 2 and id 3 is sent for deletion with 2 calls to crudFactory");
-
-            $scope.$digest();
-            expect(angular.forEach).toHaveBeenCalled(); // fades out element
-            expect(obj.reload).toHaveBeenCalled();
+            
+            // Can not test all the way through, sorry, can not get past running fadeOut promises
         });
 
-        it("Should not enter q.all():s then() callback that fades out todos and reloads todos, if deletion gives ajax error", function () {
+        it("Should not enter q.all():s then() callback that fades out todos, if deletion gives ajax error", function () {
             vm.todos = todos;
             vm.todos[0].checked = false;
             vm.todos[1].checked = true;
             vm.todos[2].checked = false;
-            var obj = { reload: function () { return true; } };
 
-            spyOn(obj, 'reload');
-            spyOn(angular, 'forEach');
+            spyOn(angular, 'forEach').and.callThrough();
             spyOn(todosCrudFactory, 'deleteTodo').and.returnValue($q.reject());         // $q.reject() Returns a promise that was already resolved as rejected with the reason
 
-            todosEffectFactory.deleteCheckedTodos(vm, obj.reload);
+            todosEffectFactory.deleteCheckedTodos(vm);
+            $scope.$apply();
 
-            expect(todosCrudFactory.deleteTodo).toHaveBeenCalled();                     // "id 2 is sent for deletion with call to crudFactory but there is an ajax error"
-            // problem testing toHaveBeenCalledWith , with call in a loop
-            $scope.$digest();
-            expect(angular.forEach).not.toHaveBeenCalled();
-            expect(obj.reload).not.toHaveBeenCalled();
+            expect(todosCrudFactory.deleteTodo).toHaveBeenCalledTimes(1);               // "id 2 is sent for deletion with call to crudFactory but there is an ajax error"
+            expect(angular.forEach).toHaveBeenCalledTimes(1);                           // only on time, so not continuing with fade out and removal from VM
         });
 
     });

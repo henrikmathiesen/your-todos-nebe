@@ -24,7 +24,6 @@ angular
             todosCrudFactory.getTodos()
                 .then(function (todos) {
                     vm.todos = todos;
-                    todosEffectFactory.isAllTodosChecked(vm);
                 });
         };
 
@@ -42,9 +41,7 @@ angular
             todosCrudFactory.addTodo(todo)
                 .then(function (addedTodo) {
                     vm.todos.push(addedTodo);
-                    todosEffectFactory.setCheckedAndEditMode(vm, addedTodo.id);
-                    todosEffectFactory.isAllTodosChecked(vm);
-                    todosEffectFactory.setFocus(addedTodo.id);
+                    todosEffectFactory.addTodo(vm, addedTodo);
                 });
         };
 
@@ -53,7 +50,7 @@ angular
         };
 
         vm.deleteCheckedTodos = function () {
-            todosEffectFactory.deleteCheckedTodos(vm, getTodos);
+            todosEffectFactory.deleteCheckedTodos(vm);
         };
 
         vm.reload = getTodos;

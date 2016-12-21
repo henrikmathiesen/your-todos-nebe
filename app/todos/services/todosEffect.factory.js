@@ -22,52 +22,70 @@ angular
             factory.isAllTodosChecked(vm);
         };
 
+        factory.addTodo = function (vm, todo) {
+            factory.setCheckedAndEditMode(vm, todo.id);
+            factory.isAllTodosChecked(vm);
+            factory.setFocus(todo.id);
+        };
+
         factory.updateCheckedTodos = function (vm) {
-            var updatePromises = [];
             var $todoElements = [];
+            var updatePromises = [];
 
-            for (var i = 0; i < vm.todos.length; i++) {
+            var unSetCheckedTodos = function () {
+                var checkedTodos = vm.todos.filter(function (todo) { return todo.checked === true });
 
-                var todo = vm.todos[i];
-
-                if (todo.checked) {
-                    $todoElements.push(angular.element('div[data-todo-id=' + todo.id + ']'));
-                    updatePromises.push(todosCrudFactory.updateTodo(todo));
+                angular.forEach(checkedTodos, function (todo) {
                     factory.unSetCheckedAndEditMode(vm, todo.id);
-                }
-            }
+                });
 
-            $q.all(updatePromises).then(function () {
+                factory.isAllTodosChecked(vm);
+            };
+
+            var fadeInCheckedTodos = function () {
                 angular.forEach($todoElements, function (el) {
                     el.fadeTo(100, 0.1).fadeTo(200, 1.0);
                 });
-                
-                factory.isAllTodosChecked(vm);
-            });
-        };
 
-        factory.deleteCheckedTodos = function (vm, getTodos) {
-            var deletePromises = [];
-            var $todoElements = [];
-            var fadePromises = [];
+                unSetCheckedTodos();
+            };
 
-            for (var i = 0; i < vm.todos.length; i++) {
-
-                var todo = vm.todos[i];
-
+            angular.forEach(vm.todos, function (todo) {
                 if (todo.checked) {
                     $todoElements.push(angular.element('div[data-todo-id=' + todo.id + ']'));
-                    deletePromises.push(todosCrudFactory.deleteTodo(todo.id));
+                    updatePromises.push(todosCrudFactory.updateTodo(todo));
                 }
-            }
+            });
 
-            $q.all(deletePromises).then(function () {
+            $q.all(updatePromises).then(fadeInCheckedTodos);
+        };
+
+        factory.deleteCheckedTodos = function (vm) {
+            var $todoElements = [];
+            var deletePromises = [];
+            var fadePromises = [];
+
+            var removeCheckedTodos = function () {
+                vm.todos = vm.todos.filter(function (todo) { return todo.checked !== true; });
+                factory.isAllTodosChecked(vm);
+            };
+
+            var fadeOutCheckedTodos = function () {
                 angular.forEach($todoElements, function (el) {
                     fadePromises.push(el.fadeOut().promise());
                 });
 
-                $q.all(fadePromises).then(getTodos);
+                $q.all(fadePromises).then(removeCheckedTodos);
+            };
+
+            angular.forEach(vm.todos, function (todo) {
+                if (todo.checked) {
+                    $todoElements.push(angular.element('div[data-todo-id=' + todo.id + ']'));
+                    deletePromises.push(todosCrudFactory.deleteTodo(todo.id));
+                }
             });
+
+            $q.all(deletePromises).then(fadeOutCheckedTodos);
         };
 
         var checkedAndEditMode = function (vm, id, shouldSet) {
