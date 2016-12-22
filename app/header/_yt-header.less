@@ -1,23 +1,35 @@
 .yt-app-header {
 
-    position: relative;
-    top: 57px;
+    position: absolute;
+    top: 11px;
+    right: 0;
+    padding-right: @yt-gutter-sm;
+    padding-top: 1px;
+
+    @media only screen and (min-width:@yt-mq-tablet-p) {
+        padding-right: @yt-gutter-md;
+        top: 0;
+    }
 
     h1 {
         text-align: right;
         margin: 0;
         color: fade(@yt-color-nightblue, 50%);
-        font-size: 32px;
-        position: relative;
-        left: -45px;
+        font-size: 23px;
+
+        @media only screen and (min-width:@yt-mq-tablet-p) {
+            font-size: 32px;
+        }
     }
 
     h2 {
         text-align: right;
         margin: 0;
         color: fade(@yt-color-nightblue, 25%);
-        font-size: 16px;
-        position: relative;
-        left: -16px;
+        font-size: 10px;
+
+        @media only screen and (min-width:@yt-mq-tablet-p) {
+            font-size: 16px;
+        }
     }
 }
