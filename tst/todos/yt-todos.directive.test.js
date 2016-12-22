@@ -131,10 +131,7 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
         });
 
         it("Should have a method for deleting all checked todos, forwarding the call", function () {
-            // We have already tested that todosEffectFactory.deleteCheckedTodos runs the sent callback, so dont need to test it here
-
             vm.deleteCheckedTodos();
-
             expect(todosEffectFactory.deleteCheckedTodos).toHaveBeenCalledWith(vm);
         });
 
