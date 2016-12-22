@@ -248,23 +248,6 @@ describe("TodosEffect.factory keeps track of checked todos, applies effect and c
 
             // Can not test all the way through, sorry, can not get past running fadeOut promises
         });
-
-        it("Should not enter q.all():s then() callback that fades out todos, if deletion gives ajax error", function () {
-            vm.todos = todos;
-            vm.todos[0].checked = false;
-            vm.todos[1].checked = true;
-            vm.todos[2].checked = false;
-
-            spyOn(angular, 'forEach').and.callThrough();
-            spyOn(todosCrudFactory, 'deleteTodo').and.returnValue($q.reject());         // $q.reject() Returns a promise that was already resolved as rejected with the reason
-
-            todosEffectFactory.deleteCheckedTodos(vm);
-            $scope.$apply();
-
-            expect(todosCrudFactory.deleteTodo).toHaveBeenCalledTimes(1);               // "id 2 is sent for deletion with call to crudFactory but there is an ajax error"
-            expect(angular.forEach).toHaveBeenCalledTimes(1);                           // only on time, so not continuing with fade out and removal from VM
-        });
-
     });
 
     describe("There should be a function for setting a todo as checked and in edit mode, and a function for unset it", function () {
