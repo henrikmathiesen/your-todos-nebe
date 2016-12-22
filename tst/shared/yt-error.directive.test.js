@@ -4,6 +4,7 @@ describe("yt-error.directive displays and error message to the user if app is in
 
     var $scope;
     var $compile;
+    var $timeout;
     var errorHandlerFactory;
     var directiveMarkup;
     var directiveElement;
@@ -14,9 +15,10 @@ describe("yt-error.directive displays and error message to the user if app is in
     beforeEach(module('templatecache'));
     beforeEach(module('shared'));
 
-    beforeEach(inject(function (_$rootScope_, _$compile_, _errorHandlerFactory_) {
+    beforeEach(inject(function (_$rootScope_, _$compile_, _$timeout_, _errorHandlerFactory_) {
         $scope = _$rootScope_.$new();
         $compile = _$compile_;
+        $timeout = _$timeout_;
         errorHandlerFactory = _errorHandlerFactory_;
 
         spyOn(errorHandlerFactory, 'getAppHasError').and.callThrough();
@@ -45,7 +47,7 @@ describe("yt-error.directive displays and error message to the user if app is in
         });
 
         it("Should start with the error message hidden", function () {
-            expect(jQelement.hasClass('yt-display-none')).toBe(true, "Message should start hidden");
+            expect(jQelement.hasClass('yt-show-app')).toBe(true, "Message should start hidden");
             expect(isolateScope.vm.showError).toBe(false);
         });
     });
@@ -63,17 +65,24 @@ describe("yt-error.directive displays and error message to the user if app is in
     it("Should show error message if an error", function () {
         errorHandlerFactory.setAppHasError(true);
         $scope.$apply();
+        $timeout.flush();
 
-        expect(jQelement.hasClass('yt-display-none')).toBe(false, "Message should be visible");
+        expect(jQelement.hasClass('yt-show-app')).toBe(false, "Message should be visible");
         expect(isolateScope.vm.showError).toBe(true);
     });
 
     it("Should hide error message if not an error", function () {
         errorHandlerFactory.setAppHasError(false);
         $scope.$apply();
+        $timeout.flush();
 
-        expect(jQelement.hasClass('yt-display-none')).toBe(true, "Message should be hidden");
+        expect(jQelement.hasClass('yt-show-app')).toBe(true, "Message should be hidden");
         expect(isolateScope.vm.showError).toBe(false);
+
+        // The directive starts in this state so this test will pass.
+        // However logic does not run false block in $watch,
+        // reason being it does not remember oldValue.
+        // Its hard to mock, sorry
     });
 
 });

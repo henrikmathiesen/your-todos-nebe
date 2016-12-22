@@ -2,7 +2,7 @@
 
 angular
     .module('shared')
-    .directive('ytError', function (errorHandlerFactory) {
+    .directive('ytError', function ($timeout, errorHandlerFactory) {
         return {
             restrict: 'E',
             scope: {},
@@ -17,14 +17,17 @@ angular
                     }
                 };
 
-                scope.$watch(errorHandlerFactory.getAppHasError, function (newValue, oldValue) {
+                var showError = function (shouldShow) {
+                    $timeout(function () {
+                        scope.vm.showError = shouldShow;
+                    });
+                };
 
-                    console.log("watching");
+                scope.$watch(errorHandlerFactory.getAppHasError, function (newValue, oldValue) {
 
                     if (newValue === true) {
                         $element.fadeIn(function () {
-                            console.log("fade in");
-                            scope.vm.showError = true;
+                            showError(true);
                         });
                     }
                     else {
@@ -33,8 +36,7 @@ angular
                         }
 
                         $element.fadeOut(function () {
-                            console.log("fade in");
-                            scope.vm.showError = false;
+                            showError(false);
                         });
                     }
 
