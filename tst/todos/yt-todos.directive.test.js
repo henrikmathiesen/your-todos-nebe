@@ -44,8 +44,6 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
             return deferred.promise;
         });
 
-        spyOn(todosEffectFactory, 'isAllTodosChecked');
-
         directiveMarkup = '<yt-todos></yt-todos>';
         directiveElement = $compile(directiveMarkup)($scope);
         $scope.$digest();
@@ -92,7 +90,7 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
 
     });
 
-    describe("Directives view model has methods for handling checked todos, forwards call to todosEffectFactory, and todosCrudFactory", function () {
+    describe("Directives view model has methods for handling checked todos and add a new todo, forwards call to todosEffectFactory", function () {
 
         var addedTodo = { id: 3, text: "" };
 
@@ -100,6 +98,7 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
             vm = $controller('ytTodosController');
             $scope.$apply();
 
+            spyOn(todosEffectFactory, 'isAllTodosChecked');
             spyOn(todosEffectFactory, 'checkAllTodos');
             spyOn(todosEffectFactory, 'updateCheckedTodos');
             spyOn(todosEffectFactory, 'deleteCheckedTodos');
@@ -118,27 +117,27 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
             expect(todosEffectFactory.checkAllTodos).toHaveBeenCalledWith(vm, true);
         });
 
-        it("Should have a method for updating all checked todos, forwarding the call", function () {
-            vm.updateCheckedTodos();
-
-            expect(todosEffectFactory.updateCheckedTodos).toHaveBeenCalledWith(vm);
-        });
-
-        it("Should have a method for deleting all checked todos, forwarding the call and then reload todos", function () {
-            // We have already tested that todosEffectFactory.deleteCheckedTodos runs the sent callback, so dont need to test it here
-
-            vm.deleteCheckedTodos();
-
-            expect(todosEffectFactory.deleteCheckedTodos).toHaveBeenCalled();
-            expect(todosCrudFactory.getTodos).toHaveBeenCalledTimes(2, "1 time on directive creation and 1 time after deletion");
-        });
-
         it("Should have a method for adding an empty new todo, forwarding the call to todosEffectFactory", function () {
             var todo = { id: null, text: "" };
             vm.addTodo();
 
             expect(todosEffectFactory.addTodo).toHaveBeenCalledWith(vm, todo);
         });
+        
+        it("Should have a method for updating all checked todos, forwarding the call", function () {
+            vm.updateCheckedTodos();
+
+            expect(todosEffectFactory.updateCheckedTodos).toHaveBeenCalledWith(vm);
+        });
+
+        it("Should have a method for deleting all checked todos, forwarding the call", function () {
+            // We have already tested that todosEffectFactory.deleteCheckedTodos runs the sent callback, so dont need to test it here
+
+            vm.deleteCheckedTodos();
+
+            expect(todosEffectFactory.deleteCheckedTodos).toHaveBeenCalledWith(vm);
+        });
+
     });
 
     describe("Directives template should render correctly", function () {

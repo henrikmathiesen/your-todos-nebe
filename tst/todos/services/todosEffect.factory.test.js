@@ -218,7 +218,7 @@ describe("TodosEffect.factory keeps track of checked todos, applies effect and c
 
     describe("There should be a function for deleting checked todos, by calling todosCrudFactory, then fades them out.", function () {
 
-        it("Should delete checked todos, fade out them and then call reload callback", function () {
+        it("Should delete checked todos and fade out them", function () {
             vm.todos = todos;
             vm.todos[0].checked = false;
             vm.todos[1].checked = true;
