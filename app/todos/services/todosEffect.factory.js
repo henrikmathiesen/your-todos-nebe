@@ -23,9 +23,13 @@ angular
         };
 
         factory.addTodo = function (vm, todo) {
-            factory.setCheckedAndEditMode(vm, todo.id);
-            factory.isAllTodosChecked(vm);
-            factory.setFocus(todo.id);
+            todosCrudFactory.addTodo(todo)
+                .then(function (addedTodo) {
+                    vm.todos.push(addedTodo);
+                    factory.setCheckedAndEditMode(vm, addedTodo.id);
+                    factory.isAllTodosChecked(vm);
+                    factory.setFocus(addedTodo.id);
+                });
         };
 
         factory.updateCheckedTodos = function (vm) {

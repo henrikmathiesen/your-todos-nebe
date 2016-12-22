@@ -136,27 +136,48 @@ describe("TodosEffect.factory keeps track of checked todos, applies effect and c
     });
 
     describe("There should be a function for adding a new todo", function () {
-        var todo = { id: 4, text: "" };
+        var newTodo = { id: null, text: "" };
+        var addedTodo = { id: 4, text: "" };
 
         beforeEach(function () {
+            spyOn(todosCrudFactory, 'addTodo').and.callFake(function () {
+                var deferred = $q.defer();
+                deferred.resolve(addedTodo);
+                return deferred.promise;
+            });
             spyOn(todosEffectFactory, 'setCheckedAndEditMode');
             spyOn(todosEffectFactory, 'isAllTodosChecked');
             spyOn(todosEffectFactory, 'setFocus');
         });
 
+        it("Should forward the call to todosCrudFactory", function () {
+            todosEffectFactory.addTodo(vm, newTodo);
+            expect(todosCrudFactory.addTodo).toHaveBeenCalledWith(newTodo);
+        });
+
+        it("Should add the new todo to the vm", function () { 
+            vm.todos = todos;
+            todosEffectFactory.addTodo(vm, newTodo);
+            $scope.$digest();
+            expect(vm.todos.length).toBe(4);
+        });
+
         it("Should set the new todo as checked and in edit mode", function () {
-            todosEffectFactory.addTodo(vm, todo);
-            expect(todosEffectFactory.setCheckedAndEditMode).toHaveBeenCalledWith(vm, todo.id);
+            todosEffectFactory.addTodo(vm, newTodo);
+            $scope.$digest();
+            expect(todosEffectFactory.setCheckedAndEditMode).toHaveBeenCalledWith(vm, addedTodo.id);
         });
 
         it("Should keep track of if all todos is checked", function () {
-            todosEffectFactory.addTodo(vm, todo);
+            todosEffectFactory.addTodo(vm, addedTodo);
+            $scope.$digest();
             expect(todosEffectFactory.isAllTodosChecked).toHaveBeenCalledWith(vm);
         });
 
         it("Should set focus on new todo", function () {
-            todosEffectFactory.addTodo(vm, todo);
-            expect(todosEffectFactory.setFocus).toHaveBeenCalledWith(todo.id);
+            todosEffectFactory.addTodo(vm, addedTodo);
+            $scope.$digest();
+            expect(todosEffectFactory.setFocus).toHaveBeenCalledWith(addedTodo.id);
         });
     });
 
@@ -224,7 +245,7 @@ describe("TodosEffect.factory keeps track of checked todos, applies effect and c
             expect(angular.forEach).toHaveBeenCalledTimes(2);
 
             expect(todosCrudFactory.deleteTodo).toHaveBeenCalledTimes(2, "id 2 and id 3 is sent for deletion with 2 calls to crudFactory");
-            
+
             // Can not test all the way through, sorry, can not get past running fadeOut promises
         });
 

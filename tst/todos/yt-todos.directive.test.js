@@ -104,12 +104,6 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
             spyOn(todosEffectFactory, 'updateCheckedTodos');
             spyOn(todosEffectFactory, 'deleteCheckedTodos');
             spyOn(todosEffectFactory, 'addTodo');
-
-            spyOn(todosCrudFactory, 'addTodo').and.callFake(function () {
-                var deferred = $q.defer();
-                deferred.resolve(addedTodo);
-                return deferred.promise;
-            });
         });
 
         it("Should have a method for checking if all todos is checked", function () {
@@ -139,14 +133,11 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
             expect(todosCrudFactory.getTodos).toHaveBeenCalledTimes(2, "1 time on directive creation and 1 time after deletion");
         });
 
-        it("Should have a method for adding an empty new todo, forwarding the call, adding new todo with recieved it to collection and calling todosEffectFactory", function () {
+        it("Should have a method for adding an empty new todo, forwarding the call to todosEffectFactory", function () {
             var todo = { id: null, text: "" };
             vm.addTodo();
-            $scope.$apply();
 
-            expect(todosCrudFactory.addTodo).toHaveBeenCalledWith(todo);
-            expect(vm.todos.length).toBe(3, "New todo added");
-            expect(todosEffectFactory.addTodo).toHaveBeenCalledWith(vm, addedTodo);
+            expect(todosEffectFactory.addTodo).toHaveBeenCalledWith(vm, todo);
         });
     });
 

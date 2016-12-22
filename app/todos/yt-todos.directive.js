@@ -37,12 +37,7 @@ angular
 
         vm.addTodo = function () {
             var todo = { id: null, text: "" };
-
-            todosCrudFactory.addTodo(todo)
-                .then(function (addedTodo) {
-                    vm.todos.push(addedTodo);
-                    todosEffectFactory.addTodo(vm, addedTodo);
-                });
+            todosEffectFactory.addTodo(vm, todo);
         };
 
         vm.updateCheckedTodos = function () {
