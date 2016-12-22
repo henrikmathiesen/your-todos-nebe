@@ -40,28 +40,6 @@ describe("TodosEffect.factory keeps track of checked todos, applies effect and c
         }
     }));
 
-    describe("test", function () {
-        it("should work", function () {
-            expect(todosEffectFactory.isAllTodosChecked).toBeDefined();
-            expect(todosEffectFactory.checkAllTodos).toBeDefined();
-            expect(todosEffectFactory.addTodo).toBeDefined();
-            expect(todosEffectFactory.updateCheckedTodos).toBeDefined();
-            expect(todosEffectFactory.deleteCheckedTodos).toBeDefined();
-            expect(todosEffectFactory.setCheckedAndEditMode).toBeDefined();
-            expect(todosEffectFactory.unSetCheckedAndEditMode).toBeDefined();
-            expect(todosEffectFactory.setFocus).toBeDefined();
-
-            spyOn(todosEffectFactory, 'setCheckedAndEditMode');
-            spyOn(todosEffectFactory, 'unSetCheckedAndEditMode');
-
-            todosEffectFactory.setCheckedAndEditMode(vm, 1);
-            todosEffectFactory.unSetCheckedAndEditMode(vm, 2);
-
-            expect(todosEffectFactory.setCheckedAndEditMode).toHaveBeenCalledWith(vm, 1);
-            expect(todosEffectFactory.unSetCheckedAndEditMode).toHaveBeenCalledWith(vm, 2);
-        });
-    });
-
     describe("There should be a function for checking if all or none todos are checked.", function () {
 
         it("Should set allTodosChecked to false and noTodosChecked to true if todos collection is empty", function () {
