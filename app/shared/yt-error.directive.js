@@ -11,6 +11,7 @@ angular
             link: function (scope, $element) {
 
                 scope.vm = {
+                    showError: false,
                     ok: function () {
                         errorHandlerFactory.setAppHasError(false);
                     }
@@ -23,7 +24,9 @@ angular
                     if (newValue === true) {
                         console.log("true hasError, fadeIn");
                         $element.fadeIn(function () {
-                            $element.removeClass('yt-display-none');
+                            //$element.removeClass('yt-display-none');
+                            console.log("fade in");
+                            scope.vm.showError = true;
                         });
                     }
                     else {
@@ -33,7 +36,8 @@ angular
 
                         console.log("false hasError, fadeOut");
                         $element.fadeOut(function () {
-                            $element.addClass('yt-display-none');
+                            //$element.addClass('yt-display-none');
+                            scope.vm.showError = false;
                         });
                     }
 
