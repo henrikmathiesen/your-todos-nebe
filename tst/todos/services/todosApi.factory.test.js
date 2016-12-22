@@ -47,7 +47,7 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         expect(serverResponse.data).toEqual(returnedTodo);
     });
 
-    it("Should expose an upDateTodo method that makes an ajax call putting a todo to 'backend-less' back end", function () { 
+    it("Should expose an updateTodo method that makes an ajax call putting a todo to 'backend-less' back end", function () {
         var updateTodo = { id: 4, text: "Juggle and succeed" };
         var returnedTodo = { id: 4, text: "Juggle and succeed" };
 
@@ -63,6 +63,30 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
 
         expect(serverResponse.status).toBe(200);
         expect(serverResponse.data).toEqual(returnedTodo);
+    });
+
+    it("Should expose an updateTodo method that makes an ajax call putting a todo and can respond with 404 if no todo by id to update is found", function () {
+        var updateTodoDummy = { id: 8, text: "Does not exist" };
+        var returnedTodo = null;
+
+        var serverResponse;
+        var serverResponseError;
+        
+        $httpBackend.when('PUT', '/api/todo/' + updateTodoDummy.id).respond(404, returnedTodo);
+
+        todosApiFactory.updateTodo(updateTodoDummy)
+            .then(function (response) { 
+                serverResponse = response;
+            })
+            .catch(function (response) { 
+                serverResponseError = response;
+            });
+
+        $httpBackend.flush();
+
+        expect(serverResponse).toBe(undefined);
+        expect(serverResponseError.status).toBe(404);
+        expect(serverResponseError.data).toBe(null);
     });
 
     it("Should expose a deleteTodo method that makes an ajax call deleting a todo to 'backend-less' back end", function () {
@@ -85,7 +109,7 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         expect(serverResponseError).toBe(undefined);
     });
 
-    it("Should expose a deleteTodo method that makes an ajax call deleting a todo and can respond with 404 if no todo is found", function () {
+    it("Should expose a deleteTodo method that makes an ajax call deleting a todo and can respond with 404 if no todo by id is found", function () {
         $httpBackend.when('DELETE', '/api/todo/' + '8').respond(404);
 
         var serverResponse;
