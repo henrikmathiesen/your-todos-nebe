@@ -34,8 +34,12 @@ angular
                         });
                     }
                     else {
+                        if (newValue === oldValue) {
+                            return;
+                        }
+
                         console.log("false hasError, fadeOut");
-                        $element.fadeOut(function () { 
+                        $element.fadeOut(function () {
                             $element.addClass('yt-display-none');
                         });
                     }
