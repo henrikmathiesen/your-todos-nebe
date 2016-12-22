@@ -45,7 +45,7 @@ angular
                 });
         };
 
-        vm.updateCheckedTodos = function () { 
+        vm.updateCheckedTodos = function () {
             todosEffectFactory.updateCheckedTodos(vm);
         };
 
@@ -55,7 +55,5 @@ angular
 
         vm.reload = getTodos;
 
-
         getTodos();
-
     });

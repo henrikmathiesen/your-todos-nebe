@@ -8,8 +8,43 @@
     padding-left: inherit;
     padding-right: inherit;
 
-    .yt-error-inner {
-        background-color: @yt-color-carrot;
-        height: 100%;
+    &__inner {
+        background-color: @yt-color-clouds;
+        padding: @yt-gutter-xs;
+
+        h1, h2 {
+            margin: 0;
+            text-align: center;
+            color: @yt-color-carrot;
+        }
+
+        h1 {
+            font-size: 32px;
+        }
+
+        h2 {
+            font-size: 16px;
+        }
+    }
+
+    &__button {
+        text-align: center;
+        margin-top: @yt-gutter-sm;
+        margin-bottom: @yt-gutter-xs;
+
+        button {
+            text-decoration: none;
+            border: none;
+            outline: none;
+            padding: @yt-gutter-xs;
+            width: 50%;
+            background-color: @yt-color-carrot;
+            color: @yt-color-clouds;
+            position: relative;
+
+            &:active {
+                top:1px;
+            }
+        }
     }
 }

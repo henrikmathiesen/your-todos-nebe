@@ -10,6 +10,12 @@ angular
             replace: true,
             link: function (scope, $element) {
 
+                scope.vm = {
+                    ok: function () {
+                        errorHandlerFactory.setAppHasError(false);
+                    }
+                };
+
                 scope.$watch(errorHandlerFactory.getAppHasError, function (newValue, oldValue) {
 
                     console.log("watch");
@@ -17,19 +23,23 @@ angular
                     console.log("oldValue: " + oldValue);
                     console.log("watch");
 
-                    if (newValue !== oldValue) {
+                    //if (newValue !== oldValue) {
 
-                        console.log("watch newValue !== oldValue");
+                    //console.log("watch newValue !== oldValue");
 
-                        if (newValue === true) {
-                            console.log("true hasError, fadeIn");
-                            $element.fadeIn();
-                        }
-                        else {
-                            console.log("false hasError, fadeOut");
-                            $element.fadeOut();
-                        }
+                    if (newValue === true) {
+                        console.log("true hasError, fadeIn");
+                        $element.fadeIn(function () {
+                            $element.removeClass('yt-display-none');
+                        });
                     }
+                    else {
+                        console.log("false hasError, fadeOut");
+                        $element.fadeOut(function () { 
+                            $element.addClass('yt-display-none');
+                        });
+                    }
+                    //}
 
                 });
 

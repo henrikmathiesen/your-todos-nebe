@@ -3,6 +3,14 @@
     background-color: @yt-color-clouds;
     box-shadow: @yt-box-shadow;
 
+    .yt-error + & {
+        display: none;
+    }
+
+    .yt-error.yt-display-none + & {
+        display: block;
+    }
+
     &__row {
         display: flex;
         align-items: stretch;
