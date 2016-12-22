@@ -18,14 +18,7 @@ angular
 
                 scope.$watch(errorHandlerFactory.getAppHasError, function (newValue, oldValue) {
 
-                    console.log("watch");
-                    console.log("newValue: " + newValue);
-                    console.log("oldValue: " + oldValue);
-                    console.log("watch");
-
-                    //if (newValue !== oldValue) {
-
-                    //console.log("watch newValue !== oldValue");
+                    console.log("!!!");
 
                     if (newValue === true) {
                         console.log("true hasError, fadeIn");
@@ -43,7 +36,6 @@ angular
                             $element.addClass('yt-display-none');
                         });
                     }
-                    //}
 
                 });
 
