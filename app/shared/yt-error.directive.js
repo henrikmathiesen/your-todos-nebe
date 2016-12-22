@@ -19,12 +19,10 @@ angular
 
                 scope.$watch(errorHandlerFactory.getAppHasError, function (newValue, oldValue) {
 
-                    console.log("!!!");
+                    console.log("watching");
 
                     if (newValue === true) {
-                        console.log("true hasError, fadeIn");
                         $element.fadeIn(function () {
-                            //$element.removeClass('yt-display-none');
                             console.log("fade in");
                             scope.vm.showError = true;
                         });
@@ -34,9 +32,8 @@ angular
                             return;
                         }
 
-                        console.log("false hasError, fadeOut");
                         $element.fadeOut(function () {
-                            //$element.addClass('yt-display-none');
+                            console.log("fade in");
                             scope.vm.showError = false;
                         });
                     }
