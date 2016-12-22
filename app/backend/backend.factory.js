@@ -60,17 +60,15 @@ angular
             return todo;
         };
 
-        factory.updateTodo = function (todo) {
-            var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(todo.id.toString());
+        factory.updateTodo = function (id, todo) {
+            var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(id.toString());
 
-            todos.splice(pos, 1, todo);
-
-            if (pos > -1) {
-                return todo;
-            }
-            else {
+            if (pos < 0) {
                 return null;
             }
+
+            todos.splice(pos, 1, todo);
+            return todo;
         };
 
         factory.deleteTodo = function (id) {

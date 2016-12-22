@@ -24,8 +24,9 @@ angular
 
         $httpBackend.whenPUT(/\/api\/todo\/\d+/)
             .respond(function (method, url, data) {
+                var id = url.split('/')[3];
                 var params = angular.fromJson(data);
-                var todo = backendFactory.updateTodo(params);
+                var todo = backendFactory.updateTodo(id, params);
                 var statusCode = todo ? 200 : 404;
 
                 return [statusCode, todo, headers];
