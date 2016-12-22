@@ -67,17 +67,15 @@ describe("backend.factory supports backend-less module to support CRUD operation
                     return todo;
                 };
 
-                factory.updateTodo = function (todo) {
-                    var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(todo.id.toString());
+                factory.updateTodo = function (id, todo) {
+                    var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(id.toString());
 
-                    todos.splice(pos, 1, todo);
-
-                    if (pos > -1) {
-                        return todo;
-                    }
-                    else {
+                    if (pos < 0) {
                         return null;
                     }
+
+                    todos.splice(pos, 1, todo);
+                    return todo;
                 };
 
                 factory.deleteTodo = function (id) {
@@ -131,16 +129,6 @@ describe("backend.factory supports backend-less module to support CRUD operation
         expect(todosAfterDelete.length).toBe(7, "There are still 7 todos because no todo deleted");
     });
 
-    it("Should be able to delete several todos", function () {
-        backendFactory.deleteTodo(1);
-        backendFactory.deleteTodo(2);
-        backendFactory.deleteTodo(3);
-        backendFactory.deleteTodo(4);
-
-        var todosAfterDelete = backendFactory.getTodos();
-        expect(todosAfterDelete.length).toBe(3);
-    });
-
     describe("Factory should have a method for updating an existing todo and return null if no match to update, so backend module can deliver status code 404", function () {
         var updateTodo = { id: 4, text: "Juggle and succeed" };
         var updateTodoDummy = { id: 8, text: "Does not exist" };
@@ -156,7 +144,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
         });
 
         it("Should find a todo by id, update it and return it", function () {
-            var updatedTodo = backendFactory.updateTodo(updateTodo);
+            var updatedTodo = backendFactory.updateTodo(updateTodo.id, updateTodo);
 
             expect(updatedTodo).toEqual(updateTodo, "should return the updated todo if match");
 
@@ -167,14 +155,14 @@ describe("backend.factory supports backend-less module to support CRUD operation
             expect(todos[pos].text).toBe("Juggle and succeed", "It should have the updated text");
         });
 
-        it("should update the existing todo, NOT adding it", function () { 
+        it("should update the existing todo, NOT adding it", function () {
             var todos = backendFactory.getTodos();
-            backendFactory.updateTodo(updateTodo);
+            backendFactory.updateTodo(updateTodo.id, updateTodo);
             expect(todos.length).toBe(7, "There are 7 todos");
         });
 
         it("Should return null if no match", function () {
-            var updatedTodo = backendFactory.updateTodo(updateTodoDummy);
+            var updatedTodo = backendFactory.updateTodo(updateTodoDummy.id, updateTodoDummy);
 
             expect(updatedTodo).toBe(null, "should return null if no match");
         });
