@@ -195,6 +195,7 @@ describe("TodosEffect.factory keeps track of checked todos, applies effect and c
             spyOn(todosCrudFactory, 'updateTodo').and.callFake(function () {
                 // return $q.defer().promise; - since $q.all(promises).then() runs when all promises are resolved, we can not return $q.defer().promise
                 // We need to return a resolved promise and then $scope.$digest() to test the next action
+                // I think $q.when({}) will return a resolved promise as well, so it like short hand version of the bellow
 
                 var deferred = $q.defer();
                 deferred.resolve("200");
