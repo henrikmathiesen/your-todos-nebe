@@ -247,7 +247,7 @@ describe("TodosEffect.factory keeps track of checked todos, applies effect and c
 
             expect(todosCrudFactory.deleteTodo).toHaveBeenCalledTimes(2, "id 2 and id 3 is sent for deletion with 2 calls to crudFactory");
 
-            // Can not test all the way through, sorry, can not get past running fadeOut promises
+            // Can not test all the way through, sorry, can not get past running fadeOut promises because can not get the elements
         });
     });
 
