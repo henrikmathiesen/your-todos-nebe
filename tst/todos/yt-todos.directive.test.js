@@ -150,7 +150,7 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
 
         beforeEach(function () {
             $checkAllTodosIcon = jQelement.find('.fa-square-o[ng-click="vm.checkAllTodos(true)"]');
-            $unCheckAllTodosIcon = jQelement.find('.fa-check-square-o[ng-click="vm.checkAllTodos(false)"]');
+            $unCheckAllTodosIcon = jQelement.find('.fa-square[ng-click="vm.checkAllTodos(false)"]');
 
             $addTodoIcon = jQelement.find('.fa-plus[ng-click="vm.addTodo()"]');
 

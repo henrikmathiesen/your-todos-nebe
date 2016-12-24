@@ -47,7 +47,7 @@ describe("yt-todo.directive renders a todo with a clickable checkbox next to it"
 
     it("Should render and toggle 2 checkbox designs next to the todos, design depends on checked status, user can click on them", function () {
         var $notCheckedIcon = jQelement.find('.fa-square-o');
-        var $checkedIcon = jQelement.find('.fa-check-square-o');
+        var $checkedIcon = jQelement.find('.fa-square');
 
         expect($notCheckedIcon.length).toBe(1);
         expect($checkedIcon.length).toBe(1);
