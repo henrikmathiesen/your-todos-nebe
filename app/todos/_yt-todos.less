@@ -1,6 +1,5 @@
 .yt-todos {
 
-    background-color: @yt-color-clouds;
     box-shadow: @yt-box-shadow;
     
     .yt-error + & {
@@ -12,19 +11,13 @@
     }
 
     @import '__yt-todos-todo-icons.less';
+    @import '__yt-todos-sticky-header.less';
 
     .yt-todos-row {
         display: flex;
         align-items: stretch;
         border-bottom: @yt-border-nightblue-02;
-
-        // // sticky header
-        // position: fixed;
-
-
-        // @media only screen and (min-width:@yt-mq-tablet-p) {
-        //     position: static;
-        // }
+        background-color: @yt-color-clouds;
 
         &__col01, &__col02 {
             float: left;

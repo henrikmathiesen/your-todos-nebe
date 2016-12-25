@@ -1,0 +1,25 @@
+& {
+    padding-top: @yt-sticky-header-row-height;
+
+    @media only screen and (min-width:@yt-mq-tablet-p) {
+        padding-top: 0;
+    }
+
+    .yt-todos-row {
+        position: fixed;
+        z-index: @yt-z-index-50;
+        top: @yt-gutter-xs;
+        left: @yt-gutter-xs;
+        right: @yt-gutter-xs;
+        height: @yt-sticky-header-row-height;
+
+        @media only screen and (min-width:@yt-mq-tablet-p) {
+            position: static;
+            z-index: initial;
+            top:initial;
+            left:initial;
+            right: initial;
+            height: initial;
+        }
+    }
+}
