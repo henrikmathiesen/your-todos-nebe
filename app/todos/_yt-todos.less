@@ -2,7 +2,7 @@
 
     background-color: @yt-color-clouds;
     box-shadow: @yt-box-shadow;
-
+    
     .yt-error + & {
         display: none;
     }
@@ -11,35 +11,43 @@
         display: block;
     }
 
-    &__row {
+    @import '__yt-todos-todo-icons.less';
+
+    .yt-todos-row {
         display: flex;
         align-items: stretch;
         border-bottom: @yt-border-nightblue-02;
-    }
 
-    &__col01, &__col02 {
-        float: left;
-        display: flex;
-        align-items: center;
-        padding-left: @yt-gutter-sm;
-        padding-right: @yt-gutter-sm;
-        padding-top: @yt-gutter-md;
-        padding-bottom: @yt-gutter-md;
-    }
+        // // sticky header
+        // position: fixed;
 
-    &__col01 {
-        border-right: @yt-border-concrete-01;
-        margin-right: 1px;
-    }
 
-    &__col02 {
-        border-left: @yt-border-concrete-01;
-        margin-left: 1px;
+        // @media only screen and (min-width:@yt-mq-tablet-p) {
+        //     position: static;
+        // }
 
-        .fa + .fa {
-            margin-left: @yt-gutter-md;
+        &__col01, &__col02 {
+            float: left;
+            display: flex;
+            align-items: center;
+            padding-left: @yt-gutter-sm;
+            padding-right: @yt-gutter-sm;
+            padding-top: @yt-gutter-md;
+            padding-bottom: @yt-gutter-md;
+        }
+
+        &__col01 {
+            border-right: @yt-border-concrete-01;
+            margin-right: 1px;
+        }
+
+        &__col02 {
+            border-left: @yt-border-concrete-01;
+            margin-left: 1px;
+
+            .fa + .fa {
+                margin-left: @yt-gutter-md;
+            }
         }
     }
-
-    @import '__yt-todos-todo-icons.less';
 }

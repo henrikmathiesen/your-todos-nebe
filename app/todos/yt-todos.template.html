@@ -1,10 +1,10 @@
 <div class="yt-todos">
-    <div class="yt-clearfix yt-todos__row">
-        <div class="yt-todos__col01">
+    <div class="yt-clearfix yt-todos-row">
+        <div class="yt-todos-row__col01">
             <span class="fa fa-2x fa-square-o" ng-show="!vm.allTodosChecked" ng-click="vm.checkAllTodos(true)"></span>
             <span class="fa fa-2x fa-square" ng-show="vm.allTodosChecked" ng-click="vm.checkAllTodos(false)"></span>
         </div>
-        <div class="yt-todos__col02">
+        <div class="yt-todos-row__col02">
             <a href="#" class="fa fa-2x fa-plus" ng-click="vm.addTodo()"></a>
             <a href="#" class="fa fa-2x fa-floppy-o" ng-show="!vm.noTodosChecked" ng-click="vm.updateCheckedTodos()"></a>
             <span class="fa fa-2x fa-floppy-o" ng-show="vm.noTodosChecked"></span>
