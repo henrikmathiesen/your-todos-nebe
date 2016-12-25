@@ -1,6 +1,8 @@
 .yt-todos {
 
-    box-shadow: @yt-box-shadow;
+    @media only screen and (min-width:@yt-mq-tablet-p) {
+        box-shadow: @yt-box-shadow;
+    }
     
     .yt-error + & {
         display: none;
