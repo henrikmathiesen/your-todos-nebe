@@ -1,16 +1,7 @@
 .yt-app-header {
 
-    position: absolute;
-    top: 10px;
-    right: @yt-gutter-xs;
-    padding-right: @yt-gutter-sm;
-    padding-top: 1px;
-
-    @media only screen and (min-width:@yt-mq-tablet-p) {
-        padding-right: @yt-gutter-md;
-        top: 0;
-    }
-
+    @import '__yt-header-sticky.less';
+    
     h1 {
         text-align: right;
         margin: 0;

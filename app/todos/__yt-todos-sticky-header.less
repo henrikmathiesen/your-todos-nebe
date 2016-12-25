@@ -5,6 +5,20 @@
         padding-top: 0;
     }
 
+    .yt-todos-row-sticky-cover {
+        position: fixed;
+        z-index: @yt-z-index-50;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: @yt-gutter-xs;
+        background-color: @yt-color-concrete;
+
+        @media only screen and (min-width:@yt-mq-tablet-p) {
+            display: none;
+        }
+    }
+
     .yt-todos-row {
         position: fixed;
         z-index: @yt-z-index-50;
