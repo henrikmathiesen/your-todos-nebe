@@ -6,7 +6,8 @@
   "scripts": {
     "start": "gulp",
     "test": "gulp test",
-    "prod": "gulp build --prod"
+    "prod": "gulp build --prod",
+    "serve": "gulp connect"
   },
   "repository": {
     "type": "git",
