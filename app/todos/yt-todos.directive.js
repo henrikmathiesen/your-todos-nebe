@@ -19,8 +19,6 @@ angular
         vm.noTodosChecked = true;
 
         var getTodos = function () {
-            //console.log("RELOADING");
-
             todosCrudFactory.getTodos()
                 .then(function (todos) {
                     vm.todos = todos;
