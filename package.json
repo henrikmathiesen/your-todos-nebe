@@ -38,8 +38,8 @@
   },
   "homepage": "https://github.com/henrikmathiesen/yourTodosNoBe#readme",
   "dependencies": {
-    "angular": "^1.5.8",
-    "angular-mocks": "^1.5.8",
+    "angular": "1.5.8",
+    "angular-mocks": "1.5.8",
     "fastclick": "^1.0.6",
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1"
