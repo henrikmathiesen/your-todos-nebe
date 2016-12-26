@@ -6,7 +6,7 @@ module.exports = function (config) {
         browsers: ['PhantomJS'],
         frameworks: ['jasmine'],
         files: [
-            // we dont include angular-mocks here since it is included in lib (we are using $httpBackend for backend less development)
+            // we dont include angular-mocks here since it is included in lib (we are using $httpBackend in ngMockE2E for backend less development)
             './bld/lib.js',
             './bld/templates.js',
             './bld/app.js',
