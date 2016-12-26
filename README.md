@@ -1,3 +1,6 @@
 # yourTodosNoBe
-A todo list app built with Angular with a mocked backend.
-Great resource: http://www.jeremyzerr.com/angularjs-backend-less-development-using-httpbackend-mock
+A Todo List App built with Angular 1.5 with a mocked backend using ngMockE2E  
+https://henrikmathiesen.github.io/yourTodosNoBe/
+
+Great resource  
+http://www.jeremyzerr.com/angularjs-backend-less-development-using-httpbackend-mock
