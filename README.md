@@ -1,4 +1,4 @@
-# yourTodosNoBe
+# Your Todos
 A Todo List App built with Angular 1.5 with a mocked backend using ngMockE2E  
 https://henrikmathiesen.github.io/yourTodosNoBe/
 
