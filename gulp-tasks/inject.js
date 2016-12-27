@@ -8,6 +8,5 @@ module.exports = function (gulp, config) {
 
         return target.pipe(inject(sources, {relative: true}))
             .pipe(gulp.dest(config.bld));
-
     };
 };

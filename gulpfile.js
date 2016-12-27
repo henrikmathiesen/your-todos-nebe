@@ -43,7 +43,6 @@ gulp.task('copy-indexhtml', require('./gulp-tasks/copy-indexhtml')(gulp, config)
 gulp.task('copy-images', require('./gulp-tasks/copy-images')(gulp, config));
 gulp.task('copy-fontawesome', require('./gulp-tasks/copy-fontawesome')(gulp, config));
 gulp.task('inject', require('./gulp-tasks/inject')(gulp, config));
-gulp.task('watch-indexhtml-task', function () { runSequence('copy-indexhtml', 'inject'); });
 gulp.task('watcher', require('./gulp-tasks/watcher')(gulp, config));
 gulp.task('connect', require('./gulp-tasks/connect')(config));
 gulp.task('tester', require('./gulp-tasks/tester')(config));
