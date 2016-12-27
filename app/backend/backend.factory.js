@@ -17,7 +17,7 @@ angular
             },
             {
                 id: 3,
-                text: "Make sure there are an equal ammount of blue berries in each muffin"
+                text: "Make sure there are an equal amount of blue berries in each muffin"
             },
             {
                 id: 4,

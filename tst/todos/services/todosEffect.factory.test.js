@@ -29,7 +29,7 @@ describe("TodosEffect.factory keeps track of checked todos, applies effect and c
             },
             {
                 id: 3,
-                text: "Make sure there are an equal ammount of blue berries in each muffin"
+                text: "Make sure there are an equal amount of blue berries in each muffin"
             }
         ]
 
