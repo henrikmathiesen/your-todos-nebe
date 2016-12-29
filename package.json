@@ -1,5 +1,5 @@
 {
-  "name": "your-todos-nebe",
+  "name": "your-todos-nobe",
   "version": "1.0.0",
   "description": "Built with Angular (mocked back end) and small parts of bootstrap",
   "main": "index.js",
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/henrikmathiesen/your-todos-nebe.git"
+    "url": "git+https://github.com/henrikmathiesen/your-todos-nobe.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/henrikmathiesen/your-todos-nebe/issues"
+    "url": "https://github.com/henrikmathiesen/your-todos-nobe/issues"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -36,7 +36,7 @@
       "no-unused-vars": 0
     }
   },
-  "homepage": "https://github.com/henrikmathiesen/your-todos-nebe#readme",
+  "homepage": "https://github.com/henrikmathiesen/your-todos-nobe#readme",
   "dependencies": {
     "angular": "1.5.8",
     "angular-mocks": "1.5.8",
