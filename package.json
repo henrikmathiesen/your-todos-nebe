@@ -1,49 +1,8 @@
 {
   "name": "your-todos-nobe",
   "version": "1.0.0",
-  "description": "Built with Angular (mocked back end) and small parts of bootstrap",
-  "main": "index.js",
-  "scripts": {
-    "start": "gulp",
-    "test": "gulp test",
-    "prod": "gulp build --prod",
-    "serve": "gulp connect"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/henrikmathiesen/your-todos-nobe.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/henrikmathiesen/your-todos-nobe/issues"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "env": {
-      "browser": true,
-      "jquery": true
-    },
-    "globals": {
-      "jQuery": true,
-      "$": true,
-      "angular": true,
-      "FastClick": true
-    },
-    "rules": {
-      "no-console": 0,
-      "no-debugger": 0,
-      "no-unused-vars": 0
-    }
-  },
-  "homepage": "https://github.com/henrikmathiesen/your-todos-nobe#readme",
-  "dependencies": {
-    "angular": "1.5.8",
-    "angular-mocks": "1.5.8",
-    "fastclick": "1.0.6",
-    "font-awesome": "4.7.0",
-    "jquery": "3.1.1"
-  },
+  "homepage": "http://henrikmathiesen.github.io/your-todos-nobe",
+  "private": true,
   "devDependencies": {
     "del": "2.2.2",
     "gulp": "3.9.1",
@@ -69,5 +28,36 @@
     "run-sequence": "1.2.2",
     "uglify-save-license": "0.4.1",
     "yargs": "6.3.0"
+  },
+  "dependencies": {
+    "angular": "1.5.8",
+    "angular-mocks": "1.5.8",
+    "fastclick": "1.0.6",
+    "font-awesome": "4.7.0",
+    "jquery": "3.1.1"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "browser": true,
+      "jquery": true
+    },
+    "globals": {
+      "jQuery": true,
+      "$": true,
+      "angular": true,
+      "FastClick": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-debugger": 0,
+      "no-unused-vars": 0
+    }
+  },
+  "scripts": {
+    "start": "gulp",
+    "test": "gulp test",
+    "prod": "gulp build --prod",
+    "serve": "gulp connect"
   }
 }
