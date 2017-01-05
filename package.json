@@ -27,6 +27,7 @@
     "karma-jasmine": "1.0.2",
     "karma-phantomjs-launcher": "1.0.2",
     "run-sequence": "1.2.2",
+    "typings": "^2.1.0",
     "uglify-save-license": "0.4.1",
     "yargs": "6.3.0"
   },
@@ -56,6 +57,8 @@
     }
   },
   "scripts": {
+    "postinstall": "npm run typings",
+    "typings": "typings install",
     "start": "gulp",
     "test": "gulp test",
     "prod": "gulp build --prod",
