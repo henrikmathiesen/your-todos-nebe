@@ -46,7 +46,5 @@ angular
             todosEffectFactory.deleteCheckedTodos(vm);
         };
 
-        vm.reload = getTodos;
-
         getTodos();
     });
