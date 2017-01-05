@@ -2,60 +2,40 @@
 
 angular
     .module('backend')
-    .factory('backendFactory', function () {
+    .factory('backendFactory', function (initialDataFactory, utilsFactory, localstorageFactory) {
 
         var factory = {};
 
-        var todos = [
-            {
-                id: 1,
-                text: "Keep up with front end stuff"
-            },
-            {
-                id: 2,
-                text: "Assemble a tshirt gun"
-            },
-            {
-                id: 3,
-                text: "Make sure there are an equal amount of blue berries in each muffin"
-            },
-            {
-                id: 4,
-                text: "Juggle and fail"
-            },
-            {
-                id: 5,
-                text: "Study Angular"
-            },
-            {
-                id: 6,
-                text: "Study React"
-            },
-            {
-                id: 7,
-                text: "Lorem ipsum dolores"
-            }
-        ];
+        var localStorageKey = 'yourTodos';
 
-        var getNewId = function () {
-            if (!todos.length) {
-                return 1;
-            }
+        if (localstorageFactory.isEmpty(localStorageKey)) {
+            localstorageFactory.set(localStorageKey, initialDataFactory.getTodos());
+        }
+        else {
 
-            var idArray = todos.map(function (todo) { return todo.id });
+        }
 
-            var idArraySorted = idArray.sort(function (a, b) { return a - b });
 
-            return idArraySorted.pop() + 1;
-        };
+
+
+
+
+
+
+
+
+
+
+        localstorageFactory.set(localStorageKey, todos);
 
         factory.getTodos = function () {
-            return todos;
+            return localstorageFactory.get(localStorageKey);
         };
 
         factory.addTodo = function (todo) {
-            todo.id = getNewId();
+            todo.id = utilsFactory.getNewId(todos);
             todos.push(todo);
+            localstorageFactory.set();
 
             return todo;
         };
