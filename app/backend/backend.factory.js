@@ -8,34 +8,24 @@ angular
 
         var localStorageKey = 'yourTodos';
 
+        var todos = initialDataFactory.getTodos();
+
         if (localstorageFactory.isEmpty(localStorageKey)) {
-            localstorageFactory.set(localStorageKey, initialDataFactory.getTodos());
+            localstorageFactory.set(localStorageKey, todos);
         }
         else {
-
+            todos = localstorageFactory.get(localStorageKey);
         }
 
 
-
-
-
-
-
-
-
-
-
-
-        localstorageFactory.set(localStorageKey, todos);
-
         factory.getTodos = function () {
-            return localstorageFactory.get(localStorageKey);
+            return todos;
         };
 
         factory.addTodo = function (todo) {
             todo.id = utilsFactory.getNewId(todos);
             todos.push(todo);
-            localstorageFactory.set();
+            localstorageFactory.set(localStorageKey, todos);
 
             return todo;
         };
@@ -48,6 +38,8 @@ angular
             }
 
             todos.splice(pos, 1, todo);
+            localstorageFactory.set(localStorageKey, todos);
+
             return todo;
         };
 
@@ -61,6 +53,8 @@ angular
                     break;
                 }
             }
+
+            localstorageFactory.set(localStorageKey, todos);
 
             return match;
         };
