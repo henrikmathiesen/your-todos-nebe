@@ -22,13 +22,17 @@ angular
         };
 
         factory.addTodo = function (todo) {
-            return todosApiFactory.addTodo(todo)
+            var storeTodo = { id: todo.id, text: todo.text };
+
+            return todosApiFactory.addTodo(storeTodo)
                 .then(onSuccess)
                 .catch(onError);
         };
 
         factory.updateTodo = function (todo) {
-            return todosApiFactory.updateTodo(todo)
+            var storeTodo = { id: todo.id, text: todo.text };
+
+            return todosApiFactory.updateTodo(storeTodo)
                 .then(onSuccess)
                 .catch(onError);
         };
