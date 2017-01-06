@@ -25,7 +25,6 @@ angular
         factory.addTodo = function (todo) {
             todo.id = utilsFactory.getNewId(todos);
             todos.push(todo);
-            localstorageFactory.set(localStorageKey, todos);
 
             return todo;
         };
