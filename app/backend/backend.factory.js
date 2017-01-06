@@ -17,7 +17,6 @@ angular
             todos = localstorageFactory.get(localStorageKey);
         }
 
-
         factory.getTodos = function () {
             return todos;
         };
