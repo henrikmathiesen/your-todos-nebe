@@ -22,7 +22,6 @@ angular
             todosCrudFactory.getTodos()
                 .then(function (todos) {
                     vm.todos = todos;
-                    console.log(vm.todos);
                 });
         };
 
