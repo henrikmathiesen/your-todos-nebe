@@ -6,7 +6,7 @@ angular
 
         var factory = {};
 
-        var onError = function (error) {
+        var onError = function () {
             errorHandlerFactory.setAppHasError(true);
             return $q.reject(); // stops the promise chain to todosCrudFactory().then() , .catch() will however run (this logic also applies to $q.all()...)
         }

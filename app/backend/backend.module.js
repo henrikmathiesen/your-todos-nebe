@@ -33,7 +33,7 @@ angular
             });
 
         $httpBackend.whenDELETE(/\/api\/todo\/\d+/)
-            .respond(function (method, url, data) {
+            .respond(function (method, url) {
                 var id = url.split('/')[3];
                 var hasDeletedMatchedId = backendFactory.deleteTodo(id);
                 var statusCode = hasDeletedMatchedId ? 204 : 404;
