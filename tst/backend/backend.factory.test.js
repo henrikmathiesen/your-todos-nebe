@@ -68,6 +68,8 @@ describe("backend.factory supports backend-less module to support CRUD operation
                 };
 
                 factory.updateTodo = function (id, todo) {
+                    todo.id = id;
+
                     var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(id.toString());
 
                     if (pos < 0) {
@@ -165,6 +167,11 @@ describe("backend.factory supports backend-less module to support CRUD operation
             var updatedTodo = backendFactory.updateTodo(updateTodoDummy.id, updateTodoDummy);
 
             expect(updatedTodo).toBe(null, "should return null if no match");
+        });
+
+        it("Should ignore id in the PUT body since id should be inmutable", function () { 
+            var updatedTodo = backendFactory.updateTodo(1, { id: 999, text: 'something' });
+            expect(updatedTodo.id).toBe(1, "id in PUT body is ignored");
         });
 
     });
