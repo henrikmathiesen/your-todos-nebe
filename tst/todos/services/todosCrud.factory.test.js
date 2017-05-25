@@ -1,4 +1,4 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 describe("todosCrud.factory works as a layer between api factory and todos controllers", function () {
 
@@ -28,7 +28,7 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
 
     it("Should have an addTodo method that forward the call to todosApiFactory", function () {
         spyOn(todosApiFactory, 'addTodo').and.returnValue($q.defer().promise);
-        var todo = { id: null, text: "" };
+        var todo = { text: "" };
         todosCrudFactory.addTodo(todo);
 
         expect(todosApiFactory.addTodo).toHaveBeenCalledWith(todo);
@@ -65,7 +65,7 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
             spyOn(errorHandlerFactory, 'setAppHasError');
             spyOn(todosApiFactory, 'addTodo').and.returnValue($q.reject());
 
-            todosCrudFactory.addTodo({ id: null, text: "" });
+            todosCrudFactory.addTodo({ text: "" });
 
             $scope.$digest();
             expect(errorHandlerFactory.setAppHasError).toHaveBeenCalledWith(true);

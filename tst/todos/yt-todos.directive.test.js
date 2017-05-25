@@ -92,8 +92,6 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
 
     describe("Directives view model has methods for handling checked todos and add a new todo, forwards call to todosEffectFactory", function () {
 
-        var addedTodo = { id: 3, text: "" };
-
         beforeEach(function () {
             vm = $controller('ytTodosController');
             $scope.$apply();
@@ -118,7 +116,7 @@ describe("yt-todos.directive loads all todos, keeps track of their checked statu
         });
 
         it("Should have a method for adding an empty new todo, forwarding the call to todosEffectFactory", function () {
-            var todo = { id: null, text: "" };
+            var todo = { text: "" };
             vm.addTodo();
 
             expect(todosEffectFactory.addTodo).toHaveBeenCalledWith(vm, todo);

@@ -19,6 +19,10 @@ angular
                 var params = angular.fromJson(data);
                 var todo = backendFactory.addTodo(params);
 
+                if(!todo) {
+                    return [500, {}, {}];
+                }
+
                 return [201, todo, headers];
             });
 

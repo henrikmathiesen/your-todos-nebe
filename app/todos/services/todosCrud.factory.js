@@ -22,9 +22,7 @@ angular
         };
 
         factory.addTodo = function (todo) {
-            var storeTodo = { id: todo.id, text: todo.text };
-
-            return todosApiFactory.addTodo(storeTodo)
+            return todosApiFactory.addTodo(todo)
                 .then(onSuccess)
                 .catch(onError);
         };

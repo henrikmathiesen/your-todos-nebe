@@ -13,7 +13,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
             .factory('backendFactory', function () {
                 var factory = {};
 
-                var todos = [
+                var todosMock = [
                     {
                         id: 1,
                         text: "Have skills that are in demand"
@@ -44,25 +44,46 @@ describe("backend.factory supports backend-less module to support CRUD operation
                     }
                 ];
 
-                var getNewId = function () {
-                    if (!todos.length) {
-                        return 1;
+                var utilsFactoryMock = {
+                    getNewId: function (todos) {
+                        if (!todosMock.length) {
+                            return 1;
+                        }
+
+                        var idArray = todosMock.map(function (todo) { return todo.id });
+
+                        var idArraySorted = idArray.sort(function (a, b) { return a - b });
+
+                        return idArraySorted.pop() + 1;
+                    },
+                    isValidTodo: function (todo) {
+                        if (!todo || !angular.isObject(todo)) {
+                            return false;
+                        }
+
+                        if (Object.keys(todo).length !== 1) {
+                            return false;
+                        }
+
+                        if (todo.text == null) {
+                            return false;
+                        }
+
+                        return true;
                     }
-
-                    var idArray = todos.map(function (todo) { return todo.id });
-
-                    var idArraySorted = idArray.sort(function (a, b) { return a - b });
-
-                    return idArraySorted.pop() + 1;
                 };
 
                 factory.getTodos = function () {
-                    return todos;
+                    return todosMock;
                 };
 
                 factory.addTodo = function (todo) {
-                    todo.id = getNewId();
-                    todos.push(todo);
+                    if (!utilsFactoryMock.isValidTodo(todo)) {
+                        return null;
+                    }
+
+                    todo.id = utilsFactoryMock.getNewId();
+                    todosMock.push(todo);
 
                     return todo;
                 };
@@ -70,23 +91,23 @@ describe("backend.factory supports backend-less module to support CRUD operation
                 factory.updateTodo = function (id, todo) {
                     todo.id = id;
 
-                    var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(id.toString());
+                    var pos = todosMock.map(function (tdo) { return tdo.id.toString(); }).indexOf(id.toString());
 
                     if (pos < 0) {
                         return null;
                     }
 
-                    todos.splice(pos, 1, todo);
+                    todosMock.splice(pos, 1, todo);
                     return todo;
                 };
 
                 factory.deleteTodo = function (id) {
                     var match = false;
 
-                    for (var i = 0; i < todos.length; i++) {
-                        if (todos[i].id == id) {
+                    for (var i = 0; i < todosMock.length; i++) {
+                        if (todosMock[i].id == id) {
                             match = true;
-                            todos.splice(i, 1);
+                            todosMock.splice(i, 1);
                             break;
                         }
                     }
@@ -169,7 +190,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
             expect(updatedTodo).toBe(null, "should return null if no match");
         });
 
-        it("Should ignore id in the PUT body since id should be inmutable", function () { 
+        it("Should ignore id in the PUT body since id should be inmutable", function () {
             var updatedTodo = backendFactory.updateTodo(1, { id: 999, text: 'something' });
             expect(updatedTodo.id).toBe(1, "id in PUT body is ignored");
         });
@@ -228,6 +249,80 @@ describe("backend.factory supports backend-less module to support CRUD operation
             var returnedTodo = backendFactory.addTodo(params);
 
             expect(returnedTodo.id).toBe(7);
+        });
+
+        describe("validating a new todo by returning null if invalid", function () {
+            it("should return null since params is null", function () {
+                var params = null;
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toBe(null);
+            });
+
+            it("should return null since params is not an object, A", function () {
+                var params = ['one ', 'two'];
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toBe(null);
+            });
+
+            it("should return null since params is not an object, B", function () {
+                var params = 'something';
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toBe(null);
+            });
+
+            it("should return null since params is an empty object", function () {
+                var params = {};
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toBe(null);
+            });
+
+            it("should return null since params is an object but have more than one property", function () {
+                var params = { text: 'Lorem', id: 99 };
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toBe(null);
+            });
+
+            it("should return null since params is an object but without a property named text", function () {
+                var params = { body: 'Lorem' };
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toBe(null);
+            });
+
+            it("should return null since params is an object but with a property named text that is undefined", function () {
+                var params = { text: undefined };
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toBe(null);
+            });
+
+            it("should return null since params is an object but with a property named text that is null", function () {
+                var params = { text: null };
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toBe(null);
+            });
+
+            // A valid todo
+
+            it("should return the todo if valid, A", function () {
+                var params = { text: 'Lorem' };
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toEqual(params);
+            });
+
+            it("should return the todo if valid, B", function () {
+                var params = { text: '' };
+                var returnedTodo = backendFactory.addTodo(params);
+
+                expect(returnedTodo).toEqual(params);
+            });
         });
 
     });

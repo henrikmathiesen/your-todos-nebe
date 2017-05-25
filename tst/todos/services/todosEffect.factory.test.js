@@ -1,4 +1,4 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 describe("TodosEffect.factory keeps track of checked todos, applies effect and calls todosCrud.factory for crud operations.", function () {
 
@@ -136,7 +136,7 @@ describe("TodosEffect.factory keeps track of checked todos, applies effect and c
     });
 
     describe("There should be a function for adding a new todo", function () {
-        var newTodo = { id: null, text: "" };
+        var newTodo = { text: "" };
         var addedTodo = { id: 4, text: "" };
 
         beforeEach(function () {

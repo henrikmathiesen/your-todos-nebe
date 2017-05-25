@@ -1,4 +1,4 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../../typings/index.d.ts" />
 
 describe("todosApi.factory makes ajax call to mocked http backend", function () {
 
@@ -30,7 +30,7 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
     });
 
     it("Should expose an addTodo method that makes an ajax call posting a todo to 'backend-less' back end", function () {
-        var todo = { id: null, text: "" };
+        var todo = { text: "" };
         var returnedTodo = { id: 2, text: "" };
 
         $httpBackend.when('POST', '/api/todo').respond(201, returnedTodo);
@@ -45,6 +45,30 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
 
         expect(serverResponse.status).toBe(201);
         expect(serverResponse.data).toEqual(returnedTodo);
+    });
+
+    it("Should expose an addTodo method that makes an ajax call posting a todo and can respond with 500 if not valid", function () {
+        var todoDummy = {};
+        var returnedTodo = null;
+
+        $httpBackend.when('POST', '/api/todo').respond(500, returnedTodo);
+
+        var serverResponse;
+        var serverResponseError;
+
+        todosApiFactory.addTodo(todoDummy)
+            .then(function (response) { 
+                serverResponse = response;
+            })
+            .catch(function (response) { 
+                serverResponseError = response;
+            });
+
+        $httpBackend.flush();
+
+        expect(serverResponse).toBe(undefined);
+        expect(serverResponseError.status).toBe(500);
+        expect(serverResponseError.data).toBe(null);
     });
 
     it("Should expose an updateTodo method that makes an ajax call putting a todo to 'backend-less' back end", function () {

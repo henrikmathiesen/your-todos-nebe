@@ -22,6 +22,10 @@ angular
         };
 
         factory.addTodo = function (todo) {
+            if(!utilsFactory.isValidTodo(todo)) {
+                return null;
+            }
+
             todo.id = utilsFactory.getNewId(todos);
             todos.push(todo);
 

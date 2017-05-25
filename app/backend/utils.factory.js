@@ -18,5 +18,21 @@ angular
             return idArraySorted.pop() + 1;
         };
 
+        factory.isValidTodo = function (todo) { 
+            if(!todo || !angular.isObject(todo)) {
+                return false;
+            }
+
+            if(Object.keys(todo).length !== 1) {
+                return false;
+            }
+
+            if(todo.text == null) {
+                return false;
+            }
+
+            return true;
+        };
+
         return factory;
     });

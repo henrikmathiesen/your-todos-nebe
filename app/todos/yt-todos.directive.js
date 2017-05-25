@@ -34,7 +34,7 @@ angular
         };
 
         vm.addTodo = function () {
-            var todo = { id: null, text: "" };
+            var todo = { text: "" };
             todosEffectFactory.addTodo(vm, todo);
         };
 
