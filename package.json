@@ -61,7 +61,6 @@
     "start": "gulp",
     "test": "gulp test",
     "prod": "gulp build --prod",
-    "serve": "gulp connect",
     "deploy": "npm run prod && gh-pages -d bld",
     "clean-gh-pages": "rm -rf node_modules/gh-pages/.cache"
   }
