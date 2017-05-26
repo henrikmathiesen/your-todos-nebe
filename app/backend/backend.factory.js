@@ -22,7 +22,7 @@ angular
         };
 
         factory.addTodo = function (todo) {
-            if(!utilsFactory.isValidTodo(todo)) {
+            if(!utilsFactory.isValidNewTodo(todo)) {
                 return null;
             }
 

@@ -56,7 +56,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
 
                         return idArraySorted.pop() + 1;
                     },
-                    isValidTodo: function (todo) {
+                    isValidNewTodo: function (todo) {
                         if (!todo || !angular.isObject(todo)) {
                             return false;
                         }
@@ -78,7 +78,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
                 };
 
                 factory.addTodo = function (todo) {
-                    if (!utilsFactoryMock.isValidTodo(todo)) {
+                    if (!utilsFactoryMock.isValidNewTodo(todo)) {
                         return null;
                     }
 

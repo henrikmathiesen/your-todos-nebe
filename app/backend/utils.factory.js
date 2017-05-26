@@ -18,7 +18,7 @@ angular
             return idArraySorted.pop() + 1;
         };
 
-        factory.isValidTodo = function (todo) { 
+        factory.isValidNewTodo = function (todo) { 
             if(!todo || !angular.isObject(todo)) {
                 return false;
             }
