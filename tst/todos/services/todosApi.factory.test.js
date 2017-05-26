@@ -113,6 +113,30 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         expect(serverResponseError.data).toBe(null);
     });
 
+    it("Should expose an updateTodo method that makes an ajax call putting a todo and can respond with 500 if not valid", function () {
+        var updateTodoDummy = { text: "not a valid object" };
+        var returnedTodo = null;
+
+        var serverResponse;
+        var serverResponseError;
+        
+        $httpBackend.when('PUT', '/api/todo/' + updateTodoDummy.id).respond(500, returnedTodo);
+
+        todosApiFactory.updateTodo(updateTodoDummy)
+            .then(function (response) { 
+                serverResponse = response;
+            })
+            .catch(function (response) { 
+                serverResponseError = response;
+            });
+
+        $httpBackend.flush();
+
+        expect(serverResponse).toBe(undefined);
+        expect(serverResponseError.status).toBe(500);
+        expect(serverResponseError.data).toBe(null);
+    });
+
     it("Should expose a deleteTodo method that makes an ajax call deleting a todo to 'backend-less' back end", function () {
         $httpBackend.when('DELETE', '/api/todo/' + '1').respond(204);
 

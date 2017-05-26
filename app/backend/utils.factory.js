@@ -18,20 +18,36 @@ angular
             return idArraySorted.pop() + 1;
         };
 
-        factory.isValidNewTodo = function (todo) { 
-            if(!todo || !angular.isObject(todo)) {
+        var _isValidTodo = function (todo, isUpdate) { 
+            var nrOfKeys = isUpdate ? 2 : 1;
+
+            if (!todo || !angular.isObject(todo)) {
                 return false;
             }
 
-            if(Object.keys(todo).length !== 1) {
+            if (Object.keys(todo).length !== nrOfKeys) {
                 return false;
             }
 
-            if(todo.text == null) {
+            if (todo.text == null) {
                 return false;
+            }
+
+            if(isUpdate) {
+                if(todo.id == null) {
+                    return false;
+                }
             }
 
             return true;
+        };
+
+        factory.isValidNewTodo = function (todo) {
+            return _isValidTodo(todo, false);
+        };
+
+        factory.isValidUpdatedTodo = function (todo) {
+            return _isValidTodo(todo, true);
         };
 
         return factory;

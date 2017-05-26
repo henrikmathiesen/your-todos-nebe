@@ -22,7 +22,7 @@ angular
         };
 
         factory.addTodo = function (todo) {
-            if(!utilsFactory.isValidNewTodo(todo)) {
+            if (!utilsFactory.isValidNewTodo(todo)) {
                 return null;
             }
 
@@ -33,13 +33,17 @@ angular
         };
 
         factory.updateTodo = function (id, todo) {
+            if (!utilsFactory.isValidUpdatedTodo(todo)) {
+                return null;
+            }
+
             // id is set again with route parameter. See unit test: "Should ignore id in the PUT body since id should be inmutable"
             todo.id = parseInt(id);
 
             var pos = todos.map(function (tdo) { return tdo.id.toString(); }).indexOf(id.toString());
 
             if (pos < 0) {
-                return null;
+                return undefined;
             }
 
             todos.splice(pos, 1, todo);

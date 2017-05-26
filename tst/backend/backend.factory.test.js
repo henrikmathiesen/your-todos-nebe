@@ -56,12 +56,14 @@ describe("backend.factory supports backend-less module to support CRUD operation
 
                         return idArraySorted.pop() + 1;
                     },
-                    isValidNewTodo: function (todo) {
+                    isValidTodo: function (todo, isUpdate) {
+                        var nrOfKeys = isUpdate ? 2 : 1;
+
                         if (!todo || !angular.isObject(todo)) {
                             return false;
                         }
 
-                        if (Object.keys(todo).length !== 1) {
+                        if (Object.keys(todo).length !== nrOfKeys) {
                             return false;
                         }
 
@@ -69,7 +71,19 @@ describe("backend.factory supports backend-less module to support CRUD operation
                             return false;
                         }
 
+                        if (isUpdate) {
+                            if (todo.id == null) {
+                                return false;
+                            }
+                        }
+
                         return true;
+                    },
+                    isValidNewTodo: function (todo) {
+                        return this.isValidTodo(todo, false);
+                    },
+                    isValidUpdatedTodo: function (todo) {
+                        return this.isValidTodo(todo, true);
                     }
                 };
 
@@ -89,12 +103,17 @@ describe("backend.factory supports backend-less module to support CRUD operation
                 };
 
                 factory.updateTodo = function (id, todo) {
-                    todo.id = id;
+                    if (!utilsFactoryMock.isValidUpdatedTodo(todo)) {
+                        return null;
+                    }
+
+                    // id is set again with route parameter. See unit test: "Should ignore id in the PUT body since id should be inmutable"
+                    todo.id = parseInt(id);
 
                     var pos = todosMock.map(function (tdo) { return tdo.id.toString(); }).indexOf(id.toString());
 
                     if (pos < 0) {
-                        return null;
+                        return undefined;
                     }
 
                     todosMock.splice(pos, 1, todo);
@@ -152,10 +171,8 @@ describe("backend.factory supports backend-less module to support CRUD operation
         expect(todosAfterDelete.length).toBe(7, "There are still 7 todos because no todo deleted");
     });
 
-    describe("Factory should have a method for updating an existing todo and return null if no match to update, so backend module can deliver status code 404", function () {
+    describe("Factory should have a method for updating an existing todo", function () {
         var updateTodo = { id: 4, text: "Juggle and succeed" };
-        var updateTodoDummy = { id: 8, text: "Does not exist" };
-
 
         it("Should first verify the pre updated state of the todo", function () {
             var todos = backendFactory.getTodos();
@@ -184,15 +201,34 @@ describe("backend.factory supports backend-less module to support CRUD operation
             expect(todos.length).toBe(7, "There are 7 todos");
         });
 
-        it("Should return null if no match", function () {
-            var updatedTodo = backendFactory.updateTodo(updateTodoDummy.id, updateTodoDummy);
+        describe("Validating an updated todo by returning null or undefined", function () {
+            var updateTodoDummy = { id: 8, text: "Does not exist" };
 
-            expect(updatedTodo).toBe(null, "should return null if no match");
-        });
+            it("Should return undefined if no match", function () {
+                var updatedTodo = backendFactory.updateTodo(updateTodoDummy.id, updateTodoDummy);
+                expect(updatedTodo === undefined).toBe(true);
+            });
 
-        it("Should ignore id in the PUT body since id should be inmutable", function () {
-            var updatedTodo = backendFactory.updateTodo(1, { id: 999, text: 'something' });
-            expect(updatedTodo.id).toBe(1, "id in PUT body is ignored");
+            it("Should return null if not valid", function () {
+                var params = { text: "Lorem" };
+                var updatedTodo = backendFactory.updateTodo(1, params);
+
+                expect(updatedTodo === null).toBe(true);
+            });
+
+            // A valid updated todo
+
+            it("Should return updated todo if valid", function () {
+                var updatedTodo = backendFactory.updateTodo(1, updateTodo);
+                expect(updatedTodo).toEqual(updateTodo);
+            });
+
+            it("Should ignore id in the PUT body since id should be inmutable", function () {
+                var updatedTodo = backendFactory.updateTodo(1, { id: 999, text: 'something' });
+                expect(updatedTodo.id).toBe(1, "id in PUT body is ignored");
+            });
+
+            // Rest of the cases are identical to POST
         });
 
     });

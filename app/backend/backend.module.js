@@ -31,9 +31,16 @@ angular
                 var id = url.split('/')[3];
                 var params = angular.fromJson(data);
                 var todo = backendFactory.updateTodo(id, params);
-                var statusCode = todo ? 200 : 404;
 
-                return [statusCode, todo, headers];
+                if(todo === null) {
+                    return [500, {}, {}];
+                }
+
+                if(todo === undefined) {
+                    return [404, {}, {}];
+                }
+
+                return [200, todo, headers];
             });
 
         $httpBackend.whenDELETE(/\/api\/todo\/\d+/)
