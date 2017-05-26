@@ -34,8 +34,8 @@ angular
         };
 
         vm.addTodo = function () {
-            var todo = { text: "" };
-            todosEffectFactory.addTodo(vm, todo);
+            var newTodo = { text: "" };
+            todosEffectFactory.addTodo(vm, newTodo);
         };
 
         vm.updateCheckedTodos = function () {
