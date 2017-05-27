@@ -172,11 +172,11 @@ describe("backend.factory supports backend-less module to support CRUD operation
     });
 
     describe("Factory should have a method for updating an existing todo", function () {
-        var updateTodo = { id: 4, text: "Juggle and succeed" };
+        var todoToUpdate = { id: 4, text: "Juggle and succeed" };
 
         it("Should first verify the pre updated state of the todo", function () {
             var todos = backendFactory.getTodos();
-            var pos = todos.map(function (todo) { return todo.id.toString(); }).indexOf(updateTodo.id.toString());
+            var pos = todos.map(function (todo) { return todo.id.toString(); }).indexOf(todoToUpdate.id.toString());
 
             expect(todos[pos].id).toBe(4, "The id of the test case - A");
             expect(todos[pos].text).toBe("Juggle and fail", "It should have the original text");
@@ -184,12 +184,12 @@ describe("backend.factory supports backend-less module to support CRUD operation
         });
 
         it("Should find a todo by id, update it and return it", function () {
-            var updatedTodo = backendFactory.updateTodo(updateTodo.id, updateTodo);
+            var returnedTodo = backendFactory.updateTodo(todoToUpdate.id, todoToUpdate);
 
-            expect(updatedTodo).toEqual(updateTodo, "should return the updated todo if match");
+            expect(returnedTodo).toEqual(todoToUpdate, "should return the updated todo if match");
 
             var todos = backendFactory.getTodos();
-            var pos = todos.map(function (todo) { return todo.id.toString(); }).indexOf(updateTodo.id.toString());
+            var pos = todos.map(function (todo) { return todo.id.toString(); }).indexOf(todoToUpdate.id.toString());
 
             expect(todos[pos].id).toBe(4, "The id of the test case - B");
             expect(todos[pos].text).toBe("Juggle and succeed", "It should have the updated text");
@@ -197,7 +197,7 @@ describe("backend.factory supports backend-less module to support CRUD operation
 
         it("should update the existing todo, NOT adding it", function () {
             var todos = backendFactory.getTodos();
-            backendFactory.updateTodo(updateTodo.id, updateTodo);
+            backendFactory.updateTodo(todoToUpdate.id, todoToUpdate);
             expect(todos.length).toBe(7, "There are 7 todos");
         });
 
@@ -205,27 +205,27 @@ describe("backend.factory supports backend-less module to support CRUD operation
             var updateTodoDummy = { id: 8, text: "Does not exist" };
 
             it("Should return undefined if no match", function () {
-                var updatedTodo = backendFactory.updateTodo(updateTodoDummy.id, updateTodoDummy);
-                expect(updatedTodo === undefined).toBe(true);
+                var returnedTodo = backendFactory.updateTodo(updateTodoDummy.id, updateTodoDummy);
+                expect(returnedTodo === undefined).toBe(true);
             });
 
             it("Should return null if not valid", function () {
-                var params = { text: "Lorem" };
-                var updatedTodo = backendFactory.updateTodo(1, params);
+                var todoToUpdate = { text: "Lorem" };
+                var returnedTodo = backendFactory.updateTodo(1, todoToUpdate);
 
-                expect(updatedTodo === null).toBe(true);
+                expect(returnedTodo === null).toBe(true);
             });
 
             // A valid updated todo
 
             it("Should return updated todo if valid", function () {
-                var updatedTodo = backendFactory.updateTodo(1, updateTodo);
-                expect(updatedTodo).toEqual(updateTodo);
+                var returnedTodo = backendFactory.updateTodo(1, todoToUpdate);
+                expect(returnedTodo).toEqual(todoToUpdate);
             });
 
             it("Should ignore id in the PUT body since id should be inmutable", function () {
-                var updatedTodo = backendFactory.updateTodo(1, { id: 999, text: 'something' });
-                expect(updatedTodo.id).toBe(1, "id in PUT body is ignored");
+                var returnedTodo = backendFactory.updateTodo(1, { id: 999, text: 'something' });
+                expect(returnedTodo.id).toBe(1, "id in PUT body is ignored");
             });
 
             // Rest of the cases are identical to POST
@@ -241,8 +241,8 @@ describe("backend.factory supports backend-less module to support CRUD operation
         });
 
         it("Should add the todo and return the added todo with an id higher than any existing todos", function () {
-            var params = { text: "My new todo" };
-            var returnedTodo = backendFactory.addTodo(params);
+            var newTodo = { text: "My new todo" };
+            var returnedTodo = backendFactory.addTodo(newTodo);
             var todos = backendFactory.getTodos();
 
             expect(todos.length).toBe(8);
@@ -258,8 +258,8 @@ describe("backend.factory supports backend-less module to support CRUD operation
                 backendFactory.deleteTodo(id);
             });
 
-            var params = { text: "My new todo" };
-            var returnedTodo = backendFactory.addTodo(params);
+            var newTodo = { text: "My new todo" };
+            var returnedTodo = backendFactory.addTodo(newTodo);
 
             expect(todos.length).toBe(1);
             expect(returnedTodo.id).toBe(1);
@@ -270,8 +270,8 @@ describe("backend.factory supports backend-less module to support CRUD operation
             backendFactory.deleteTodo(6);
             backendFactory.deleteTodo(4);
 
-            var params = { text: "My new todo" };
-            var returnedTodo = backendFactory.addTodo(params);
+            var newTodo = { text: "My new todo" };
+            var returnedTodo = backendFactory.addTodo(newTodo);
 
             expect(returnedTodo.id).toBe(6);
         });
@@ -281,65 +281,65 @@ describe("backend.factory supports backend-less module to support CRUD operation
             backendFactory.deleteTodo(2);
             backendFactory.deleteTodo(7);
 
-            var params = { text: "My new todo" };
-            var returnedTodo = backendFactory.addTodo(params);
+            var newTodo = { text: "My new todo" };
+            var returnedTodo = backendFactory.addTodo(newTodo);
 
             expect(returnedTodo.id).toBe(7);
         });
 
         describe("validating a new todo by returning null if invalid", function () {
-            it("should return null since params is null", function () {
-                var params = null;
-                var returnedTodo = backendFactory.addTodo(params);
+            it("should return null since newTodo is null", function () {
+                var newTodo = null;
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
                 expect(returnedTodo).toBe(null);
             });
 
-            it("should return null since params is not an object, A", function () {
-                var params = ['one ', 'two'];
-                var returnedTodo = backendFactory.addTodo(params);
+            it("should return null since newTodo is not an object, A", function () {
+                var newTodo = ['one ', 'two'];
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
                 expect(returnedTodo).toBe(null);
             });
 
-            it("should return null since params is not an object, B", function () {
-                var params = 'something';
-                var returnedTodo = backendFactory.addTodo(params);
+            it("should return null since newTodo is not an object, B", function () {
+                var newTodo = 'something';
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
                 expect(returnedTodo).toBe(null);
             });
 
-            it("should return null since params is an empty object", function () {
-                var params = {};
-                var returnedTodo = backendFactory.addTodo(params);
+            it("should return null since newTodo is an empty object", function () {
+                var newTodo = {};
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
                 expect(returnedTodo).toBe(null);
             });
 
-            it("should return null since params is an object but have more than one property", function () {
-                var params = { text: 'Lorem', id: 99 };
-                var returnedTodo = backendFactory.addTodo(params);
+            it("should return null since newTodo is an object but have more than one property", function () {
+                var newTodo = { text: 'Lorem', id: 99 };
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
                 expect(returnedTodo).toBe(null);
             });
 
-            it("should return null since params is an object but without a property named text", function () {
-                var params = { body: 'Lorem' };
-                var returnedTodo = backendFactory.addTodo(params);
+            it("should return null since newTodo is an object but without a property named text", function () {
+                var newTodo = { body: 'Lorem' };
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
                 expect(returnedTodo).toBe(null);
             });
 
-            it("should return null since params is an object but with a property named text that is undefined", function () {
-                var params = { text: undefined };
-                var returnedTodo = backendFactory.addTodo(params);
+            it("should return null since newTodo is an object but with a property named text that is undefined", function () {
+                var newTodo = { text: undefined };
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
                 expect(returnedTodo).toBe(null);
             });
 
-            it("should return null since params is an object but with a property named text that is null", function () {
-                var params = { text: null };
-                var returnedTodo = backendFactory.addTodo(params);
+            it("should return null since newTodo is an object but with a property named text that is null", function () {
+                var newTodo = { text: null };
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
                 expect(returnedTodo).toBe(null);
             });
@@ -347,17 +347,17 @@ describe("backend.factory supports backend-less module to support CRUD operation
             // A valid todo
 
             it("should return the todo if valid, A", function () {
-                var params = { text: 'Lorem' };
-                var returnedTodo = backendFactory.addTodo(params);
+                var newTodo = { text: 'Lorem' };
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
-                expect(returnedTodo).toEqual(params);
+                expect(returnedTodo).toEqual(newTodo);
             });
 
             it("should return the todo if valid, B", function () {
-                var params = { text: '' };
-                var returnedTodo = backendFactory.addTodo(params);
+                var newTodo = { text: '' };
+                var returnedTodo = backendFactory.addTodo(newTodo);
 
-                expect(returnedTodo).toEqual(params);
+                expect(returnedTodo).toEqual(newTodo);
             });
         });
 

@@ -28,9 +28,9 @@ angular
         };
 
         factory.updateTodo = function (todo) {
-            var storeTodo = { id: todo.id, text: todo.text };
+            var todoToUpdate = { id: todo.id, text: todo.text };
 
-            return todosApiFactory.updateTodo(storeTodo)
+            return todosApiFactory.updateTodo(todoToUpdate)
                 .then(onSuccess)
                 .catch(onError);
         };

@@ -77,14 +77,14 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
 
     describe("PUT", function () {
         it("Should expose an updateTodo method that makes an ajax call putting a todo to 'backend-less' back end", function () {
-            var updateTodo = { id: 4, text: "Juggle and succeed" };
+            var todoToUpdate = { id: 4, text: "Juggle and succeed" };
             var returnedTodo = { id: 4, text: "Juggle and succeed" };
 
-            $httpBackend.when('PUT', '/api/todo/' + updateTodo.id).respond(200, returnedTodo);
+            $httpBackend.when('PUT', '/api/todo/' + todoToUpdate.id).respond(200, returnedTodo);
 
             var serverResponse;
 
-            todosApiFactory.updateTodo(updateTodo).then(function (response) {
+            todosApiFactory.updateTodo(todoToUpdate).then(function (response) {
                 serverResponse = response;
             });
 
@@ -95,15 +95,15 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         });
 
         it("Should expose an updateTodo method that makes an ajax call putting a todo and can respond with 404 if no todo by id to update is found", function () {
-            var updateTodoDummy = { id: 8, text: "Does not exist" };
+            var todoToUpdateDummy = { id: 8, text: "Does not exist" };
             var returnedTodo = null;
 
             var serverResponse;
             var serverResponseError;
 
-            $httpBackend.when('PUT', '/api/todo/' + updateTodoDummy.id).respond(404, returnedTodo);
+            $httpBackend.when('PUT', '/api/todo/' + todoToUpdateDummy.id).respond(404, returnedTodo);
 
-            todosApiFactory.updateTodo(updateTodoDummy)
+            todosApiFactory.updateTodo(todoToUpdateDummy)
                 .then(function (response) {
                     serverResponse = response;
                 })
@@ -119,15 +119,15 @@ describe("todosApi.factory makes ajax call to mocked http backend", function () 
         });
 
         it("Should expose an updateTodo method that makes an ajax call putting a todo and can respond with 500 if not valid", function () {
-            var updateTodoDummy = { text: "not a valid object" };
+            var todoToUpdateDummy = { text: "not a valid object" };
             var returnedTodo = null;
 
             var serverResponse;
             var serverResponseError;
 
-            $httpBackend.when('PUT', '/api/todo/' + updateTodoDummy.id).respond(500, returnedTodo);
+            $httpBackend.when('PUT', '/api/todo/' + todoToUpdateDummy.id).respond(500, returnedTodo);
 
-            todosApiFactory.updateTodo(updateTodoDummy)
+            todosApiFactory.updateTodo(todoToUpdateDummy)
                 .then(function (response) {
                     serverResponse = response;
                 })

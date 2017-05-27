@@ -36,10 +36,10 @@ describe("todosCrud.factory works as a layer between api factory and todos contr
 
     it("Should have an updateTodo method that forward the call to todosApiFactory", function () {
         spyOn(todosApiFactory, 'updateTodo').and.returnValue($q.defer().promise);
-        var updateTodo = { id: 4, text: "Juggle and succeed" };
-        todosCrudFactory.updateTodo(updateTodo);
+        var todoToUpdate = { id: 4, text: "Juggle and succeed" };
+        todosCrudFactory.updateTodo(todoToUpdate);
 
-        expect(todosApiFactory.updateTodo).toHaveBeenCalledWith(updateTodo);
+        expect(todosApiFactory.updateTodo).toHaveBeenCalledWith(todoToUpdate);
     });
 
     it("Should have a deleteTodo method that forwards the call to todosApiFactory", function () {

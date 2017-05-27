@@ -16,8 +16,8 @@ angular
 
         $httpBackend.whenPOST('/api/todo')
             .respond(function (method, url, data) {
-                var params = angular.fromJson(data);
-                var todo = backendFactory.addTodo(params);
+                var newTodo = angular.fromJson(data);
+                var todo = backendFactory.addTodo(newTodo);
 
                 if(!todo) {
                     return [500, {}, {}];
@@ -29,8 +29,8 @@ angular
         $httpBackend.whenPUT(/\/api\/todo\/\d+/)
             .respond(function (method, url, data) {
                 var id = url.split('/')[3];
-                var params = angular.fromJson(data);
-                var todo = backendFactory.updateTodo(id, params);
+                var todoToUpdate = angular.fromJson(data);
+                var todo = backendFactory.updateTodo(id, todoToUpdate);
 
                 if(todo === null) {
                     return [500, {}, {}];
