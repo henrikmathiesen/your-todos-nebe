@@ -8,9 +8,10 @@ angular
 
         var localStorageKey = 'yourTodos';
 
-        var todos = initialDataFactory.getTodos();
+        var todos;
 
         if (localstorageFactory.isEmpty(localStorageKey)) {
+            todos = initialDataFactory.getTodos();
             localstorageFactory.set(localStorageKey, todos);
         }
         else {
