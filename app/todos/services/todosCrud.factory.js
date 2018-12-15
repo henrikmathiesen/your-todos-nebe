@@ -8,7 +8,7 @@ angular
 
         var onError = function () {
             errorHandlerFactory.setAppHasError(true);
-            return $q.reject(); // stops the promise chain to todosCrudFactory().then() , .catch() will however run (this logic also applies to $q.all()...)
+            return $q.reject(); // stops the promise chain to todosCrudFactory.xxx().then() (in yt-todos.directive) , .catch() will however run (this logic also applies to $q.all()...)
         }
 
         var onSuccess = function (response) {
